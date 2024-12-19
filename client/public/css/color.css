@@ -1,0 +1,17 @@
+:root {
+	--color--gray--lightest: #eee;
+	--color--gray--lighter: #ccc;
+	--color--gray--light: #aaa;
+	--color--gray--medium: #888;
+	--color--gray--dark: #666;
+	--color--gray--darker: #444;
+	--color--gray--darkest: #222;
+	--color--red: hsl(0, 80%, 60%);
+	--color--blue: hsl(220, 80%, 60%);
+
+	--color--accent: #f55;
+	--link--color: var(--color--red);
+
+	--color--background: var(--color--gray--darkest);
+	--color--text: var(--color--gray--lightest);
+}

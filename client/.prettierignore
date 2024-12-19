@@ -1,0 +1,6 @@
+dist/font
+dist/img
+dist/js
+dist/vid
+node_modules
+tsc

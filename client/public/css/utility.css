@@ -1,0 +1,49 @@
+.cursor--pointer {
+	cursor: pointer;
+}
+
+.flex {
+	display: flex;
+}
+
+.grid {
+	display: grid;
+}
+
+.width--100 {
+	width: 100%;
+}
+
+.height--100 {
+	height: 100%;
+}
+
+.overflow--hidden {
+	overflow: hidden;
+}
+
+.place-items--center {
+	place-items: center;
+}
+
+.pointer-events--none {
+	pointer-events: none;
+}
+
+.position--absolute {
+	position: absolute;
+}
+
+.position--relative {
+	position: relative;
+}
+
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.round {
+	border-radius: 50%;
+}

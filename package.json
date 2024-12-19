@@ -1,0 +1,25 @@
+{
+  "name": "nautilus",
+  "version": "1.0.0",
+  "description": "Nautilus",
+  "author": "Uri Kalish",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urikalish/nautilus.git"
+  },
+  "homepage": "https://github.com/urikalish/nautilus#readme",
+  "bugs": {
+    "url": "https://github.com/urikalish/nautilus/issues"
+  },
+  "scripts": {
+    "build": "cd client && yarn build",
+    "post-checkout": "cd client && yarn post-checkout",
+    "post-merge": "cd client && yarn post-merge",
+    "pre-commit": "cd client && yarn pre-commit"
+  },
+  "pre-commit": "pre-commit",
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
+  }
+}

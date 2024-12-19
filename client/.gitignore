@@ -1,0 +1,4 @@
+node_modules
+public/js
+tsc
+yarn-error.log
