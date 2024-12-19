@@ -1,7 +1,7 @@
 {
-  "name": "nautilus-client",
+  "name": "kalish-nautilus-client",
   "version": "1.0.0",
-  "description": "Nautilus client",
+  "description": "Kalish Nautilus client",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/urikalish/nautilus.git"
