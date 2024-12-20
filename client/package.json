@@ -41,5 +41,6 @@
     "typescript-eslint": "^8.18.1"
   },
   "resolutions": {
-  }
+  },
+  "packageManager": "yarn@1.22.5"
 }
