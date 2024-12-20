@@ -1104,7 +1104,7 @@ side-channel@^1.0.6:
     side-channel-map "^1.0.1"
     side-channel-weakmap "^1.0.2"
 
-smob@^1.0.0:
+smob@^1.0.0, smob@^1.5.0:
   version "1.5.0"
   resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/smob/-/smob-1.5.0.tgz#85d79a1403abf128d24d3ebc1cdc5e1a9548d3ab"
   integrity sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==
