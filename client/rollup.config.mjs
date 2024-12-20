@@ -1,5 +1,4 @@
-import json from '@rollup/plugin-json';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 const isProduction = process.env.build === 'production';
 
@@ -11,7 +10,6 @@ export default {
     sourcemap: !isProduction,
   },
   plugins: [
-    json(),
     isProduction && terser()
   ]
 };
