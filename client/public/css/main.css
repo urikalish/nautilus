@@ -29,12 +29,27 @@ a:visited {
 
 body {
 	height: 100%;
-	overflow: hidden;
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
+	position: relative;
 	font-family: var(--font-family--default);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	background-color: var(--color--background);
 	color: var(--color--text);
+}
+
+.underwater-video {
+	position: absolute;
+	inset: 0;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: -1;
+}
+
+.app {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
 }
