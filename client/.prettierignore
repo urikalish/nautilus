@@ -1,6 +1,7 @@
-dist/font
-dist/img
-dist/js
-dist/vid
+public/font
+public/img
+public/js
+public/audio
+public/video
 node_modules
 tsc
