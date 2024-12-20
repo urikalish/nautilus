@@ -1045,7 +1045,7 @@ semver@^7.6.0:
   resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/semver/-/semver-7.6.3.tgz#980f7b5550bc175fb4dc09403085627f9eb33143"
   integrity sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==
 
-serialize-javascript@^6.0.1:
+serialize-javascript@6.0.2, serialize-javascript@^6.0.1:
   version "6.0.2"
   resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/serialize-javascript/-/serialize-javascript-6.0.2.tgz#defa1e055c83bf6d59ea805d8da862254eb6a6c2"
   integrity sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==
