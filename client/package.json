@@ -26,7 +26,7 @@
     "full": "yarn format && yarn lint && yarn build",
     "dev": "http-server ./public --port 6464 --cors -c-1",
     "pre-commit": "yarn full",
-    "netlify-build": "yarn cache clean && yarn && yarn compile && yarn bundle"
+    "netlify-build": "yarn compile && yarn bundle"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
