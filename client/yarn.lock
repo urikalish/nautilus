@@ -1117,10 +1117,10 @@ rimraf@^5.0.10:
   dependencies:
     glob "^10.3.7"
 
-rollup@^2.79.2:
-  version "2.79.2"
-  resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/rollup/-/rollup-2.79.2.tgz#f150e4a5db4b121a21a747d762f701e5e9f49090"
-  integrity sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==
+rollup@^3.29.5:
+  version "3.29.5"
+  resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/rollup/-/rollup-3.29.5.tgz#8a2e477a758b520fb78daf04bca4c522c1da8a54"
+  integrity sha512-GVsDdsbJzzy4S/v3dqWPJ7EfvZJfCHiDqe80IyrF59LYuP+e6U1LJoUqeuqRbwAWoMNoXivMNeNAOf5E22VA1w==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -1239,6 +1239,7 @@ source-map@^0.6.0:
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -1257,6 +1258,7 @@ string-width@^5.0.1, string-width@^5.1.2:
     strip-ansi "^7.0.1"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://nexus.octane.admlabs.aws.swinfra.net/nexus/content/groups/npm/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
