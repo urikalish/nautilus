@@ -22,7 +22,7 @@
     "bundle-dev": "rollup -c rollup.config.mjs --environment build:development",
     "bundle-prod": "rollup -c rollup.config.mjs --environment build:production",
     "bundle": "yarn bundle-dev && yarn bundle-prod",
-    "build": "yarn clean && yarn compile && yarn bundle",
+    "build": "yarn compile && yarn bundle",
     "full": "yarn format && yarn lint && yarn build",
     "dev": "http-server ./public --port 6464 --cors -c-1",
     "pre-commit": "yarn full"
@@ -33,7 +33,6 @@
     "eslint": "^9.17.0",
     "http-server": "^14.1.1",
     "prettier": "^3.4.2",
-    "rimraf": "^5.0.10",
     "rollup": "^3.29.5",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.1"
