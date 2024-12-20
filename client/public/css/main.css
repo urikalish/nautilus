@@ -40,7 +40,7 @@ body {
 	color: var(--color--text);
 }
 
-.underwater-video {
+.video-underwater {
 	position: absolute;
 	inset: 0;
 	min-width: 100%;
@@ -52,4 +52,5 @@ body {
 	position: relative;
 	height: 100%;
 	overflow: hidden;
+	padding: 24px;
 }

@@ -24,10 +24,14 @@
 		<link rel="stylesheet" href="./css/main.css" />
 	</head>
 	<body>
-		<video autoplay muted loop playsinline class="underwater-video">
+		<video autoplay muted loop playsinline class="video-underwater">
 			<source src="./vid/underwater.mp4" type="video/mp4" />
 		</video>
-		<div id="app" class="app full-screen-height overflow--hidden fade-in"></div>
+		<audio loop id="sound-sub-internal" src="./sound/sub-internal.mp3"></audio>
+		<audio loop id="sound-sonar-ping" src="./sound/sonar-ping.mp3"></audio>
+		<div id="app" class="app full-screen-height overflow--hidden fade-in">
+			<button id="button-start">Start</button>
+		</div>
 		<script type="module" src="./js/main.js"></script>
 	</body>
 </html>
