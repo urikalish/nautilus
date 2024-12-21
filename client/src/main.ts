@@ -1,8 +1,6 @@
 import { Sound } from './sound';
 import { Position } from './position';
 
-let a = 3;
-
 let position = new Position(4, 4);
 
 function start() {
