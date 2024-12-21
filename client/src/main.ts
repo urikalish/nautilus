@@ -1,5 +1,5 @@
 import { Sound } from './sound';
-import { Position } from './position';
+import { Position } from './model/position';
 
 let position = new Position(4, 4);
 

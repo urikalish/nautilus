@@ -1,14 +1,14 @@
 export class Position {
-	time: number;
 	x: number;
 	y: number;
 	sector: string;
+	time: number;
 
 	constructor(x: number, y: number) {
-		this.time = Date.now();
 		this.x = x;
 		this.y = y;
 		this.sector = Position.calcSector(this.x, this.y);
+		this.time = Date.now();
 	}
 
 	static calcSector(x: number, y: number): string {
