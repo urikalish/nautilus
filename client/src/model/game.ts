@@ -1,6 +1,6 @@
 import { Player } from './player';
 import { Sub } from './sub';
-import { getDateTime } from '../utils/utils';
+import { getDateTime } from '../services/utils';
 import { settings } from './settings';
 
 export enum GameStatus {
@@ -18,6 +18,7 @@ export enum GameResult {
 
 export class Game {
 	id: number;
+	ind: number;
 	creationTime: number;
 	creationDate: string;
 	status: GameStatus;
@@ -26,15 +27,15 @@ export class Game {
 	subs: Sub[];
 	debug: boolean;
 
-	constructor(id: number) {
+	constructor(id: number, date: Date, ind: number, players: Player[], subs: Sub[]) {
+		this.debug = settings.debug;
 		this.id = id;
-		const now = new Date();
-		this.creationTime = now.getTime();
-		this.creationDate = getDateTime(now);
+		this.ind = ind;
+		this.creationTime = date.getTime();
+		this.creationDate = getDateTime(date);
 		this.status = GameStatus.CREATED;
 		this.result = GameResult.NONE;
-		this.players = [new Player(0), new Player(1)];
-		this.subs = [new Sub(0), new Sub(1)];
-		this.debug = settings.debug;
+		this.players = players;
+		this.subs = subs;
 	}
 }

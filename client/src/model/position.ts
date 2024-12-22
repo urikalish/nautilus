@@ -1,14 +1,11 @@
 export class Position {
-	x: number;
-	y: number;
-	sector: string;
-	time: number;
+	time: number = Date.now();
+	x: number = 0;
+	y: number = 0;
+	sector: string = '';
 
-	constructor(x: number, y: number) {
-		this.x = x;
-		this.y = y;
-		this.sector = Position.calcSector(this.x, this.y);
-		this.time = Date.now();
+	constructor(time: number, x: number, y: number) {
+		this.setPosition(time, x, y);
 	}
 
 	static calcSector(x: number, y: number): string {
@@ -20,14 +17,14 @@ export class Position {
 		return xSectors[Math.trunc(x)] + ySectors[Math.trunc(y)];
 	}
 
-	updatePosition(curSpeedKnots: number, curAngle: number) {
-		const newTime = Date.now();
-		const deltaTimeMs = newTime - this.time;
-		const deltaDistanceMiles = (curSpeedKnots / 3600000) * deltaTimeMs;
-		const angleInRadians = ((curAngle - 90) * Math.PI) / 180;
-		this.time = newTime;
-		this.x = Number((this.x += deltaDistanceMiles * Math.cos(angleInRadians)).toFixed(3));
-		this.y = Number((this.y -= deltaDistanceMiles * Math.sin(angleInRadians)).toFixed(3));
-		this.sector = Position.calcSector(this.x, this.y);
+	toString() {
+		return `x: ${this.x}, y: ${this.y}, sector: ${this.sector}`;
+	}
+
+	setPosition(time: number, x: number, y: number) {
+		this.time = time;
+		this.x = x;
+		this.y = y;
+		this.sector = Position.calcSector(x, y);
 	}
 }

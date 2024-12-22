@@ -1,17 +1,17 @@
-import { settings } from './settings';
+import { Position } from './position';
 
 export class Sub {
 	index: number;
-	class: string;
-	speedFull: number;
-	depthTestFeet: number;
-	depthMaxFeet: number;
+	position: Position;
+	courseDeg: number;
+	speedKnots: number;
+	depthFeet: number;
 
-	constructor(index: number) {
+	constructor(index: number, position: Position, courseDeg: number, speedKnots: number, depthFeet: number) {
 		this.index = index;
-		this.class = settings.subClass;
-		this.speedFull = settings.subSpeedFull;
-		this.depthTestFeet = settings.subDepthTestFeet;
-		this.depthMaxFeet = settings.subDepthMaxFeet;
+		this.position = position;
+		this.courseDeg = courseDeg;
+		this.speedKnots = speedKnots;
+		this.depthFeet = depthFeet;
 	}
 }
