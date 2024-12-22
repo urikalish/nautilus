@@ -1,13 +1,23 @@
 export const settings = {
 	debug: true,
 	appName: 'Kalish Nautilus',
-	subClass: 'Virginia',
-	subSpeedFull: 25,
-	subDepthTestFeet: 800,
-	subDepthMaxFeet: 1600,
-	torpedoTubesNumber: 4,
-	torpedoType: 'MK-48',
-	torpedoCount: 25,
-	torpedoSpeedKnots: 55,
-	reportIntervalNavigation: 10000,
+	submarineClass: 'Virginia',
+	speed: {
+		full: 25, //knots
+	},
+	depth: {
+		test: 800, //feet
+		max: 1600, //feet
+	},
+	tubes: {
+		count: 4,
+	},
+	torpedo: {
+		count: 25,
+		type: 'Mark 48',
+		speed: 55, //knots
+	},
+	reportInterval: {
+		navigation: 10000,
+	},
 };

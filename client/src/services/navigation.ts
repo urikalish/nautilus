@@ -22,14 +22,10 @@ export class Navigation {
 		const sub = this.getMySub();
 		const position = this.getMyPosition();
 		const newTime = Date.now();
-		const deltaTimeMs = newTime - position.time;
-		const deltaDistanceMiles = (sub.speedKnots / 3600000) * deltaTimeMs;
-		const angleRadians = ((sub.courseDeg - 90) * Math.PI) / 180;
-		position.setPosition(
-			newTime,
-			Number((position.x += deltaDistanceMiles * Math.cos(angleRadians)).toFixed(3)),
-			Number((position.y -= deltaDistanceMiles * Math.sin(angleRadians)).toFixed(3)),
-		);
+		const dTime = newTime - position.time;
+		const dDistance = (sub.speed / 3600000) * dTime;
+		const angleRadians = ((sub.course - 90) * Math.PI) / 180;
+		position.setPosition(newTime, Number((position.x += dDistance * Math.cos(angleRadians)).toFixed(3)), Number((position.y -= dDistance * Math.sin(angleRadians)).toFixed(3)));
 	}
 
 	reportSector() {
@@ -47,10 +43,10 @@ export class Navigation {
 		if (newSector !== this.lastReportedSector) {
 			this.reportSector();
 		}
-		setTimeout(this.onTick.bind(this), settings.reportIntervalNavigation);
+		setTimeout(this.onTick.bind(this), settings.reportInterval.navigation);
 	}
 
 	start() {
-		setTimeout(this.onTick.bind(this), settings.reportIntervalNavigation);
+		setTimeout(this.onTick.bind(this), settings.reportInterval.navigation);
 	}
 }

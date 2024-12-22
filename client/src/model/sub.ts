@@ -3,15 +3,15 @@ import { Position } from './position';
 export class Sub {
 	index: number;
 	position: Position;
-	courseDeg: number;
-	speedKnots: number;
-	depthFeet: number;
+	course: number; //degrees
+	speed: number; //knots
+	depth: number; //feet
 
-	constructor(index: number, position: Position, courseDeg: number, speedKnots: number, depthFeet: number) {
+	constructor(index: number, position: Position, course: number, speed: number, depth: number) {
 		this.index = index;
 		this.position = position;
-		this.courseDeg = courseDeg;
-		this.speedKnots = speedKnots;
-		this.depthFeet = depthFeet;
+		this.course = course;
+		this.speed = speed;
+		this.depth = depth;
 	}
 }

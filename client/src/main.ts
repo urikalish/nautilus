@@ -20,8 +20,8 @@ function start() {
 	const startDate: Date = new Date();
 	const startTime = startDate.getTime();
 	const subs = [
-		new Sub(0, new Position(startTime, 1, 1), 45, settings.subSpeedFull, settings.subDepthTestFeet),
-		new Sub(1, new Position(startTime, 7, 7), 125, settings.subSpeedFull, settings.subDepthTestFeet),
+		new Sub(0, new Position(startTime, 1, 1), 45, settings.speed.full, settings.depth.test),
+		new Sub(1, new Position(startTime, 7, 7), 125, settings.speed.full, settings.depth.test),
 	];
 	game = new Game(getRandomNumber(3), startDate, ind, players, subs);
 	navigation = new Navigation(game);
