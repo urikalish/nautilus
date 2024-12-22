@@ -33,7 +33,7 @@ export class Navigation {
 		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
-		Speech.speak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])}, ${Speech.toNatoPhonetic(sector[1])}`, 0, 2.0, 1.5, 1.0);
+		Speech.speak(`Conn Navigation, current location, ${Speech.toNatoPhonetic(sector[0])}, ${Speech.toNatoPhonetic(sector[1])}`, 0, 2.0, 1.5, 1.0);
 	}
 
 	onTick() {
