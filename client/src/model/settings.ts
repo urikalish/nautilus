@@ -9,7 +9,7 @@ export const settings = {
 		test: 800, //feet
 		max: 1600, //feet
 	},
-	tubes: {
+	tube: {
 		count: 4,
 	},
 	torpedo: {
