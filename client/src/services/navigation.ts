@@ -18,18 +18,6 @@ export class Navigation {
 		return this.getMySub().position;
 	}
 
-	start() {
-		setInterval(() => {
-			this.updatePosition();
-			const newPosition = this.getMyPosition();
-			const newSector = newPosition.sector;
-			console.log(`position: ${newPosition}`);
-			if (newSector !== this.lastReportedSector) {
-				this.reportSector();
-			}
-		}, settings.reportIntervalNavigation);
-	}
-
 	updatePosition() {
 		const sub = this.getMySub();
 		const position = this.getMyPosition();
@@ -49,5 +37,20 @@ export class Navigation {
 		const sector = position.sector;
 		this.lastReportedSector = sector;
 		Speech.speak(`Conn Navigation, current location sector, ${Speech.toNatoPhonetic(sector[0])}, ${Speech.toNatoPhonetic(sector[1])}`, 0, 2.0, 1.5, 1.0);
+	}
+
+	onTick() {
+		this.updatePosition();
+		const newPosition = this.getMyPosition();
+		const newSector = newPosition.sector;
+		console.log(`position: ${newPosition}`);
+		if (newSector !== this.lastReportedSector) {
+			this.reportSector();
+		}
+		setTimeout(this.onTick.bind(this), settings.reportIntervalNavigation);
+	}
+
+	start() {
+		setTimeout(this.onTick.bind(this), settings.reportIntervalNavigation);
 	}
 }
