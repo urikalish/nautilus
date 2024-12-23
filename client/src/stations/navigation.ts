@@ -16,13 +16,13 @@ export class Navigation {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	report() {
+	report(reportSector: boolean = true) {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
-		this.speak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`);
+		this.speak(`Conn Navigation ${reportSector ? `, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}` : ``}`);
 	}
 
 	update() {
@@ -38,7 +38,7 @@ export class Navigation {
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
-			this.report();
+			this.report(true);
 		}
 	}
 

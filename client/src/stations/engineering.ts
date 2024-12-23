@@ -17,7 +17,7 @@ export class Engineering {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	report(reportEngine: boolean, reportSpeed: boolean) {
+	report(reportEngine: boolean = true, reportSpeed: boolean = true) {
 		const speed = this.game.getMySub().speed;
 		this.lastReportedSpeed = speed;
 		console.log(`speed: ${speed}`);

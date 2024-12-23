@@ -17,7 +17,7 @@ export class Helm {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	report(reportCourse: boolean, reportDepth: boolean) {
+	report(reportCourse: boolean = true, reportDepth: boolean = true) {
 		const course = this.game.getMySub().course;
 		const depth = this.game.getMySub().depth;
 		this.lastReportedCourse = course;

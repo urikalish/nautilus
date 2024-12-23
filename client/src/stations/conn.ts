@@ -35,10 +35,13 @@ export class Conn {
 	}
 
 	start() {
-		this.commandHelper.start();
 		this.speak(`Aye`);
 		this.speak(`All stations, report`, () => {
+			this.navigation.report();
+			this.helm.report();
+			this.engineering.report();
 			this.updateAll();
+			this.commandHelper.start();
 		});
 	}
 
