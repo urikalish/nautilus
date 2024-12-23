@@ -45,10 +45,11 @@ export class Helm {
 		alert(`Unknown ${this.station} command ${command.type}`);
 	}
 
-	handleCommand(command: Command) {
+	handleCommand(command: Command, onCommandHandled: () => void) {
 		if (command.type === CommandType.SET_COURSE) {
 			this.speak(`Conn Helm, set course to ${Speech.toThreeNumbers(command.data)}, aye`, () => {
 				this.setCourse(command.data);
+				onCommandHandled();
 			});
 		}
 	}

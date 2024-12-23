@@ -2,7 +2,6 @@ import { settings } from '../model/settings';
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { Station } from '../model/station';
-import { Command } from '../model/command';
 
 export class Engineering {
 	station: Station = Station.ENGINEERING;
@@ -36,12 +35,4 @@ export class Engineering {
 			this.report(true, true);
 		}
 	}
-
-	getCommandText(command: Command) {
-		alert(`Unknown ${this.station} command ${command.type}`);
-	}
-
-	// handleCommand(command: Command) {
-	// 	alert('Engineering.handleCommand() not implemented');
-	// }
 }

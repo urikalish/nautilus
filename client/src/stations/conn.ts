@@ -45,17 +45,17 @@ export class Conn {
 		});
 	}
 
+	handleCommandHandled() {
+		this.speak(`Very well`);
+	}
+
 	handleCommand(command: Command) {
 		let commandText;
-		if (command.station === Station.NAVIGATION) {
-			//this.navigation.handleCommand(command);
-		} else if (command.station === Station.HELM) {
+		if (command.station === Station.HELM) {
 			commandText = this.helm.getCommandText(command);
 			this.speak(commandText, () => {
-				this.helm.handleCommand(command);
+				this.helm.handleCommand(command, this.handleCommandHandled.bind(this));
 			});
-		} else if (command.station === Station.ENGINEERING) {
-			//this.engineering.handleCommand(command);
 		}
 	}
 }
