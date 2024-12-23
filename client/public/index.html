@@ -30,7 +30,9 @@
 		<audio loop id="sound-sub-internal" src="./audio/sub-internal.mp3"></audio>
 		<audio loop id="sound-sonar-ping" src="./audio/sonar-ping.mp3"></audio>
 		<div id="app" class="app full-screen-height overflow--hidden fade-in">
-			<button id="button-start">Start</button>
+			<button id="button-start" class="button-start">Start</button>
+			<label for="input-command">Command</label>
+			<input id="input-command" class="input-command display--none" />
 		</div>
 		<script type="module" src="./js/main.js"></script>
 	</body>

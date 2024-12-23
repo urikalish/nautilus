@@ -14,7 +14,7 @@ export class Navigation {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	reportPosition() {
+	report() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		console.log(`position: ${position}`);
@@ -30,11 +30,13 @@ export class Navigation {
 		const dTime = newTime - position.time;
 		const dDistance = (sub.speed / 3600000) * dTime;
 		const angleRadians = ((sub.course - 90) * Math.PI) / 180;
-		position.setPosition(newTime, Number((position.x += dDistance * Math.cos(angleRadians)).toFixed(3)), Number((position.y -= dDistance * Math.sin(angleRadians)).toFixed(3)));
+		const newX = Number((position.x + dDistance * Math.cos(angleRadians)).toFixed(3));
+		const newY = Number((position.y - dDistance * Math.sin(angleRadians)).toFixed(3));
+		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
-			this.reportPosition();
+			this.report();
 		}
 	}
 }

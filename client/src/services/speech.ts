@@ -20,7 +20,7 @@ export class Speech {
 		if (voiceIndex < 0 || voiceIndex >= Speech.voices.length) {
 			console.error(`invalid voice index`);
 		}
-		const utterance: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+		const utterance: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(text.trim());
 		utterance.voice = Speech.voices[voiceIndex];
 		utterance.pitch = pitch;
 		utterance.rate = rate;

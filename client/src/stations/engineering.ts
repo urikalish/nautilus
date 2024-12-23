@@ -15,7 +15,7 @@ export class Engineering {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	reportEngineAndSpeed() {
+	report(reportEngine: boolean, reportSpeed: boolean) {
 		const speed = this.game.getMySub().speed;
 		this.lastReportedSpeed = speed;
 		console.log(`speed: ${speed}`);
@@ -25,13 +25,13 @@ export class Engineering {
 			[settings.speed.oneThird]: 'one third',
 			0: 'stopped',
 		}[speed];
-		this.speak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`);
+		this.speak(`Conn Engineering ${reportEngine ? `, engine ${engineStatus}` : ``} ${reportSpeed ? `, speed ${speed} knots` : ``}`);
 	}
 
 	update() {
 		const speed = this.game.getMySub().speed;
 		if (speed !== this.lastReportedSpeed) {
-			this.reportEngineAndSpeed();
+			this.report(true, true);
 		}
 	}
 }

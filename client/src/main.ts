@@ -1,4 +1,4 @@
-import { GameInitializer } from './services/game-initializer';
+import { GameInitializer } from './game-initializer';
 
 const gameInitializer = new GameInitializer();
 gameInitializer.init();

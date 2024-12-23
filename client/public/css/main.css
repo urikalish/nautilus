@@ -52,5 +52,22 @@ body {
 	position: relative;
 	height: 100%;
 	overflow: hidden;
+	display: grid;
+	place-content: center;
+}
+
+button {
+	padding: 8px 24px;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+input {
+	width: 800px;
+	outline: none;
+	border: 2px solid var(--color--red);
+	background-color: transparent;
 	padding: 24px;
+	color: var(--color--red);
+	font-size: 40px;
 }
