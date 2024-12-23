@@ -15,11 +15,11 @@ export class Conn {
 	game: Game;
 	commandHelper: CommandHelper;
 
-	constructor(game: Game, navigation: Navigation, helm: Helm, engineering: Engineering) {
+	constructor(game: Game) {
 		this.game = game;
-		this.navigation = navigation;
-		this.helm = helm;
-		this.engineering = engineering;
+		this.navigation = new Navigation(game);
+		this.helm = new Helm(game);
+		this.engineering = new Engineering(game);
 		this.commandHelper = new CommandHelper(game, this.handleCommand.bind(this));
 	}
 
