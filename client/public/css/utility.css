@@ -47,3 +47,7 @@
 .round {
 	border-radius: 50%;
 }
+
+.display--none {
+	display: none;
+}

@@ -19,8 +19,4 @@ export const settings = {
 		type: 'Mark 48',
 		speed: 55, //knots
 	},
-	reportInterval: {
-		navigation: 10000,
-		engineering: 5000,
-	},
 };

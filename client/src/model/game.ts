@@ -4,6 +4,7 @@ import { getDateTime } from '../services/utils';
 import { settings } from './settings';
 
 export enum GameStatus {
+	NA = '',
 	CREATED = 'created',
 	WAITING = 'waiting',
 	STARTED = 'started',
@@ -11,7 +12,7 @@ export enum GameStatus {
 }
 
 export enum GameResult {
-	NONE = '',
+	NA = '',
 	WIN_PLAYER_0 = 'winPlayer0',
 	WIN_PLAYER_1 = 'winPlayer1',
 }
@@ -34,8 +35,12 @@ export class Game {
 		this.creationTime = date.getTime();
 		this.creationDate = getDateTime(date);
 		this.status = GameStatus.CREATED;
-		this.result = GameResult.NONE;
+		this.result = GameResult.NA;
 		this.players = players;
 		this.subs = subs;
+	}
+
+	getMySub() {
+		return this.subs[this.ind];
 	}
 }
