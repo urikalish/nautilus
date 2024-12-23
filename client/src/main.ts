@@ -1,4 +1,4 @@
-import { GameInitializer } from './game-initializer';
+import { Initializer } from './initializer';
 
-const gameInitializer = new GameInitializer();
-gameInitializer.init();
+const initializer = new Initializer();
+initializer.init();

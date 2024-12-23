@@ -7,7 +7,7 @@ import { getRandomNumber } from './services/utils';
 import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
 
-export class GameInitializer {
+export class Initializer {
 	startButton: HTMLElement | null = document.getElementById('button-start');
 
 	start() {

@@ -1,13 +1,15 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
+import { Station } from '../model/station';
+import { Command } from '../model/command';
 
 export class Navigation {
+	station: Station = Station.NAVIGATION;
 	game: Game;
-	lastReportedSector: string;
+	lastReportedSector: string = '';
 
 	constructor(game: Game) {
 		this.game = game;
-		this.lastReportedSector = '';
 	}
 
 	speak(text: string, cb?: () => void) {
@@ -39,4 +41,12 @@ export class Navigation {
 			this.report();
 		}
 	}
+
+	getCommandText(command: Command) {
+		alert(`Unknown ${this.station} command ${command.type}`);
+	}
+
+	// handleCommand(command: Command) {
+	// 	alert('Navigation.handleCommand() not implemented');
+	// }
 }

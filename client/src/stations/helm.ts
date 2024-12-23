@@ -1,15 +1,16 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
+import { Command, CommandType } from '../model/command';
+import { Station } from '../model/station';
 
 export class Helm {
+	station: Station = Station.HELM;
 	game: Game;
-	lastReportedCourse: number;
-	lastReportedDepth: number;
+	lastReportedCourse: number = -1;
+	lastReportedDepth: number = -1;
 
 	constructor(game: Game) {
 		this.game = game;
-		this.lastReportedCourse = -1;
-		this.lastReportedDepth = -1;
 	}
 
 	speak(text: string, cb?: () => void) {
@@ -30,6 +31,25 @@ export class Helm {
 		const depthChanged = this.game.getMySub().depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {
 			this.report(courseChanged, depthChanged);
+		}
+	}
+
+	setCourse(course: number) {
+		this.game.getMySub().course = course;
+	}
+
+	getCommandText(command: Command) {
+		if (command.type === CommandType.SET_COURSE) {
+			return `Helm, set course to ${Speech.toThreeNumbers(command.data)}`;
+		}
+		alert(`Unknown ${this.station} command ${command.type}`);
+	}
+
+	handleCommand(command: Command) {
+		if (command.type === CommandType.SET_COURSE) {
+			this.speak(`Conn Helm, set course to ${Speech.toThreeNumbers(command.data)}, aye`, () => {
+				this.setCourse(command.data);
+			});
 		}
 	}
 }

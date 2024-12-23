@@ -1,17 +1,23 @@
 import { Game } from './model/game';
+import { Command, CommandType } from './model/command';
+import { Station } from './model/station';
 
-export class CommandManager {
+export class CommandHelper {
 	game: Game;
 	inputCommand: HTMLInputElement | null = null;
+	onCommand: (Command) => void;
 
-	constructor(game: Game) {
+	constructor(game: Game, onCommand: (Command) => void) {
 		this.game = game;
+		this.onCommand = onCommand;
 	}
 
 	handleKeyDown(event) {
 		if (event.key === 'Escape') {
 			this.inputCommand!.value = '';
 		} else if (event.key === 'Enter') {
+			const command = new Command(Station.HELM, CommandType.SET_COURSE, 0);
+			this.onCommand(command);
 			this.inputCommand!.value = '';
 		}
 	}
