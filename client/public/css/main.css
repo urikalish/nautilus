@@ -63,8 +63,8 @@ body {
 
 .img-angle-wheel {
 	position: absolute;
-	height: 96vh;
-	top: 2vh;
+	height: 70vh;
+	bottom: 2vh;
 	right: 2vh;
 	opacity: 0.1;
 	filter: invert(1);
@@ -75,18 +75,25 @@ body {
 	position: relative;
 	height: 100%;
 	overflow: hidden;
-	display: grid;
 	place-content: center;
 }
 
 .inp-command {
-	width: 334px;
+	width: 332px;
 	outline: none;
 	border: none;
+	border-bottom: 1px solid var(--color--gray--light);
 	background-color: transparent;
-	padding: 16px 24px;
-	font-size: 80px;
+	padding: 8px 0;
+	font-size: 64px;
 	text-transform: uppercase;
 	user-select: none;
 	color: var(--color--red);
+}
+
+.lbl-command {
+	position: relative;
+	top: 4px;
+	font-size: 16px;
+	color: var(--color--gray--light);
 }

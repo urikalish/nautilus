@@ -28,8 +28,8 @@ export class Initializer {
 		const btnStart = document.getElementById('btn-start');
 		btnStart!.addEventListener('click', () => {
 			btnStart!.classList.add('display--none');
-			const imgAngleWheel = document.getElementById('img-angle-wheel');
-			imgAngleWheel!.classList.remove('display--none');
+			const gameMain = document.getElementById('game-main');
+			gameMain!.classList.remove('display--none');
 			this.start();
 		});
 	}

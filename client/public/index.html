@@ -30,10 +30,10 @@
 		<button id="btn-start" class="btn-start">Start</button>
 		<audio loop id="sound-sub-internal" src="./audio/sub-internal.mp3"></audio>
 		<audio loop id="sound-sonar-ping" src="./audio/sonar-ping.mp3"></audio>
-		<div class="game-main">
-			<img id="img-angle-wheel" class="img-angle-wheel display--none" src="./img/angle-wheel.png" alt="angle wheel" />
-			<label for="inp-command" class="display--none">Command</label>
-			<input id="inp-command" class="inp-command display--none" />
+		<div id="game-main" class="game-main grid display--none">
+			<img id="img-angle-wheel" class="img-angle-wheel" src="./img/angle-wheel.png" alt="angle wheel" />
+			<input id="inp-command" class="inp-command" />
+			<label for="inp-command" class="lbl-command">Command</label>
 		</div>
 		<script type="module" src="./js/main.js"></script>
 	</body>
