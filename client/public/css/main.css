@@ -63,9 +63,9 @@ body {
 
 .img-angle-wheel {
 	position: absolute;
-	height: 90vh;
-	top: 5vh;
-	right: 5vh;
+	height: 96vh;
+	top: 2vh;
+	right: 2vh;
 	opacity: 0.1;
 	filter: invert(1);
 	z-index: -1;
