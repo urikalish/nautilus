@@ -64,7 +64,7 @@ button {
 }
 
 input {
-	width: 396px;
+	width: 520px;
 	outline: none;
 	border: 2px solid var(--color--red);
 	background-color: transparent;
