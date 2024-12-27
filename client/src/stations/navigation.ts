@@ -15,8 +15,12 @@ export class Navigation {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	calculateAngle(x1: number, y1: number, x2: number, y2: number): number {
+	static calcAngle(x1: number, y1: number, x2: number, y2: number): number {
 		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;
+	}
+
+	static calcBearing(x1: number, y1: number, x2: number, y2: number, ownCourse: number): number {
+		return (Navigation.calcAngle(x1, y1, x2, y2) - ownCourse + 360) % 360;
 	}
 
 	report(reportSector: boolean = true) {

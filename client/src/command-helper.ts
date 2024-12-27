@@ -23,7 +23,7 @@ export class CommandHelper {
 	}
 
 	start() {
-		this.inputCommand = document.getElementById('input-command') as HTMLInputElement;
+		this.inputCommand = document.getElementById('inp-command') as HTMLInputElement;
 		this.inputCommand!.classList.remove('display--none');
 		this.inputCommand!.focus();
 		this.inputCommand!.addEventListener('keydown', this.handleKeyDown.bind(this));

@@ -8,8 +8,6 @@ import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
 
 export class Initializer {
-	startButton: HTMLElement | null = document.getElementById('button-start');
-
 	start() {
 		const players = [new Player(0), new Player(1)];
 		const startDate: Date = new Date();
@@ -27,9 +25,11 @@ export class Initializer {
 	init() {
 		document.title = settings.appName;
 		Speech.init();
-		const startButton = document.getElementById('button-start');
-		this.startButton!.addEventListener('click', () => {
-			startButton!.classList.add('display--none');
+		const btnStart = document.getElementById('btn-start');
+		btnStart!.addEventListener('click', () => {
+			btnStart!.classList.add('display--none');
+			const imgAngleWheel = document.getElementById('img-angle-wheel');
+			imgAngleWheel!.classList.remove('display--none');
 			this.start();
 		});
 	}

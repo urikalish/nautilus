@@ -40,16 +40,38 @@ body {
 	color: var(--color--text);
 }
 
-.video-underwater {
+.vid-underwater {
 	position: absolute;
 	inset: 0;
 	min-width: 100%;
 	min-height: 100%;
-	z-index: -1;
 	filter: hue-rotate(25deg) saturate(0.5);
+	z-index: -1;
 }
 
-.app {
+.btn-start {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 8px 24px;
+	font-size: 24px;
+	cursor: pointer;
+	user-select: none;
+	z-index: 1;
+}
+
+.img-angle-wheel {
+	position: absolute;
+	height: 90vh;
+	top: 5vh;
+	right: 5vh;
+	opacity: 0.3;
+	filter: invert(1);
+	z-index: -1;
+}
+
+.game-main {
 	position: relative;
 	height: 100%;
 	overflow: hidden;
@@ -57,16 +79,10 @@ body {
 	place-content: center;
 }
 
-button {
-	padding: 8px 24px;
-	font-size: 24px;
-	cursor: pointer;
-}
-
-input {
-	width: 520px;
+.inp-command {
+	width: 400px;
 	outline: none;
-	border: 2px solid var(--color--red);
+	border: none;
 	background-color: transparent;
 	padding: 16px 24px;
 	font-size: 80px;

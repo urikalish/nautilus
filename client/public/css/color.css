@@ -25,6 +25,7 @@
 	--color--accent: var(--color--red);
 	--link--color: var(--color--red);
 
-	--color--background: var(--color--blue--1);
-	--color--text: var(--color--blue--e);
+	--color--background: var(--color--gray--darkest);
+	--color--text: var(--color--gray--lightest);
+	--color--command-status: var(--color--red);
 }

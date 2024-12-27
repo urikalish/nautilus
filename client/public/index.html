@@ -23,16 +23,17 @@
 		<link rel="manifest" href="./manifest.json" />
 		<link rel="stylesheet" href="./css/main.css" />
 	</head>
-	<body>
-		<video autoplay muted loop playsinline class="video-underwater">
+	<body class="fade-in">
+		<video autoplay muted loop playsinline class="vid-underwater">
 			<source src="./video/underwater.mp4" type="video/mp4" />
 		</video>
+		<button id="btn-start" class="btn-start">Start</button>
 		<audio loop id="sound-sub-internal" src="./audio/sub-internal.mp3"></audio>
 		<audio loop id="sound-sonar-ping" src="./audio/sonar-ping.mp3"></audio>
-		<div id="app" class="app full-screen-height overflow--hidden fade-in">
-			<button id="button-start" class="button-start">Start</button>
-			<label for="input-command" class="display--none">Command</label>
-			<input id="input-command" class="input-command display--none" />
+		<div class="game-main">
+			<img id="img-angle-wheel" class="img-angle-wheel display--none" src="./img/angle-wheel.png" alt="angle wheel" />
+			<label for="inp-command" class="display--none">Command</label>
+			<input id="inp-command" class="inp-command display--none" />
 		</div>
 		<script type="module" src="./js/main.js"></script>
 	</body>
