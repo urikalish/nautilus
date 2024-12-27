@@ -15,6 +15,10 @@ export class Navigation {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
+	calculateAngle(x1: number, y1: number, x2: number, y2: number): number {
+		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;
+	}
+
 	report(reportSector: boolean = true) {
 		const sub = this.game.getMySub();
 		const position = sub.position;
@@ -30,9 +34,9 @@ export class Navigation {
 		const newTime = Date.now();
 		const dTime = newTime - position.time;
 		const dDistance = (sub.speed / 3600000) * dTime;
-		const angleRadians = ((sub.course - 90) * Math.PI) / 180;
-		const newX = Number((position.x + dDistance * Math.cos(angleRadians)).toFixed(3));
-		const newY = Number((position.y - dDistance * Math.sin(angleRadians)).toFixed(3));
+		const angleRad = ((sub.course - 90) * Math.PI) / 180;
+		const newX = Number((position.x + dDistance * Math.cos(angleRad)).toFixed(3));
+		const newY = Number((position.y - dDistance * Math.sin(angleRad)).toFixed(3));
 		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;

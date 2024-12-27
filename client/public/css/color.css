@@ -7,11 +7,24 @@
 	--color--gray--darker: #444;
 	--color--gray--darkest: #222;
 	--color--red: hsl(0, 80%, 60%);
-	--color--blue: hsl(220, 80%, 60%);
+	--color--blue--1: #112;
+	--color--blue--2: #223;
+	--color--blue--3: #334;
+	--color--blue--4: #445;
+	--color--blue--5: #556;
+	--color--blue--6: #667;
+	--color--blue--7: #778;
+	--color--blue--8: #889;
+	--color--blue--9: #99a;
+	--color--blue--a: #aab;
+	--color--blue--b: #bbc;
+	--color--blue--c: #ccd;
+	--color--blue--d: #dde;
+	--color--blue--e: #eef;
 
 	--color--accent: #f55;
 	--link--color: var(--color--red);
 
-	--color--background: var(--color--gray--darkest);
-	--color--text: var(--color--gray--lightest);
+	--color--background: var(--color--blue--2);
+	--color--text: var(--color--blue--e);
 }

@@ -46,6 +46,7 @@ body {
 	min-width: 100%;
 	min-height: 100%;
 	z-index: -1;
+	filter: hue-rotate(25deg) saturate(0.5);
 }
 
 .app {
