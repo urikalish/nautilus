@@ -64,11 +64,13 @@ button {
 }
 
 input {
-	width: 800px;
+	width: 396px;
 	outline: none;
 	border: 2px solid var(--color--red);
 	background-color: transparent;
-	padding: 24px;
+	padding: 16px 24px;
+	font-size: 80px;
+	text-transform: uppercase;
+	user-select: none;
 	color: var(--color--red);
-	font-size: 40px;
 }

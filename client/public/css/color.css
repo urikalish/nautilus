@@ -6,7 +6,7 @@
 	--color--gray--dark: #666;
 	--color--gray--darker: #444;
 	--color--gray--darkest: #222;
-	--color--red: hsl(0, 80%, 60%);
+	--color--red: #f55;
 	--color--blue--1: #112;
 	--color--blue--2: #223;
 	--color--blue--3: #334;
@@ -22,9 +22,9 @@
 	--color--blue--d: #dde;
 	--color--blue--e: #eef;
 
-	--color--accent: #f55;
+	--color--accent: var(--color--red);
 	--link--color: var(--color--red);
 
-	--color--background: var(--color--blue--2);
+	--color--background: var(--color--blue--1);
 	--color--text: var(--color--blue--e);
 }
