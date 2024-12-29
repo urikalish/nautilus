@@ -6,6 +6,7 @@ import { Helm } from './helm';
 import { Engineering } from './engineering';
 import { CommandHelper } from '../command-helper';
 import { Command } from '../model/command';
+import { BoardHelper } from '../board-helper';
 
 export class Conn {
 	station: Station = Station.CONN;
@@ -14,12 +15,14 @@ export class Conn {
 	engineering: Engineering;
 	game: Game;
 	commandHelper: CommandHelper;
+	boardHelper: BoardHelper;
 
 	constructor(game: Game) {
 		this.game = game;
 		this.navigation = new Navigation(game);
 		this.helm = new Helm(game);
 		this.engineering = new Engineering(game);
+		this.boardHelper = new BoardHelper(game);
 		this.commandHelper = new CommandHelper(game, this.handleCommand.bind(this));
 	}
 
@@ -35,6 +38,7 @@ export class Conn {
 	}
 
 	start() {
+		this.boardHelper.start();
 		this.commandHelper.start();
 		this.speak(`Aye`);
 		this.speak(`All stations, report`, () => {

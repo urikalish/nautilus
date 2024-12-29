@@ -61,12 +61,34 @@ body {
 	z-index: 1;
 }
 
+.board {
+	position: absolute;
+	height: 60vh;
+	width: 60vh;
+	bottom: 2vh;
+	left: 2vh;
+	opacity: 0.2;
+	z-index: -1;
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	border-bottom: 1px solid var(--color--gray--lightest);
+	border-right: 1px solid var(--color--gray--lightest);
+}
+
+.board-cell {
+	display: grid;
+	place-items: center;
+	color: var(--color--gray--lightest);
+	border-top: 1px solid var(--color--gray--lightest);
+	border-left: 1px solid var(--color--gray--lightest);
+}
+
 .img-angle-wheel {
 	position: absolute;
-	height: 70vh;
+	height: 60vh;
 	bottom: 2vh;
 	right: 2vh;
-	opacity: 0.1;
+	opacity: 0.2;
 	filter: invert(1);
 	z-index: -1;
 }
