@@ -2,6 +2,7 @@ import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { Command, CommandType } from '../model/command';
 import { Station } from '../model/station';
+import { Sub } from '../model/sub';
 
 export class Helm {
 	station: Station = Station.HELM;
@@ -27,8 +28,11 @@ export class Helm {
 	}
 
 	update() {
-		const courseChanged = this.game.getMySub().course !== this.lastReportedCourse;
-		const depthChanged = this.game.getMySub().depth !== this.lastReportedDepth;
+		const sub: Sub = this.game.getMySub();
+		const imgBearingWheel = document.getElementById('img-bearing-wheel');
+		imgBearingWheel!.style.transform = `scale(0.8) rotateZ(${sub.course}deg`;
+		const courseChanged = sub.course !== this.lastReportedCourse;
+		const depthChanged = sub.depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {
 			this.report(courseChanged, depthChanged);
 		}

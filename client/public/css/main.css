@@ -83,14 +83,20 @@ body {
 	border-left: 1px solid var(--color--gray--lightest);
 }
 
-.img-angle-wheel {
+.img-angles-wheel {
 	position: absolute;
-	height: 60vh;
+	height: 70vh;
 	bottom: 2vh;
 	right: 2vh;
-	opacity: 0.2;
 	filter: invert(1);
+	opacity: 1;
 	z-index: -1;
+}
+.img-course-wheel--course {
+}
+.img-bearing-wheel--bearing {
+	transform: scale(0.8);
+	transition: all 3s ease-in-out;
 }
 
 .game-main {
