@@ -46,7 +46,6 @@ export class Navigation {
 		const newPosition = sub.position;
 		mySub!.style.left = `calc(${12.5 * newPosition.x}% - 2px)`;
 		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 2px)`;
-		console.log(newPosition.x + ',' + newPosition.y + ' ' + newPosition.sector);
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
 			this.report(true);
