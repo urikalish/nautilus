@@ -6,7 +6,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "tsc",
+    "outDir": "public/js",
     "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,

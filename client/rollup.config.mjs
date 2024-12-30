@@ -1,15 +1,24 @@
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 
-const isProduction = process.env.build === 'production';
+const production = process.env.build === 'production';
 
 export default {
-  input: 'tsc/main.js',
+  input: 'src/main.ts', // Use the TypeScript source file directly
   output: {
     format: 'iife',
-    file: isProduction ? 'public/js/main.min.js' : 'public/js/main.js',
-    sourcemap: !isProduction,
+    file: production ? 'public/js/main.min.js' : 'public/js/main.js',
+    sourcemap: !production,
   },
   plugins: [
-    isProduction && terser()
+    resolve(),
+    commonjs(),
+    typescript({
+      sourceMap: !production,
+      inlineSources: !production
+    }),
+    production && terser()
   ]
 };
