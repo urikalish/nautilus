@@ -5,7 +5,7 @@ export const settings = {
 	speed: {
 		full: 30, //knots
 		twoThirds: 20, //knots
-		oneThird: 30, //knots
+		oneThird: 10, //knots
 	},
 	depth: {
 		test: 800, //feet
