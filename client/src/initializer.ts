@@ -8,7 +8,7 @@ import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
 
 export class Initializer {
-	start() {
+	async start() {
 		const players = [new Player(0), new Player(1)];
 		const startDate: Date = new Date();
 		const startTime = startDate.getTime();
@@ -19,18 +19,18 @@ export class Initializer {
 		const ind = 0;
 		const game = new Game(getRandomNumber(3), startDate, ind, players, subs);
 		const gameManager = new GameManager(game);
-		gameManager.start();
+		await gameManager.start();
 	}
 
 	init() {
 		document.title = settings.appName;
 		Speech.init();
 		const btnStart = document.getElementById('btn-start');
-		btnStart!.addEventListener('click', () => {
+		btnStart!.addEventListener('click', async () => {
 			btnStart!.classList.add('display--none');
 			const gameMain = document.getElementById('game-main');
 			gameMain!.classList.remove('display--none');
-			this.start();
+			await this.start();
 		});
 	}
 }

@@ -24,9 +24,9 @@ export class Conn implements Station {
 		await Speech.speak(text, { pitch: 1.0, rate: 1.5 });
 	}
 
-	report() {}
+	async report() {}
 
-	tick() {
+	async tick() {
 		this.stations.forEach(station => {
 			station.tick();
 		});
@@ -40,7 +40,7 @@ export class Conn implements Station {
 		this.stations.forEach(station => {
 			station.report();
 		});
-		this.tick();
+		await this.tick();
 	}
 
 	parseCommand(shortText: string): Command | null {

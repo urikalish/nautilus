@@ -25,9 +25,9 @@ export class GameManager {
 		this.conn = new Conn(game, [this.navigation, this.helm, this.engineering], this.boardHelper);
 	}
 
-	start() {
+	async start() {
 		this.sound.start();
 		this.boardHelper.start();
-		this.conn.start();
+		await this.conn.start();
 	}
 }

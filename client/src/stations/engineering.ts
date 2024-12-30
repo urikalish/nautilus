@@ -42,5 +42,5 @@ export class Engineering implements Station {
 		return null;
 	}
 
-	executeCommand(command: Command) {}
+	async executeCommand(command: Command) {}
 }
