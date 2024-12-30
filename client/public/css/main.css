@@ -102,7 +102,7 @@ body {
 	transition: all 5s ease-in-out;
 }
 .img-course-wheel--course {
-	transform: scale(1.0) rotateZ(0deg);
+	transform: scale(1) rotateZ(0deg);
 }
 .img-bearing-wheel--bearing {
 	transform: scale(0.8) rotateZ(0deg);
