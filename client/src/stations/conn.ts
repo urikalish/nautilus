@@ -1,40 +1,38 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Station } from '../model/station';
-import { Navigation } from './navigation';
-import { Helm } from './helm';
-import { Engineering } from './engineering';
 import { CommandHelper } from '../command-helper';
 import { Command } from '../model/command';
 import { BoardHelper } from '../board-helper';
+import { Station } from './station';
+import { StationType } from '../model/station-type';
 
-export class Conn {
-	station: Station = Station.CONN;
-	navigation: Navigation;
-	helm: Helm;
-	engineering: Engineering;
+export class Conn implements Station {
+	type: StationType = StationType.CONN;
+	stations: Station[];
 	game: Game;
 	commandHelper: CommandHelper;
 	boardHelper: BoardHelper;
+	commands: Command[] = [];
 
-	constructor(game: Game) {
+	constructor(game: Game, stations: Station[], boardHelper: BoardHelper, commandHelper: CommandHelper) {
 		this.game = game;
-		this.navigation = new Navigation(game);
-		this.helm = new Helm(game);
-		this.engineering = new Engineering(game);
-		this.boardHelper = new BoardHelper(game);
-		this.commandHelper = new CommandHelper(game, this.handleCommand.bind(this));
+		this.stations = stations;
+		this.boardHelper = boardHelper;
+		this.commandHelper = commandHelper;
+		this.commandHelper.setOnCommand(this.handleCommand.bind(this));
 	}
 
 	speak(text: string, cb?: () => void) {
 		Speech.speak(text, 0, 1.0, 1.5, 1.0, cb);
 	}
 
-	updateAll() {
-		this.navigation.update();
-		this.helm.update();
-		this.engineering.update();
-		setTimeout(this.updateAll.bind(this), 10000);
+	report() {}
+
+	tick() {
+		this.stations.forEach(station => {
+			station.tick();
+		});
+		setTimeout(this.tick.bind(this), 10000);
 	}
 
 	start() {
@@ -42,10 +40,10 @@ export class Conn {
 		this.commandHelper.start();
 		this.speak(`Aye`);
 		this.speak(`All stations, report`, () => {
-			this.navigation.report();
-			this.helm.report();
-			this.engineering.report();
-			this.updateAll();
+			this.stations.forEach(station => {
+				station.report();
+			});
+			this.tick();
 		});
 	}
 
@@ -55,7 +53,7 @@ export class Conn {
 
 	handleCommand(command: Command) {
 		let commandText;
-		if (command.station === Station.HELM) {
+		if (command.stationType === StationType.HELM) {
 			commandText = this.helm.getCommandText(command);
 			this.speak(commandText, () => {
 				this.helm.handleCommand(command, this.handleCommandHandled.bind(this));

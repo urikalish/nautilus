@@ -1,11 +1,13 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { Command, CommandType } from '../model/command';
-import { Station } from '../model/station';
 import { Sub } from '../model/sub';
+import { StationType } from '../model/station-type';
+import { Station } from './station';
 
-export class Helm {
-	station: Station = Station.HELM;
+export class Helm implements Station {
+	type: StationType = StationType.HELM;
+	commands: Command[] = [];
 	game: Game;
 	lastReportedCourse: number = -1;
 	lastReportedDepth: number = -1;
@@ -18,16 +20,16 @@ export class Helm {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	report(reportCourse: boolean = true, reportDepth: boolean = true) {
+	report() {
 		const course = this.game.getMySub().course;
 		const depth = this.game.getMySub().depth;
 		this.lastReportedCourse = course;
 		this.lastReportedDepth = depth;
 		console.log(`course:${course}, depth:${depth}`);
-		this.speak(`Conn Helm ${reportCourse ? `, course ${Speech.toThreeNumbers(course)}` : ``} ${reportDepth ? `, depth ${depth} feet` : ``}`);
+		this.speak(`Conn Helm, course ${Speech.toThreeNumbers(course)}, depth ${depth} feet`);
 	}
 
-	update() {
+	tick() {
 		const sub: Sub = this.game.getMySub();
 		const imgBearingWheel = document.getElementById('img-bearing-wheel');
 		imgBearingWheel!.style.transform = `scale(0.8) rotateZ(${sub.course}deg`;
@@ -36,7 +38,7 @@ export class Helm {
 		const courseChanged = sub.course !== this.lastReportedCourse;
 		const depthChanged = sub.depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {
-			this.report(courseChanged, depthChanged);
+			this.report();
 		}
 	}
 

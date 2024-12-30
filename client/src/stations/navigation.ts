@@ -1,9 +1,12 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Station } from '../model/station';
+import { StationType } from '../model/station-type';
+import { Station } from './station';
+import { Command } from '../model/command';
 
-export class Navigation {
-	station: Station = Station.NAVIGATION;
+export class Navigation implements Station {
+	type: StationType = StationType.NAVIGATION;
+	commands: Command[] = [];
 	game: Game;
 	lastReportedSector: string = '';
 
@@ -15,24 +18,16 @@ export class Navigation {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	static calcAngle(x1: number, y1: number, x2: number, y2: number): number {
-		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;
-	}
-
-	static calcBearing(x1: number, y1: number, x2: number, y2: number, ownCourse: number): number {
-		return (Navigation.calcAngle(x1, y1, x2, y2) - ownCourse + 360) % 360;
-	}
-
-	report(reportSector: boolean = true) {
+	report() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
-		this.speak(`Conn Navigation ${reportSector ? `, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}` : ``}`);
+		this.speak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`);
 	}
 
-	update() {
+	tick() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		const newTime = Date.now();
@@ -48,7 +43,15 @@ export class Navigation {
 		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 2px)`;
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
-			this.report(true);
+			this.report();
 		}
+	}
+
+	static calcAngle(x1: number, y1: number, x2: number, y2: number): number {
+		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;
+	}
+
+	static calcBearing(x1: number, y1: number, x2: number, y2: number, ownCourse: number): number {
+		return (Navigation.calcAngle(x1, y1, x2, y2) - ownCourse + 360) % 360;
 	}
 }

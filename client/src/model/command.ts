@@ -1,20 +1,17 @@
-import { Station } from './station';
-
-export enum CommandType {
-	NA = '',
-	SET_COURSE = 'set-course',
-}
+import { StationType } from './station-type';
 
 export class Command {
 	time: number;
-	station: Station;
-	type: CommandType;
+	text: string;
+	stationType: StationType;
+	id: string;
 	data: any;
 
-	constructor(station: Station, type: CommandType, data: any) {
+	constructor(text: string, stationType: StationType, id: string, data: any) {
 		this.time = Date.now();
-		this.station = station;
-		this.type = type;
+		this.text = text;
+		this.stationType = stationType;
+		this.id = id;
 		this.data = data;
 	}
 }

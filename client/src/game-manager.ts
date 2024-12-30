@@ -1,18 +1,37 @@
 import { Game } from './model/game';
 import { Sound } from './services/sound';
 import { Conn } from './stations/conn';
+import { Navigation } from './stations/navigation';
+import { Helm } from './stations/helm';
+import { Engineering } from './stations/engineering';
+import { BoardHelper } from './board-helper';
+import { CommandHelper } from './command-helper';
 
 export class GameManager {
 	game: Game;
+	sound: Sound;
+	boardHelper: BoardHelper;
+	commandHelper: CommandHelper;
 	conn: Conn;
+	engineering: Engineering;
+	helm: Helm;
+	navigation: Navigation;
 
 	constructor(game: Game) {
 		this.game = game;
-		this.conn = new Conn(game);
+		this.sound = new Sound();
+		this.boardHelper = new BoardHelper(game);
+		this.commandHelper = new CommandHelper(game);
+		this.engineering = new Engineering(game);
+		this.helm = new Helm(game);
+		this.navigation = new Navigation(game);
+		this.conn = new Conn(game, [this.navigation, this.helm, this.engineering], this.boardHelper, this.commandHelper);
 	}
 
 	start() {
-		Sound.playEnvironmentSounds();
+		this.sound.start();
+		this.boardHelper.start();
+		this.commandHelper.start();
 		this.conn.start();
 	}
 }

@@ -1,10 +1,13 @@
 import { settings } from '../model/settings';
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Station } from '../model/station';
+import { StationType } from '../model/station-type';
+import { Station } from './station';
+import { Command } from '../model/command';
 
-export class Engineering {
-	station: Station = Station.ENGINEERING;
+export class Engineering implements Station {
+	type: StationType = StationType.ENGINEERING;
+	commands: Command[] = [];
 	game: Game;
 	lastReportedSpeed: number = -1;
 
@@ -16,7 +19,7 @@ export class Engineering {
 		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
 	}
 
-	report(reportEngine: boolean = true, reportSpeed: boolean = true) {
+	report() {
 		const speed = this.game.getMySub().speed;
 		this.lastReportedSpeed = speed;
 		console.log(`speed: ${speed}`);
@@ -26,13 +29,13 @@ export class Engineering {
 			[settings.speed.oneThird]: 'one third',
 			0: 'stopped',
 		}[speed];
-		this.speak(`Conn Engineering ${reportEngine ? `, engine ${engineStatus}` : ``} ${reportSpeed ? `, speed ${speed} knots` : ``}`);
+		this.speak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`);
 	}
 
-	update() {
+	tick() {
 		const speed = this.game.getMySub().speed;
 		if (speed !== this.lastReportedSpeed) {
-			this.report(true, true);
+			this.report();
 		}
 	}
 }

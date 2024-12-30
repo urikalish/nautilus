@@ -8,8 +8,7 @@ export class BoardHelper {
 		this.game = game;
 	}
 
-	start() {
-		this.board = document.getElementById('board') as HTMLDivElement;
+	createBoardSectorElements() {
 		for (let y = 8; y >= 1; y--) {
 			for (const x of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
 				const cell = document.createElement('div');
@@ -19,5 +18,10 @@ export class BoardHelper {
 				this.board?.appendChild(cell);
 			}
 		}
+	}
+
+	start() {
+		this.board = document.getElementById('board') as HTMLDivElement;
+		this.createBoardSectorElements();
 	}
 }
