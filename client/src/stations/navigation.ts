@@ -42,7 +42,10 @@ export class Navigation {
 		const newX = Number((position.x + dDistance * Math.cos(angleRad)).toFixed(3));
 		const newY = Number((position.y - dDistance * Math.sin(angleRad)).toFixed(3));
 		position.setPosition(newTime, newX, newY);
+		const mySub = document.getElementById('my-sub');
 		const newPosition = sub.position;
+		mySub!.style.left = `calc(${12.5 * newPosition.x}% - 2px)`;
+		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 2px)`;
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
 			this.report(true);

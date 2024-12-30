@@ -31,6 +31,8 @@ export class Helm {
 		const sub: Sub = this.game.getMySub();
 		const imgBearingWheel = document.getElementById('img-bearing-wheel');
 		imgBearingWheel!.style.transform = `scale(0.8) rotateZ(${sub.course}deg`;
+		const imgSubTop = document.getElementById('img-sub-top');
+		imgSubTop!.style.transform = `scale(0.4) rotateZ(${sub.course}deg`;
 		const courseChanged = sub.course !== this.lastReportedCourse;
 		const depthChanged = sub.depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {

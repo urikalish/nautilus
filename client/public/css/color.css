@@ -28,4 +28,5 @@
 	--color--background: var(--color--gray--darkest);
 	--color--text: var(--color--gray--lightest);
 	--color--command-status: var(--color--red);
+	--board-color: var(--color--gray--dark);
 }
