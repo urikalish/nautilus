@@ -1,3 +1,10 @@
+export class SpeakOptions {
+	voiceIndex?: number;
+	pitch?: number;
+	rate?: number;
+	volume?: number;
+}
+
 export class Speech {
 	static synth: SpeechSynthesis;
 	static voices: SpeechSynthesisVoice[] = [];
@@ -10,27 +17,17 @@ export class Speech {
 		window.speechSynthesis.getVoices();
 	}
 
-	static speak(text: string, voiceIndex = 0, pitch = 1.0, rate = 1.0, volume = 1.0, cb?: () => void | undefined) {
-		if (text.trim() === '') {
-			return;
-		}
-		if (Speech.voices.length === 0) {
-			console.error(`no voices found`);
-		}
-		if (voiceIndex < 0 || voiceIndex >= Speech.voices.length) {
-			console.error(`invalid voice index`);
-		}
-		const utterance: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(text.trim());
-		utterance.voice = Speech.voices[voiceIndex];
-		utterance.pitch = pitch;
-		utterance.rate = rate;
-		utterance.volume = volume;
-		if (cb) {
-			utterance.onend = () => {
-				cb();
-			};
-		}
-		window.speechSynthesis.speak(utterance);
+	static speak(text, options: SpeakOptions) {
+		return new Promise((resolve: any, reject: any) => {
+			const utterance = new SpeechSynthesisUtterance(text);
+			utterance.voice = Speech.voices[options.voiceIndex || 0];
+			utterance.pitch = options.pitch || 1;
+			utterance.rate = options.rate || 1;
+			utterance.volume = options.volume || 1;
+			utterance.onend = () => resolve();
+			utterance.onerror = error => reject(error);
+			window.speechSynthesis.speak(utterance);
+		});
 	}
 
 	static toNatoPhonetic(letter: string): string {

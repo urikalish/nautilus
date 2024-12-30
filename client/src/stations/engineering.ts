@@ -14,11 +14,11 @@ export class Engineering implements Station {
 		this.game = game;
 	}
 
-	speak(text: string, cb?: () => void) {
-		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
+	async speak(text: string) {
+		await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
 	}
 
-	report() {
+	async report() {
 		const speed = this.game.getMySub().speed;
 		this.lastReportedSpeed = speed;
 		console.log(`speed: ${speed}`);
@@ -28,13 +28,13 @@ export class Engineering implements Station {
 			[settings.speed.oneThird]: 'one third',
 			0: 'stopped',
 		}[speed];
-		this.speak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`);
+		await this.speak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`);
 	}
 
-	tick() {
+	async tick() {
 		const speed = this.game.getMySub().speed;
 		if (speed !== this.lastReportedSpeed) {
-			this.report();
+			await this.report();
 		}
 	}
 
@@ -42,5 +42,5 @@ export class Engineering implements Station {
 		return null;
 	}
 
-	executeCommand(command: Command, cb?: () => void) {}
+	executeCommand(command: Command) {}
 }

@@ -20,8 +20,8 @@ export class Conn implements Station {
 		this.commandHelper = new CommandHelper(game, this.parseCommand.bind(this), this.executeCommand.bind(this));
 	}
 
-	speak(text: string, cb?: () => void) {
-		Speech.speak(text, 0, 1.0, 1.5, 1.0, cb);
+	async speak(text: string) {
+		await Speech.speak(text, { pitch: 1.0, rate: 1.5 });
 	}
 
 	report() {}
@@ -33,15 +33,14 @@ export class Conn implements Station {
 		setTimeout(this.tick.bind(this), 10000);
 	}
 
-	start() {
+	async start() {
 		this.commandHelper.start();
-		this.speak(`Aye`);
-		this.speak(`All stations, report`, () => {
-			this.stations.forEach(station => {
-				station.report();
-			});
-			this.tick();
+		await this.speak(`Aye`);
+		await this.speak(`All stations, report`);
+		this.stations.forEach(station => {
+			station.report();
 		});
+		this.tick();
 	}
 
 	parseCommand(shortText: string): Command | null {
@@ -55,17 +54,11 @@ export class Conn implements Station {
 		return command;
 	}
 
-	executeCommand(command: Command, cb?: () => void) {
+	async executeCommand(command: Command) {
 		for (const station of this.stations) {
 			if (command.stationType === station.type) {
-				this.speak(command.speechText, () => {
-					station.executeCommand(command, () => {
-						this.speak(`Aye`);
-						if (cb) {
-							cb();
-						}
-					});
-				});
+				await this.speak(command.speechText);
+				await station.executeCommand(command);
 				break;
 			}
 		}

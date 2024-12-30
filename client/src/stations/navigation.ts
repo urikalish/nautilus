@@ -13,20 +13,20 @@ export class Navigation implements Station {
 		this.game = game;
 	}
 
-	speak(text: string, cb?: () => void) {
-		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
+	async speak(text: string) {
+		await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
 	}
 
-	report() {
+	async report() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
-		this.speak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`);
+		await this.speak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`);
 	}
 
-	tick() {
+	async tick() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		const newTime = Date.now();
@@ -42,7 +42,7 @@ export class Navigation implements Station {
 		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 3px)`;
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
-			this.report();
+			await this.report();
 		}
 	}
 
@@ -50,7 +50,7 @@ export class Navigation implements Station {
 		return null;
 	}
 
-	executeCommand(command: Command, cb?: () => void) {}
+	async executeCommand(command: Command) {}
 
 	static calcAngle(x1: number, y1: number, x2: number, y2: number): number {
 		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;

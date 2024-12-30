@@ -19,20 +19,20 @@ export class Helm implements Station {
 		this.game = game;
 	}
 
-	speak(text: string, cb?: () => void) {
-		Speech.speak(text, 0, 2.0, 1.5, 1.0, cb);
+	async speak(text: string) {
+		await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
 	}
 
-	report() {
+	async report() {
 		const course = this.game.getMySub().course;
 		const depth = this.game.getMySub().depth;
 		this.lastReportedCourse = course;
 		this.lastReportedDepth = depth;
 		console.log(`course:${course}, depth:${depth}`);
-		this.speak(`Conn Helm, course ${Speech.toThreeNumbers(course)}, depth ${depth} feet`);
+		await this.speak(`Conn Helm, course ${Speech.toThreeNumbers(course)}, depth ${depth} feet`);
 	}
 
-	tick() {
+	async tick() {
 		const sub: Sub = this.game.getMySub();
 		const imgBearingWheel = document.getElementById('img-bearing-wheel');
 		imgBearingWheel!.style.transform = `scale(0.8) rotateZ(${sub.course}deg`;
@@ -41,7 +41,7 @@ export class Helm implements Station {
 		const courseChanged = sub.course !== this.lastReportedCourse;
 		const depthChanged = sub.depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {
-			this.report();
+			await this.report();
 		}
 	}
 
@@ -60,14 +60,10 @@ export class Helm implements Station {
 		return null;
 	}
 
-	executeCommand(command: Command, cb?: () => void) {
+	async executeCommand(command: Command) {
 		if (command.id === commandId.SET_COURSE) {
-			this.speak(`Conn Helm, set course to ${Speech.toThreeNumbers(command.data)}, aye`, () => {
-				this.game.getMySub().course = command.data;
-				if (cb) {
-					cb();
-				}
-			});
+			await this.speak(`Conn Helm, set course to ${Speech.toThreeNumbers(command.data)}, aye`);
+			this.game.getMySub().course = command.data;
 		}
 	}
 }

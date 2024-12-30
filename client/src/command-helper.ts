@@ -6,9 +6,9 @@ export class CommandHelper {
 	inputCommandElm: HTMLInputElement | null = null;
 	command: Command | null = null;
 	onParseCommand: (shortText: string) => Command | null;
-	onExecuteCommand: (command: Command, cb?: () => void) => void | null;
+	onExecuteCommand: (command: Command, cb?: () => void) => void;
 
-	constructor(game: Game, onParseCommand: (shortText: string) => Command | null, onExecuteCommand: (command: Command, cb?: () => void) => void | null) {
+	constructor(game: Game, onParseCommand: (shortText: string) => Command | null, onExecuteCommand: (command: Command) => void) {
 		this.game = game;
 		this.onParseCommand = onParseCommand;
 		this.onExecuteCommand = onExecuteCommand;
