@@ -71,22 +71,24 @@ body {
 	z-index: -1;
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
-	border-bottom: 1px solid var(--board-color);
-	border-right: 1px solid var(--board-color);
+	border-bottom: 1px dashed var(--board-color);
+	border-right: 1px dashed var(--board-color);
 }
 
 .board-cell {
 	display: grid;
 	place-items: center;
 	color: var(--board-color);
-	border-top: 1px solid var(--board-color);
-	border-left: 1px solid var(--board-color);
+	border-top: 1px dashed var(--board-color);
+	border-left: 1px dashed var(--board-color);
+	font-size: 14px;
+	user-select: none;
 }
 
 .my-sub {
 	position: absolute;
-	width: 5px;
-	height: 5px;
+	width: 7px;
+	height: 7px;
 	border-radius: 50%;
 	background-color: var(--color--red);
 }
@@ -100,6 +102,7 @@ body {
 	opacity: 1;
 	z-index: -1;
 	transition: all 5s ease-in-out;
+	user-select: none;
 }
 .img-course-wheel--course {
 	transform: scale(1) rotateZ(0deg);
@@ -117,6 +120,7 @@ body {
 	z-index: -1;
 	transform: scale(0.4) rotateZ(0deg);
 	transition: all 5s ease-in-out;
+	user-select: none;
 }
 
 .game-main {
@@ -136,7 +140,15 @@ body {
 	font-size: 64px;
 	text-transform: uppercase;
 	user-select: none;
-	color: var(--color--red);
+}
+.inp-command.empty {
+	color: var(--color--gray--lightest);
+}
+.inp-command.invalid {
+	color: var(--color--invalid);
+}
+.inp-command.valid {
+	color: var(--color--valid);
 }
 
 .lbl-command {
@@ -144,4 +156,5 @@ body {
 	top: 4px;
 	font-size: 16px;
 	color: var(--color--gray--light);
+	user-select: none;
 }

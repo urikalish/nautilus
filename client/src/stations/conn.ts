@@ -12,14 +12,12 @@ export class Conn implements Station {
 	game: Game;
 	commandHelper: CommandHelper;
 	boardHelper: BoardHelper;
-	commands: Command[] = [];
 
-	constructor(game: Game, stations: Station[], boardHelper: BoardHelper, commandHelper: CommandHelper) {
+	constructor(game: Game, stations: Station[], boardHelper: BoardHelper) {
 		this.game = game;
 		this.stations = stations;
 		this.boardHelper = boardHelper;
-		this.commandHelper = commandHelper;
-		this.commandHelper.setOnCommand(this.handleCommand.bind(this));
+		this.commandHelper = new CommandHelper(game, this.parseCommand.bind(this), this.executeCommand.bind(this));
 	}
 
 	speak(text: string, cb?: () => void) {
@@ -36,7 +34,6 @@ export class Conn implements Station {
 	}
 
 	start() {
-		this.boardHelper.start();
 		this.commandHelper.start();
 		this.speak(`Aye`);
 		this.speak(`All stations, report`, () => {
@@ -47,17 +44,30 @@ export class Conn implements Station {
 		});
 	}
 
-	handleCommandHandled() {
-		this.speak(`Very well`);
+	parseCommand(shortText: string): Command | null {
+		let command: Command | null = null;
+		for (const station of this.stations) {
+			command = station.parseCommand(shortText);
+			if (command) {
+				break;
+			}
+		}
+		return command;
 	}
 
-	handleCommand(command: Command) {
-		let commandText;
-		if (command.stationType === StationType.HELM) {
-			commandText = this.helm.getCommandText(command);
-			this.speak(commandText, () => {
-				this.helm.handleCommand(command, this.handleCommandHandled.bind(this));
-			});
+	executeCommand(command: Command, cb?: () => void) {
+		for (const station of this.stations) {
+			if (command.stationType === station.type) {
+				this.speak(command.speechText, () => {
+					station.executeCommand(command, () => {
+						this.speak(`Aye`);
+						if (cb) {
+							cb();
+						}
+					});
+				});
+				break;
+			}
 		}
 	}
 }

@@ -3,8 +3,9 @@ import { Command } from '../model/command';
 
 export interface Station {
 	type: StationType;
-	commands: Command[];
 	speak: (text: string, cb?: () => void) => void;
 	report: (flags?: boolean[], cb?: () => void) => void;
 	tick: () => void;
+	parseCommand: (shortText: string) => Command | null;
+	executeCommand: (command: Command, cb?: () => void) => void;
 }

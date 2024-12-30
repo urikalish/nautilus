@@ -6,7 +6,6 @@ import { Command } from '../model/command';
 
 export class Navigation implements Station {
 	type: StationType = StationType.NAVIGATION;
-	commands: Command[] = [];
 	game: Game;
 	lastReportedSector: string = '';
 
@@ -39,13 +38,19 @@ export class Navigation implements Station {
 		position.setPosition(newTime, newX, newY);
 		const mySub = document.getElementById('my-sub');
 		const newPosition = sub.position;
-		mySub!.style.left = `calc(${12.5 * newPosition.x}% - 2px)`;
-		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 2px)`;
+		mySub!.style.left = `calc(${12.5 * newPosition.x}% - 3px)`;
+		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 3px)`;
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
 			this.report();
 		}
 	}
+
+	parseCommand(shortText: string): Command | null {
+		return null;
+	}
+
+	executeCommand(command: Command, cb?: () => void) {}
 
 	static calcAngle(x1: number, y1: number, x2: number, y2: number): number {
 		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;

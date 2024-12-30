@@ -1,13 +1,16 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Command, CommandType } from '../model/command';
+import { Command } from '../model/command';
 import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
 import { Station } from './station';
 
+enum commandId {
+	SET_COURSE = 'set-course',
+}
+
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
-	commands: Command[] = [];
 	game: Game;
 	lastReportedCourse: number = -1;
 	lastReportedDepth: number = -1;
@@ -42,22 +45,28 @@ export class Helm implements Station {
 		}
 	}
 
-	setCourse(course: number) {
-		this.game.getMySub().course = course;
-	}
-
-	getCommandText(command: Command) {
-		if (command.type === CommandType.SET_COURSE) {
-			return `Helm, set course to ${Speech.toThreeNumbers(command.data)}`;
+	parseCommand(shortText: string): Command | null {
+		if (shortText.startsWith('HSC')) {
+			const m = /^HSC([0-3][0-9][0-9])$/.exec(shortText);
+			if (!m) {
+				return null;
+			}
+			const course = parseInt(m[1]);
+			if (course >= 360) {
+				return null;
+			}
+			return new Command(this.type, shortText, commandId.SET_COURSE, course, `Helm, set course to ${Speech.toThreeNumbers(course)}`);
 		}
-		alert(`Unknown ${this.station} command ${command.type}`);
+		return null;
 	}
 
-	handleCommand(command: Command, onCommandHandled: () => void) {
-		if (command.type === CommandType.SET_COURSE) {
+	executeCommand(command: Command, cb?: () => void) {
+		if (command.id === commandId.SET_COURSE) {
 			this.speak(`Conn Helm, set course to ${Speech.toThreeNumbers(command.data)}, aye`, () => {
-				this.setCourse(command.data);
-				onCommandHandled();
+				this.game.getMySub().course = command.data;
+				if (cb) {
+					cb();
+				}
 			});
 		}
 	}

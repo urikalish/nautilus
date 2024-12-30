@@ -2,16 +2,18 @@ import { StationType } from './station-type';
 
 export class Command {
 	time: number;
-	text: string;
 	stationType: StationType;
+	shortText: string;
 	id: string;
 	data: any;
+	speechText: string;
 
-	constructor(text: string, stationType: StationType, id: string, data: any) {
+	constructor(stationType: StationType, shortText: string, id: string, data: any, speechText: string) {
 		this.time = Date.now();
-		this.text = text;
+		this.shortText = shortText;
 		this.stationType = stationType;
 		this.id = id;
 		this.data = data;
+		this.speechText = speechText;
 	}
 }

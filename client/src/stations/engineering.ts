@@ -7,7 +7,6 @@ import { Command } from '../model/command';
 
 export class Engineering implements Station {
 	type: StationType = StationType.ENGINEERING;
-	commands: Command[] = [];
 	game: Game;
 	lastReportedSpeed: number = -1;
 
@@ -38,4 +37,10 @@ export class Engineering implements Station {
 			this.report();
 		}
 	}
+
+	parseCommand(shortText: string): Command | null {
+		return null;
+	}
+
+	executeCommand(command: Command, cb?: () => void) {}
 }
