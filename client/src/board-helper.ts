@@ -10,8 +10,8 @@ export class BoardHelper {
 
 	start() {
 		this.board = document.getElementById('board') as HTMLDivElement;
-		for (const x of ['H', 'G', 'F', 'E', 'D', 'C', 'B', 'A']) {
-			for (let y = 1; y <= 8; y++) {
+		for (let y = 8; y >= 1; y--) {
+			for (const x of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) {
 				const cell = document.createElement('div');
 				cell.innerText = x + y;
 				cell.dataset.id = x + y;
