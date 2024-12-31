@@ -13,7 +13,6 @@ export class Conn implements Station {
 	stations: Station[];
 	game: Game;
 	uiHelper: UiHelper;
-	inputCommandElm: HTMLInputElement | null = null;
 	command: Command | null = null;
 
 	constructor(game: Game, uiHelper: UiHelper) {
@@ -37,7 +36,7 @@ export class Conn implements Station {
 	}
 
 	async handleCommandInputKeyUp(event) {
-		if (this.inputCommandElm!.value.trim() === '' || event.key === 'Escape') {
+		if (this.uiHelper.inputCommandElm!.value.trim() === '' || event.key === 'Escape') {
 			this.uiHelper.setCommandInputStatus('empty');
 			this.command = null;
 		} else if (event.key === 'Enter') {
@@ -46,11 +45,11 @@ export class Conn implements Station {
 				await this.executeCommand(this.command);
 			}
 		} else {
-			this.command = this.parseCommand(this.inputCommandElm!.value.trim().toUpperCase());
+			this.command = this.parseCommand(event.target.value.trim().toUpperCase());
 			if (this.command) {
 				this.uiHelper.setCommandInputStatus('valid');
 			} else {
-				this.inputCommandElm!.classList.add('invalid');
+				this.uiHelper.setCommandInputStatus('invalid');
 			}
 		}
 	}
@@ -80,6 +79,7 @@ export class Conn implements Station {
 		this.uiHelper.inputCommandElm!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
 		await this.speak(`Aye`);
 		await this.speak(`All stations, report`);
+		this.uiHelper.tick();
 		for (const station of this.stations) {
 			await station.report();
 		}
