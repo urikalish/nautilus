@@ -17,7 +17,7 @@ export class Conn implements Station {
 
 	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
-		this.stations = [new Engineering(game), new Helm(game), new Navigation(game)];
+		this.stations = [new Navigation(game), new Helm(game), new Engineering(game)];
 		this.uiHelper = uiHelper;
 	}
 
