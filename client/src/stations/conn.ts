@@ -37,21 +37,18 @@ export class Conn implements Station {
 	}
 
 	async handleCommandInputKeyUp(event) {
-		this.inputCommandElm!.classList.remove('empty', 'invalid', 'valid');
 		if (this.inputCommandElm!.value.trim() === '' || event.key === 'Escape') {
-			this.inputCommandElm!.value = '';
-			this.inputCommandElm!.classList.add('empty');
+			this.uiHelper.setCommandInputStatus('empty');
 			this.command = null;
 		} else if (event.key === 'Enter') {
 			if (this.command) {
-				this.inputCommandElm!.value = '';
-				this.inputCommandElm!.classList.add('empty');
+				this.uiHelper.setCommandInputStatus('empty');
 				await this.executeCommand(this.command);
 			}
 		} else {
 			this.command = this.parseCommand(this.inputCommandElm!.value.trim().toUpperCase());
 			if (this.command) {
-				this.inputCommandElm!.classList.add('valid');
+				this.uiHelper.setCommandInputStatus('valid');
 			} else {
 				this.inputCommandElm!.classList.add('invalid');
 			}
@@ -80,10 +77,7 @@ export class Conn implements Station {
 	}
 
 	async start() {
-		this.inputCommandElm = document.getElementById('inp-command') as HTMLInputElement;
-		this.inputCommandElm!.classList.remove('display--none');
-		this.inputCommandElm!.focus();
-		this.inputCommandElm!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
+		this.uiHelper.inputCommandElm!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
 		await this.speak(`Aye`);
 		await this.speak(`All stations, report`);
 		for (const station of this.stations) {

@@ -6,6 +6,7 @@ export class UiHelper {
 	mySubMarker: HTMLDivElement | null = null;
 	imgBearingWheel: HTMLImageElement | null = null;
 	imgSubTop: HTMLImageElement | null = null;
+	inputCommandElm: HTMLInputElement | null = null;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -23,6 +24,18 @@ export class UiHelper {
 		}
 	}
 
+	setCommandInputStatus(status: string) {
+		this.inputCommandElm!.classList.remove('empty', 'invalid', 'valid');
+		if (status === 'empty') {
+			this.inputCommandElm!.value = '';
+			this.inputCommandElm!.classList.add('empty');
+		} else if (status === 'invalid') {
+			this.inputCommandElm!.classList.add('invalid');
+		} else if (status === 'valid') {
+			this.inputCommandElm!.classList.add('valid');
+		}
+	}
+
 	tick() {
 		const mySub = this.game.getMySub();
 		const mySubMarketSize = 7;
@@ -37,6 +50,9 @@ export class UiHelper {
 		this.mySubMarker = document.getElementById('my-sub') as HTMLDivElement;
 		this.imgBearingWheel = document.getElementById('img-bearing-wheel') as HTMLImageElement;
 		this.imgSubTop = document.getElementById('img-sub-top') as HTMLImageElement;
+		this.inputCommandElm = document.getElementById('inp-command') as HTMLInputElement;
+		this.inputCommandElm!.classList.remove('display--none');
+		this.inputCommandElm!.focus();
 		this.createBoardSectorElements();
 	}
 }
