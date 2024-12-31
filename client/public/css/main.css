@@ -93,33 +93,42 @@ body {
 	background-color: var(--color--red);
 }
 
+.wheels {
+	position: absolute;
+	right: 2vh;
+	bottom: 2vh;
+	width: 60vh;
+	height: 60vh;
+}
 .img-angles-wheel {
 	position: absolute;
-	height: 60vh;
-	bottom: 2vh;
-	right: 2vh;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 	filter: invert(1);
-	opacity: 1;
 	z-index: -1;
-	transition: all 5s ease-in-out;
+	transform: rotateZ(0deg);
+	transition: all 3s ease-in-out;
 	user-select: none;
 }
-.img-course-wheel--course {
-	transform: scale(1) rotateZ(0deg);
+.img-angles-wheel--course {
 }
-.img-bearing-wheel--bearing {
-	transform: scale(0.8) rotateZ(0deg);
+.img-angles-wheel--bearing {
+	left: 10%;
+	top: 10%;
+	width: 80%;
+	height: 80%;
 }
 
 .img-sub-top {
 	position: absolute;
-	height: 60vh;
-	bottom: 2vh;
-	right: 28vh;
-	opacity: 1;
+	height: 50%;
+	top: calc(50% - 156px);
+	left: calc(50% - 18px);
 	z-index: -1;
-	transform: scale(0.4) rotateZ(0deg);
-	transition: all 5s ease-in-out;
+	transform: rotateZ(0deg);
+	transition: all 3s ease-in-out;
 	user-select: none;
 }
 

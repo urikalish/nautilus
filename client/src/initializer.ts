@@ -6,6 +6,7 @@ import { settings } from './model/settings';
 import { getRandomNumber } from './services/utils';
 import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
+import { UiHelper } from './services/ui-helper';
 
 export class Initializer {
 	async start() {
@@ -27,9 +28,9 @@ export class Initializer {
 		Speech.init();
 		const btnStart = document.getElementById('btn-start');
 		btnStart!.addEventListener('click', async () => {
-			btnStart!.classList.add('display--none');
+			UiHelper.hideElement(btnStart);
 			const gameMain = document.getElementById('game-main');
-			gameMain!.classList.remove('display--none');
+			UiHelper.showElement(gameMain);
 			await this.start();
 		});
 	}
