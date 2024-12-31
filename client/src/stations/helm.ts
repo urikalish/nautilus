@@ -62,7 +62,7 @@ export class Helm implements Station {
 
 	async executeCommand(command: Command) {
 		if (command.id === commandId.SET_COURSE) {
-			await this.speak(`Conn Helm, set course to ${Speech.toThreeNumbers(command.data)}, aye`);
+			await this.speak(`Conn Helm set course to ${Speech.toThreeNumbers(command.data)}, aye`);
 			this.game.getMySub().course = command.data;
 		}
 	}
