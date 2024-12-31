@@ -1,9 +1,12 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { Command } from '../model/command';
-import { UiHelper } from '../ui-helper';
-import { Station } from './station';
+import { UiHelper } from '../services/ui-helper';
+import { Station } from '../model/station';
 import { StationType } from '../model/station-type';
+import { Engineering } from './engineering';
+import { Helm } from './helm';
+import { Navigation } from './navigation';
 
 export class Conn implements Station {
 	type: StationType = StationType.CONN;
@@ -13,10 +16,10 @@ export class Conn implements Station {
 	inputCommandElm: HTMLInputElement | null = null;
 	command: Command | null = null;
 
-	constructor(game: Game, stations: Station[], boardHelper: UiHelper) {
+	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
-		this.stations = stations;
-		this.uiHelper = boardHelper;
+		this.stations = [new Engineering(game), new Helm(game), new Navigation(game)];
+		this.uiHelper = uiHelper;
 	}
 
 	async speak(text: string) {
@@ -29,10 +32,11 @@ export class Conn implements Station {
 		this.stations.forEach(station => {
 			station.tick();
 		});
+		this.uiHelper.tick();
 		setTimeout(this.tick.bind(this), 1000);
 	}
 
-	handleCommandInputKeyUp(event) {
+	async handleCommandInputKeyUp(event) {
 		this.inputCommandElm!.classList.remove('empty', 'invalid', 'valid');
 		if (this.inputCommandElm!.value.trim() === '' || event.key === 'Escape') {
 			this.inputCommandElm!.value = '';
@@ -42,7 +46,7 @@ export class Conn implements Station {
 			if (this.command) {
 				this.inputCommandElm!.value = '';
 				this.inputCommandElm!.classList.add('empty');
-				this.executeCommand(this.command).then(() => {});
+				await this.executeCommand(this.command);
 			}
 		} else {
 			this.command = this.parseCommand(this.inputCommandElm!.value.trim().toUpperCase());
@@ -82,9 +86,9 @@ export class Conn implements Station {
 		this.inputCommandElm!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
 		await this.speak(`Aye`);
 		await this.speak(`All stations, report`);
-		this.stations.forEach(station => {
-			station.report();
-		});
-		this.tick().then(() => {});
+		for (const station of this.stations) {
+			await station.report();
+		}
+		await this.tick();
 	}
 }

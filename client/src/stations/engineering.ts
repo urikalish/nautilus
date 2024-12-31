@@ -2,7 +2,7 @@ import { settings } from '../model/settings';
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
-import { Station } from './station';
+import { Station } from '../model/station';
 import { Command } from '../model/command';
 
 export class Engineering implements Station {

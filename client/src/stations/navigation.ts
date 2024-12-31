@@ -1,19 +1,16 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
-import { Station } from './station';
+import { Station } from '../model/station';
 import { Command } from '../model/command';
-import { UiHelper } from '../ui-helper';
 
 export class Navigation implements Station {
 	type: StationType = StationType.NAVIGATION;
 	game: Game;
-	uiHelper: UiHelper;
 	lastReportedSector: string = '';
 
-	constructor(game: Game, uiHelper: UiHelper) {
+	constructor(game: Game) {
 		this.game = game;
-		this.uiHelper = uiHelper;
 	}
 
 	async speak(text: string) {
@@ -40,7 +37,6 @@ export class Navigation implements Station {
 		const newY = Number((position.y - dDistance * Math.sin(angleRad)).toFixed(3));
 		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
-		this.uiHelper.updateMySubMarkerPosition(sub);
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
 			await this.report();

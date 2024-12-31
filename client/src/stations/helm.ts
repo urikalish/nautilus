@@ -3,8 +3,7 @@ import { Game } from '../model/game';
 import { Command } from '../model/command';
 import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
-import { Station } from './station';
-import { UiHelper } from '../ui-helper';
+import { Station } from '../model/station';
 
 enum commandId {
 	SET_COURSE = 'set-course',
@@ -13,13 +12,11 @@ enum commandId {
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
 	game: Game;
-	uiHelper: UiHelper;
 	lastReportedCourse: number = -1;
 	lastReportedDepth: number = -1;
 
-	constructor(game: Game, uiHelper: UiHelper) {
+	constructor(game: Game) {
 		this.game = game;
-		this.uiHelper = uiHelper;
 	}
 
 	async speak(text: string) {
@@ -37,7 +34,6 @@ export class Helm implements Station {
 
 	async tick() {
 		const sub: Sub = this.game.getMySub();
-		this.uiHelper.updateMySubCourseAndBearing(sub);
 		const courseChanged = sub.course !== this.lastReportedCourse;
 		const depthChanged = sub.depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {

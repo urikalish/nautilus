@@ -1,5 +1,5 @@
-import { StationType } from '../model/station-type';
-import { Command } from '../model/command';
+import { StationType } from './station-type';
+import { Command } from './command';
 
 export interface Station {
 	type: StationType;

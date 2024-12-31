@@ -1,5 +1,4 @@
-import { Game } from './model/game';
-import { Sub } from './model/sub';
+import { Game } from '../model/game';
 
 export class UiHelper {
 	game: Game;
@@ -24,13 +23,11 @@ export class UiHelper {
 		}
 	}
 
-	updateMySubMarkerPosition(mySub: Sub) {
-		const marketSize = 7;
-		this.mySubMarker!.style.left = `calc(${12.5 * mySub.position.x}% - ${Math.trunc(marketSize / 2)}px)`;
-		this.mySubMarker!.style.bottom = `calc(${12.5 * mySub.position.y}% - ${Math.trunc(marketSize / 2)}px)`;
-	}
-
-	updateMySubCourseAndBearing(mySub: Sub) {
+	tick() {
+		const mySub = this.game.getMySub();
+		const mySubMarketSize = 7;
+		this.mySubMarker!.style.left = `calc(${12.5 * mySub.position.x}% - ${Math.trunc(mySubMarketSize / 2)}px)`;
+		this.mySubMarker!.style.bottom = `calc(${12.5 * mySub.position.y}% - ${Math.trunc(mySubMarketSize / 2)}px)`;
 		this.imgBearingWheel!.style.transform = `scale(0.8) rotateZ(${mySub.course}deg`;
 		this.imgSubTop!.style.transform = `scale(0.4) rotateZ(${mySub.course}deg`;
 	}
