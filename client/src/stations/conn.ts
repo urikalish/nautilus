@@ -36,7 +36,7 @@ export class Conn implements Station {
 	}
 
 	async handleCommandInputKeyUp(event) {
-		if (this.uiHelper.inputCommandElm!.value.trim() === '' || event.key === 'Escape') {
+		if (this.uiHelper.inpCommand!.value.trim() === '' || event.key === 'Escape') {
 			this.uiHelper.setCommandInputStatus('empty');
 			this.command = null;
 		} else if (event.key === 'Enter') {
@@ -76,7 +76,7 @@ export class Conn implements Station {
 	}
 
 	async start() {
-		this.uiHelper.inputCommandElm!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
+		this.uiHelper.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
 		await this.speak(`Aye`);
 		await this.speak(`All stations, report`);
 		this.uiHelper.tick();
@@ -84,5 +84,6 @@ export class Conn implements Station {
 			await station.report();
 		}
 		await this.tick();
+		this.uiHelper.enableCommand();
 	}
 }
