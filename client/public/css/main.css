@@ -94,10 +94,11 @@ body {
 
 .board-marker-my-sub {
 	position: absolute;
-	width: 7px;
-	height: 7px;
+	width: 9px;
+	height: 9px;
+	transform: translate(-4px, 4px);
 	border-radius: 50%;
-	background-color: var(--color--red);
+	background-color: lime;
 }
 
 .command-pane {
@@ -112,6 +113,7 @@ body {
 	font-size: 64px;
 	text-transform: uppercase;
 	user-select: none;
+	transition: all 0.2s ease-in-out;
 }
 .inp-command.empty {
 	color: var(--color--gray--lightest);
@@ -158,16 +160,16 @@ body {
 .side-port {
 	position: absolute;
 	inset: 0 50% 0 0;
-	background-color: var(--color--red);
+	background-color: red;
 	border-radius: 100% 0 0 100% / 50% 0 0 50%;
-	opacity: 0.2;
+	opacity: 0.1;
 }
 .side-starboard {
 	position: absolute;
 	inset: 0 0 0 50%;
-	background-color: var(--color--green);
+	background-color: lime;
 	border-radius: 0 100% 100% 0 / 0 50% 50% 0;
-	opacity: 0.2;
+	opacity: 0.1;
 }
 .img-angles-wheel--bearing {
 	position: absolute;

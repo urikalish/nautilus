@@ -51,9 +51,8 @@ export class UiHelper {
 
 	tick() {
 		const mySub = this.game.getMySub();
-		const mySubMarketSize = 7;
-		this.boardMarkerMySub!.style.left = `calc(${12.5 * mySub.position.x}% - ${Math.trunc(mySubMarketSize / 2)}px)`;
-		this.boardMarkerMySub!.style.bottom = `calc(${12.5 * mySub.position.y}% - ${Math.trunc(mySubMarketSize / 2)}px)`;
+		this.boardMarkerMySub!.style.left = `${12.5 * mySub.position.x}%`;
+		this.boardMarkerMySub!.style.bottom = `${12.5 * mySub.position.y}%`;
 		UiHelper.showElement(this.boardMarkerMySub);
 		this.rotatingPane!.style.transform = `rotateZ(${mySub.course}deg`;
 	}
