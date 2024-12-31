@@ -51,14 +51,14 @@ export class Helm implements Station {
 			if (course >= 360) {
 				return null;
 			}
-			return new Command(this.type, shortText, commandId.SET_COURSE, course, `Helm, set course to ${Speech.toThreeNumbers(course)}`);
+			return new Command(this.type, shortText, commandId.SET_COURSE, course, `Helm, set course ${Speech.toThreeNumbers(course)}`);
 		}
 		return null;
 	}
 
 	async executeCommand(command: Command) {
 		if (command.id === commandId.SET_COURSE) {
-			await this.speak(`Conn Helm set course to ${Speech.toThreeNumbers(command.data)}, aye`);
+			await this.speak(`Conn Helm set course ${Speech.toThreeNumbers(command.data)}, aye`);
 			this.game.getMySub().course = command.data;
 		}
 	}
