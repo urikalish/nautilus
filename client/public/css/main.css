@@ -95,7 +95,7 @@ body {
 
 .img-angles-wheel {
 	position: absolute;
-	height: 70vh;
+	height: 60vh;
 	bottom: 2vh;
 	right: 2vh;
 	filter: invert(1);
@@ -113,9 +113,9 @@ body {
 
 .img-sub-top {
 	position: absolute;
-	height: 70vh;
+	height: 60vh;
 	bottom: 2vh;
-	right: 33vh;
+	right: 28vh;
 	opacity: 1;
 	z-index: -1;
 	transform: scale(0.4) rotateZ(0deg);

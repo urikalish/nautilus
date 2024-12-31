@@ -4,6 +4,7 @@ import { Command } from '../model/command';
 import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
 import { Station } from './station';
+import { UiHelper } from '../ui-helper';
 
 enum commandId {
 	SET_COURSE = 'set-course',
@@ -12,11 +13,13 @@ enum commandId {
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
 	game: Game;
+	uiHelper: UiHelper;
 	lastReportedCourse: number = -1;
 	lastReportedDepth: number = -1;
 
-	constructor(game: Game) {
+	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
+		this.uiHelper = uiHelper;
 	}
 
 	async speak(text: string) {
@@ -34,10 +37,7 @@ export class Helm implements Station {
 
 	async tick() {
 		const sub: Sub = this.game.getMySub();
-		const imgBearingWheel = document.getElementById('img-bearing-wheel');
-		imgBearingWheel!.style.transform = `scale(0.8) rotateZ(${sub.course}deg`;
-		const imgSubTop = document.getElementById('img-sub-top');
-		imgSubTop!.style.transform = `scale(0.4) rotateZ(${sub.course}deg`;
+		this.uiHelper.updateMySubCourseAndBearing(sub);
 		const courseChanged = sub.course !== this.lastReportedCourse;
 		const depthChanged = sub.depth !== this.lastReportedDepth;
 		if (courseChanged || depthChanged) {

@@ -3,14 +3,17 @@ import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from './station';
 import { Command } from '../model/command';
+import { UiHelper } from '../ui-helper';
 
 export class Navigation implements Station {
 	type: StationType = StationType.NAVIGATION;
 	game: Game;
+	uiHelper: UiHelper;
 	lastReportedSector: string = '';
 
-	constructor(game: Game) {
+	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
+		this.uiHelper = uiHelper;
 	}
 
 	async speak(text: string) {
@@ -36,10 +39,8 @@ export class Navigation implements Station {
 		const newX = Number((position.x + dDistance * Math.cos(angleRad)).toFixed(3));
 		const newY = Number((position.y - dDistance * Math.sin(angleRad)).toFixed(3));
 		position.setPosition(newTime, newX, newY);
-		const mySub = document.getElementById('my-sub');
 		const newPosition = sub.position;
-		mySub!.style.left = `calc(${12.5 * newPosition.x}% - 3px)`;
-		mySub!.style.bottom = `calc(${12.5 * newPosition.y}% - 3px)`;
+		this.uiHelper.updateMySubMarkerPosition(sub);
 		const newSector = newPosition.sector;
 		if (newSector !== this.lastReportedSector) {
 			await this.report();
