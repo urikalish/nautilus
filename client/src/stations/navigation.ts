@@ -49,6 +49,10 @@ export class Navigation implements Station {
 
 	async executeCommand(command: Command) {}
 
+	static calcDistance(x1: number, y1: number, x2: number, y2: number): number {
+		return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+	}
+
 	static calcAngle(x1: number, y1: number, x2: number, y2: number): number {
 		return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;
 	}

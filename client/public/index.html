@@ -31,6 +31,15 @@
 		<audio loop id="sound-sub-internal" src="./audio/sub-internal.mp3"></audio>
 		<audio loop id="sound-sonar-ping" src="./audio/sonar-ping.mp3"></audio>
 		<div id="game-main" class="game-main grid display--none">
+			<div id="wheels" class="wheels">
+				<img id="img-course-wheel" class="img-angles-wheel--course" src="./img/angles-wheel-1.png" alt="course wheel" aria-hidden="true" />
+				<div id="rotating-pane" class="rotating-pane">
+					<div class="side-port"></div>
+					<div class="side-starboard"></div>
+					<img id="img-bearing-wheel" class="img-angles-wheel--bearing" src="./img/angles-wheel-1.png" alt="bearing wheel" aria-hidden="true" />
+					<img id="img-sub-top" class="img-sub-top" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
+				</div>
+			</div>
 			<div class="board-container">
 				<div class="board-gutters">
 					<div class="board-gutter">
@@ -82,15 +91,6 @@
 			<div id="command-pane" class="command-pane grid visibility--hidden">
 				<input id="inp-command" class="inp-command empty" />
 				<label for="inp-command" class="lbl-command">Command</label>
-			</div>
-			<div id="wheels" class="wheels">
-				<img id="img-course-wheel" class="img-angles-wheel--course" src="./img/angles-wheel-1.png" alt="course wheel" aria-hidden="true" />
-				<div id="rotating-pane" class="rotating-pane">
-					<div class="side-port"></div>
-					<div class="side-starboard"></div>
-					<img id="img-bearing-wheel" class="img-angles-wheel--bearing" src="./img/angles-wheel-1.png" alt="bearing wheel" aria-hidden="true" />
-					<img id="img-sub-top" class="img-sub-top" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
-				</div>
 			</div>
 		</div>
 		<script type="module" src="./js/main.js"></script>

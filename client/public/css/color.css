@@ -6,8 +6,8 @@
 	--color--gray--dark: #666;
 	--color--gray--darker: #444;
 	--color--gray--darkest: #222;
-	--color--green: #5c5;
-	--color--red: #f55;
+	/*--color--green: #5c5;*/
+	/*--color--red: #f55;*/
 	--color--blue--1: #112;
 	--color--blue--2: #223;
 	--color--blue--3: #334;
@@ -23,14 +23,9 @@
 	--color--blue--d: #dde;
 	--color--blue--e: #eef;
 
-	--color--accent: var(--color--red);
-	--link--color: var(--color--red);
-
 	--color--background: var(--color--gray--darkest);
 	--color--text: var(--color--gray--lightest);
-	--color--command-status: var(--color--red);
 	--board-color: var(--color--gray--medium);
-
-	--color--invalid: var(--color--red);
-	--color--valid: var(--color--green);
+	--color--invalid: red;
+	--color--valid: lime;
 }
