@@ -4,6 +4,7 @@ export class UiHelper {
 	game: Game;
 	board: HTMLDivElement | null = null;
 	boardMarkerMySub: HTMLImageElement | null = null;
+	boardMarkerEnemySub: HTMLImageElement | null = null;
 	rotatingPane: HTMLDivElement | null = null;
 	commandPane: HTMLDivElement | null = null;
 	inpCommand: HTMLInputElement | null = null;
@@ -51,15 +52,20 @@ export class UiHelper {
 
 	tick() {
 		const mySub = this.game.getMySub();
+		const enemySub = this.game.getEnemySub();
 		this.boardMarkerMySub!.style.left = `${12.5 * mySub.position.x}%`;
 		this.boardMarkerMySub!.style.bottom = `${12.5 * mySub.position.y}%`;
 		UiHelper.showElement(this.boardMarkerMySub);
+		this.boardMarkerEnemySub!.style.left = `${12.5 * enemySub.position.x}%`;
+		this.boardMarkerEnemySub!.style.bottom = `${12.5 * enemySub.position.y}%`;
+		UiHelper.showElement(this.boardMarkerEnemySub);
 		this.rotatingPane!.style.transform = `rotateZ(${mySub.course}deg`;
 	}
 
 	start() {
 		this.board = document.getElementById('board') as HTMLDivElement;
 		this.boardMarkerMySub = document.getElementById('board-marker-my-sub') as HTMLImageElement;
+		this.boardMarkerEnemySub = document.getElementById('board-marker-enemy-sub') as HTMLImageElement;
 		this.rotatingPane = document.getElementById('rotating-pane') as HTMLImageElement;
 		this.commandPane = document.getElementById('command-pane') as HTMLDivElement;
 		this.inpCommand = document.getElementById('inp-command') as HTMLInputElement;

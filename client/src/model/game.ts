@@ -43,4 +43,7 @@ export class Game {
 	getMySub() {
 		return this.subs[this.ind];
 	}
+	getEnemySub() {
+		return this.subs[Math.abs(this.ind - 1)];
+	}
 }

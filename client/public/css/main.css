@@ -141,7 +141,12 @@ body {
 	width: 24px;
 	height: 24px;
 	transform: translate(-12px, 12px);
-	fill: lime;
+}
+.board-marker-enemy-sub {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	transform: translate(-12px, 12px) rotateZ(45deg);
 }
 
 .command-pane {
