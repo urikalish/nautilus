@@ -17,8 +17,8 @@
 	src: url('../font/share-tech-mono-regular.woff2') format('woff2');
 }
 :root {
-	--font-family--default: 'Play', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-		'Segoe UI Symbol';
+	--font-family--default: 'Play', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	--font-family--code: 'Share Tech Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 

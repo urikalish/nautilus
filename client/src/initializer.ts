@@ -14,8 +14,20 @@ export class Initializer {
 		const startDate: Date = new Date();
 		const startTime = startDate.getTime();
 		const subs = [
-			new Sub(0, new Position(startTime, 1.5, 1.5), 45, settings.speed.oneThird, settings.depth.test),
-			new Sub(1, new Position(startTime, 6.5, 6.5), 225, settings.speed.oneThird, settings.depth.test),
+			new Sub(
+				0,
+				new Position(startTime, Math.random() * 7 + 0.5, Math.random() * 7 + 0.5),
+				Math.trunc(Math.random() * 360),
+				settings.speed.oneThird,
+				settings.depth.test,
+			),
+			new Sub(
+				1,
+				new Position(startTime, Math.random() * 7 + 0.5, Math.random() * 7 + 0.5),
+				Math.trunc(Math.random() * 360),
+				settings.speed.oneThird,
+				settings.depth.test,
+			),
 		];
 		const ind = 0;
 		const game = new Game(getRandomNumber(3), startDate, ind, players, subs);
