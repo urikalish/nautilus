@@ -145,6 +145,7 @@ body {
 }
 
 .command-pane {
+	place-content: center;
 }
 .inp-command {
 	width: 20vw;

@@ -29,7 +29,7 @@
 	--color--background: var(--color--gray--darkest);
 	--color--text: var(--color--gray--lightest);
 	--color--command-status: var(--color--red);
-	--board-color: #fff;
+	--board-color: var(--color--gray--medium);
 
 	--color--invalid: var(--color--red);
 	--color--valid: var(--color--green);
