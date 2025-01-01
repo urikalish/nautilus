@@ -113,7 +113,6 @@ body {
 	font-size: 64px;
 	text-transform: uppercase;
 	user-select: none;
-	transition: all 0.2s ease-in-out;
 }
 .inp-command.empty {
 	color: var(--color--gray--lightest);
