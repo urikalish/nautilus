@@ -31,8 +31,52 @@
 		<audio loop id="sound-sub-internal" src="./audio/sub-internal.mp3"></audio>
 		<audio loop id="sound-sonar-ping" src="./audio/sonar-ping.mp3"></audio>
 		<div id="game-main" class="game-main grid display--none">
-			<div id="board" class="board">
-				<div id="board-marker-my-sub" class="board-marker-my-sub display--none"></div>
+			<div class="board-container">
+				<div class="board-gutters">
+					<div class="board-gutter">
+						<div class="board-gutter-label">A</div>
+						<div class="board-gutter-label">B</div>
+						<div class="board-gutter-label">C</div>
+						<div class="board-gutter-label">D</div>
+						<div class="board-gutter-label">E</div>
+						<div class="board-gutter-label">F</div>
+						<div class="board-gutter-label">G</div>
+						<div class="board-gutter-label">H</div>
+					</div>
+					<div class="board-gutter">
+						<div class="board-gutter-label">8</div>
+						<div class="board-gutter-label">7</div>
+						<div class="board-gutter-label">6</div>
+						<div class="board-gutter-label">5</div>
+						<div class="board-gutter-label">4</div>
+						<div class="board-gutter-label">3</div>
+						<div class="board-gutter-label">2</div>
+						<div class="board-gutter-label">1</div>
+					</div>
+					<div class="board-gutter">
+						<div class="board-gutter-label">A</div>
+						<div class="board-gutter-label">B</div>
+						<div class="board-gutter-label">C</div>
+						<div class="board-gutter-label">D</div>
+						<div class="board-gutter-label">E</div>
+						<div class="board-gutter-label">F</div>
+						<div class="board-gutter-label">G</div>
+						<div class="board-gutter-label">H</div>
+					</div>
+					<div class="board-gutter">
+						<div class="board-gutter-label">8</div>
+						<div class="board-gutter-label">7</div>
+						<div class="board-gutter-label">6</div>
+						<div class="board-gutter-label">5</div>
+						<div class="board-gutter-label">4</div>
+						<div class="board-gutter-label">3</div>
+						<div class="board-gutter-label">2</div>
+						<div class="board-gutter-label">1</div>
+					</div>
+				</div>
+				<div id="board" class="board">
+					<img id="board-marker-my-sub" class="board-marker-my-sub display--none" src="./img/board-marker-my-sub.svg" alt="my sub marker" />
+				</div>
 			</div>
 			<div id="command-pane" class="command-pane grid visibility--hidden">
 				<input id="inp-command" class="inp-command empty" />

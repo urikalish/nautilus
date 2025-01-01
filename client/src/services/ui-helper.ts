@@ -3,7 +3,7 @@ import { Game } from '../model/game';
 export class UiHelper {
 	game: Game;
 	board: HTMLDivElement | null = null;
-	boardMarkerMySub: HTMLDivElement | null = null;
+	boardMarkerMySub: HTMLImageElement | null = null;
 	rotatingPane: HTMLDivElement | null = null;
 	commandPane: HTMLDivElement | null = null;
 	inpCommand: HTMLInputElement | null = null;
@@ -59,7 +59,7 @@ export class UiHelper {
 
 	start() {
 		this.board = document.getElementById('board') as HTMLDivElement;
-		this.boardMarkerMySub = document.getElementById('board-marker-my-sub') as HTMLDivElement;
+		this.boardMarkerMySub = document.getElementById('board-marker-my-sub') as HTMLImageElement;
 		this.rotatingPane = document.getElementById('rotating-pane') as HTMLImageElement;
 		this.commandPane = document.getElementById('command-pane') as HTMLDivElement;
 		this.inpCommand = document.getElementById('inp-command') as HTMLInputElement;
