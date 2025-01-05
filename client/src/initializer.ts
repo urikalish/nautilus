@@ -37,8 +37,8 @@ export class Initializer {
 		const btnStart = document.getElementById('btn-start');
 		btnStart!.addEventListener('click', async () => {
 			UiHelper.hideElement(btnStart);
-			const gameMain = document.getElementById('game-main');
-			UiHelper.showElement(gameMain);
+			const wrapperElm = document.getElementById('wrapper');
+			UiHelper.showElement(wrapperElm);
 			await this.start();
 		});
 	}

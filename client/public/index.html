@@ -30,67 +30,100 @@
 		<button id="btn-start" class="btn-start">Start</button>
 		<audio loop id="sound-sub-internal" src="./audio/sub-internal.mp3"></audio>
 		<audio loop id="sound-sonar-ping" src="./audio/sonar-ping.mp3"></audio>
-		<div id="game-main" class="game-main grid display--none">
-			<div id="wheels" class="wheels">
-				<img id="img-course-wheel" class="img-angles-wheel--course" src="./img/angles-wheel-1.png" alt="course wheel" aria-hidden="true" />
-				<div id="rotating-pane" class="rotating-pane">
-					<div class="side-port"></div>
-					<div class="side-starboard"></div>
-					<img id="img-bearing-wheel" class="img-angles-wheel--bearing" src="./img/angles-wheel-1.png" alt="bearing wheel" aria-hidden="true" />
-					<img id="img-sub-top" class="img-sub-top" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
-				</div>
-			</div>
-			<div class="board-container">
-				<div class="board-gutters">
-					<div class="board-gutter">
-						<div class="board-gutter-label">A</div>
-						<div class="board-gutter-label">B</div>
-						<div class="board-gutter-label">C</div>
-						<div class="board-gutter-label">D</div>
-						<div class="board-gutter-label">E</div>
-						<div class="board-gutter-label">F</div>
-						<div class="board-gutter-label">G</div>
-						<div class="board-gutter-label">H</div>
+		<div id="wrapper" class="wrapper grid display--none">
+			<div id="main" class="main grid">
+				<div id="pane-left" class="pane-left">
+					<div class="wheel wheel-1">
+						<img id="img-wheel-1-outer" class="img-wheel img-wheel-1-outer" src="./img/angles-wheel-1.png" alt="course wheel" aria-hidden="true" />
+						<div id="pn-1-sub" class="pn-sub pn-sub-1">
+							<div class="side-port"></div>
+							<div class="side-starboard"></div>
+							<img
+								id="img-wheel-1-inner"
+								class="img-wheel img-wheel-1-inner"
+								src="./img/angles-wheel-1.png"
+								alt="bearing wheel"
+								aria-hidden="true"
+							/>
+							<img id="img-sub-1" class="img-sub img-sub-1" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
+						</div>
 					</div>
-					<div class="board-gutter">
-						<div class="board-gutter-label">8</div>
-						<div class="board-gutter-label">7</div>
-						<div class="board-gutter-label">6</div>
-						<div class="board-gutter-label">5</div>
-						<div class="board-gutter-label">4</div>
-						<div class="board-gutter-label">3</div>
-						<div class="board-gutter-label">2</div>
-						<div class="board-gutter-label">1</div>
-					</div>
-					<div class="board-gutter">
-						<div class="board-gutter-label">A</div>
-						<div class="board-gutter-label">B</div>
-						<div class="board-gutter-label">C</div>
-						<div class="board-gutter-label">D</div>
-						<div class="board-gutter-label">E</div>
-						<div class="board-gutter-label">F</div>
-						<div class="board-gutter-label">G</div>
-						<div class="board-gutter-label">H</div>
-					</div>
-					<div class="board-gutter">
-						<div class="board-gutter-label">8</div>
-						<div class="board-gutter-label">7</div>
-						<div class="board-gutter-label">6</div>
-						<div class="board-gutter-label">5</div>
-						<div class="board-gutter-label">4</div>
-						<div class="board-gutter-label">3</div>
-						<div class="board-gutter-label">2</div>
-						<div class="board-gutter-label">1</div>
+					<div class="wheel wheel-2">
+						<img id="img-wheel-2-outer" class="img-wheel img-wheel-2-outer" src="./img/angles-wheel-1.png" alt="course wheel" aria-hidden="true" />
+						<div id="pn-2-sub" class="pn-sub pn-sub-2">
+							<div class="side-port"></div>
+							<div class="side-starboard"></div>
+							<img
+								id="img-wheel-2-inner"
+								class="img-wheel img-wheel-2-inner"
+								src="./img/angles-wheel-1.png"
+								alt="bearing wheel"
+								aria-hidden="true"
+							/>
+							<img id="img-sub-2" class="img-sub img-sub-2" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
+						</div>
 					</div>
 				</div>
-				<div id="board" class="board">
-					<img id="board-marker-my-sub" class="board-marker-my-sub display--none" src="./img/marker/marker-friend.svg" alt="my sub marker" />
-					<img id="board-marker-enemy-sub" class="board-marker-enemy-sub display--none" src="./img/marker/marker-foe.svg" alt="enemy sub marker" />
+				<div id="pane-center" class="pane-center">
+					<div class="board-container">
+						<div class="board-gutters">
+							<div class="board-gutter">
+								<div class="board-gutter-label">A</div>
+								<div class="board-gutter-label">B</div>
+								<div class="board-gutter-label">C</div>
+								<div class="board-gutter-label">D</div>
+								<div class="board-gutter-label">E</div>
+								<div class="board-gutter-label">F</div>
+								<div class="board-gutter-label">G</div>
+								<div class="board-gutter-label">H</div>
+							</div>
+							<div class="board-gutter">
+								<div class="board-gutter-label">8</div>
+								<div class="board-gutter-label">7</div>
+								<div class="board-gutter-label">6</div>
+								<div class="board-gutter-label">5</div>
+								<div class="board-gutter-label">4</div>
+								<div class="board-gutter-label">3</div>
+								<div class="board-gutter-label">2</div>
+								<div class="board-gutter-label">1</div>
+							</div>
+							<div class="board-gutter">
+								<div class="board-gutter-label">A</div>
+								<div class="board-gutter-label">B</div>
+								<div class="board-gutter-label">C</div>
+								<div class="board-gutter-label">D</div>
+								<div class="board-gutter-label">E</div>
+								<div class="board-gutter-label">F</div>
+								<div class="board-gutter-label">G</div>
+								<div class="board-gutter-label">H</div>
+							</div>
+							<div class="board-gutter">
+								<div class="board-gutter-label">8</div>
+								<div class="board-gutter-label">7</div>
+								<div class="board-gutter-label">6</div>
+								<div class="board-gutter-label">5</div>
+								<div class="board-gutter-label">4</div>
+								<div class="board-gutter-label">3</div>
+								<div class="board-gutter-label">2</div>
+								<div class="board-gutter-label">1</div>
+							</div>
+						</div>
+						<div id="board" class="board">
+							<img id="board-marker-my-sub" class="board-marker-my-sub display--none" src="./img/marker/marker-friend.svg" alt="my sub marker" />
+							<img
+								id="board-marker-enemy-sub"
+								class="board-marker-enemy-sub display--none"
+								src="./img/marker/marker-foe.svg"
+								alt="enemy sub marker"
+							/>
+						</div>
+					</div>
+					<div id="command-pane" class="command-pane grid visibility--hidden">
+						<input id="inp-command" class="inp-command empty" />
+						<label for="inp-command" class="lbl-command">Command</label>
+					</div>
 				</div>
-			</div>
-			<div id="command-pane" class="command-pane grid visibility--hidden">
-				<input id="inp-command" class="inp-command empty" />
-				<label for="inp-command" class="lbl-command">Command</label>
+				<div id="pane-right" class="pane-right"></div>
 			</div>
 		</div>
 		<script type="module" src="./js/main.js"></script>
