@@ -4,6 +4,7 @@ import { Command } from '../model/command';
 import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
+import { Direction } from '../model/direction';
 
 enum commandId {
 	SET_COURSE = 'set-course',
@@ -42,8 +43,8 @@ export class Helm implements Station {
 	}
 
 	parseCommand(shortText: string): Command | null {
-		if (shortText.startsWith('HSC')) {
-			const m = /^HSC([0-3][0-9][0-9])$/.exec(shortText);
+		if (shortText.startsWith('HRRSC')) {
+			const m = /^HRRSC([0-3][0-9][0-9])$/.exec(shortText);
 			if (!m) {
 				return null;
 			}
@@ -51,15 +52,37 @@ export class Helm implements Station {
 			if (course >= 360) {
 				return null;
 			}
-			return new Command(this.type, shortText, commandId.SET_COURSE, course, `Helm, set course ${Speech.toThreeNumbers(course)}`);
+			return new Command(
+				this.type,
+				shortText,
+				commandId.SET_COURSE,
+				{ course, direction: Direction.RIGHT },
+				`Helm, right rudder, steer course ${Speech.toThreeNumbers(course)}`,
+			);
+		} else if (shortText.startsWith('HLRSC')) {
+			const m = /^HLRSC([0-3][0-9][0-9])$/.exec(shortText);
+			if (!m) {
+				return null;
+			}
+			const course = parseInt(m[1]);
+			if (course >= 360) {
+				return null;
+			}
+			return new Command(
+				this.type,
+				shortText,
+				commandId.SET_COURSE,
+				{ course, direction: Direction.LEFT },
+				`Helm, left rudder, steer course ${Speech.toThreeNumbers(course)}`,
+			);
 		}
 		return null;
 	}
 
 	async executeCommand(command: Command) {
 		if (command.id === commandId.SET_COURSE) {
-			await this.speak(`Conn Helm set course ${Speech.toThreeNumbers(command.data)}, aye`);
-			this.game.getMySub().course = command.data;
+			await this.speak(`${command.data.direction} rudder, steer course ${Speech.toThreeNumbers(command.data.course)}, Conn Helm, aye`);
+			this.game.getMySub().course = command.data.course;
 		}
 	}
 }

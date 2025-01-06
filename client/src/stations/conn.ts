@@ -77,8 +77,7 @@ export class Conn implements Station {
 
 	async start() {
 		this.uiHelper.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
-		await this.speak(`Aye`);
-		await this.speak(`All stations, report`);
+		await this.speak(`Aye, all stations, report`);
 		this.uiHelper.tick();
 		for (const station of this.stations) {
 			await station.report();

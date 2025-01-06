@@ -60,8 +60,8 @@ export class UiHelper {
 		this.boardMarkerEnemySub!.style.left = `${12.5 * enemySub.position.x}%`;
 		this.boardMarkerEnemySub!.style.bottom = `${12.5 * enemySub.position.y}%`;
 		UiHelper.showElement(this.boardMarkerEnemySub);
-		this.pane1sub!.style.transform = `rotateZ(${mySub.course}deg`;
-		this.imgWheel2Outer!.style.transform = `rotateZ(-${mySub.course}deg`;
+		this.pane1sub!.style.transform = `rotate(${mySub.course}deg`;
+		this.imgWheel2Outer!.style.transform = `rotate(-${mySub.course}deg`;
 	}
 
 	start() {
@@ -73,5 +73,13 @@ export class UiHelper {
 		this.commandPane = document.getElementById('command-pane') as HTMLDivElement;
 		this.inpCommand = document.getElementById('inp-command') as HTMLInputElement;
 		this.createBoardSectorElements();
+	}
+
+	rotateElement(element, degrees, direction = 'right') {
+		const currentTransform = window.getComputedStyle(element).getPropertyValue('rotate');
+		const currentRotation = currentTransform === 'none' ? 0 : parseInt(currentTransform.replace('deg', ''));
+		const rotationAmount = direction.toLowerCase() === 'left' ? -degrees : degrees;
+		const newRotation = currentRotation + rotationAmount;
+		element.style.rotate = `${newRotation}deg`;
 	}
 }

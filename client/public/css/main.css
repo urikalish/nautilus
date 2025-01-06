@@ -87,8 +87,8 @@ body {
 	width: 100%;
 	height: 100%;
 	filter: invert(1);
-	transform: rotateZ(0deg);
-	transition: all 3s ease-in-out;
+	transform: rotate(0deg);
+	transition: all 3s linear;
 	user-select: none;
 }
 .pn-sub {
@@ -97,8 +97,8 @@ body {
 	top: 10%;
 	width: 80%;
 	height: 80%;
-	transform: rotateZ(0deg);
-	transition: all 3s ease-in-out;
+	transform: rotate(0deg);
+	transition: all 3s linear;
 }
 .side-port {
 	position: absolute;
@@ -211,7 +211,7 @@ body {
 	position: absolute;
 	width: 24px;
 	height: 24px;
-	transform: translate(-12px, 12px) rotateZ(45deg);
+	transform: translate(-12px, 12px) rotate(45deg);
 }
 .command-pane {
 	place-content: center;
