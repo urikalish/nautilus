@@ -75,7 +75,7 @@ export class Speech {
 		return natoPhonetic[letter.toUpperCase()];
 	}
 
-	static toThreeNumbers(num: number): string {
+	static toThreeDigits(num: number): string {
 		let numStr = num.toString();
 		if (numStr.length === 1) {
 			numStr = '00' + numStr;

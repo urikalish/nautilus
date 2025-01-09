@@ -13,3 +13,7 @@ export function getDateTime(date: Date) {
 	const seconds = ('0' + date.getSeconds()).slice(-2); // Format seconds as two digits
 	return `${day}/${month}/${year}/ ${hours}:${minutes}:${seconds}`;
 }
+
+export function roundDecimal(number: number, decimalPlaces: number): number {
+	return Math.round(number * 10 ** decimalPlaces) / 10 ** decimalPlaces;
+}

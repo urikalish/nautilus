@@ -3,6 +3,7 @@ import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Command } from '../model/command';
+import { roundDecimal } from '../services/utils';
 
 export class Navigation implements Station {
 	type: StationType = StationType.NAVIGATION;
@@ -33,8 +34,8 @@ export class Navigation implements Station {
 		const dTime = newTime - position.time;
 		const dDistance = (sub.speed / 3600000) * dTime;
 		const angleRad = ((sub.course - 90) * Math.PI) / 180;
-		const newX = Number((position.x + dDistance * Math.cos(angleRad)).toFixed(3));
-		const newY = Number((position.y - dDistance * Math.sin(angleRad)).toFixed(3));
+		const newX = roundDecimal(position.x + dDistance * Math.cos(angleRad), 3);
+		const newY = roundDecimal(position.y - dDistance * Math.sin(angleRad), 3);
 		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;

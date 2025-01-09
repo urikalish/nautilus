@@ -5,8 +5,10 @@ import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Direction } from '../model/direction';
+import { settings } from '../model/settings';
+import { roundDecimal } from '../services/utils';
 
-enum commandId {
+enum commandType {
 	SET_COURSE = 'set-course',
 }
 
@@ -15,6 +17,7 @@ export class Helm implements Station {
 	game: Game;
 	lastReportedCourse: number = -1;
 	lastReportedDepth: number = -1;
+	activeCommands: Command[] = [];
 
 	constructor(game: Game) {
 		this.game = game;
@@ -30,15 +33,25 @@ export class Helm implements Station {
 		this.lastReportedCourse = course;
 		this.lastReportedDepth = depth;
 		console.log(`course:${course}, depth:${depth}`);
-		await this.speak(`Conn Helm, course ${Speech.toThreeNumbers(course)}, depth ${depth} feet`);
+		await this.speak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`);
 	}
 
 	async tick() {
 		const sub: Sub = this.game.getMySub();
-		const courseChanged = sub.course !== this.lastReportedCourse;
-		const depthChanged = sub.depth !== this.lastReportedDepth;
-		if (courseChanged || depthChanged) {
-			await this.report();
+		let i = 0;
+		while (i < this.activeCommands.length) {
+			const cmd = this.activeCommands[i];
+			const delta = ((Date.now() - cmd.time) / 1000) * settings.steer.degPerSec;
+			if (cmd.data.direction === Direction.RIGHT) {
+				sub.course = Math.min(roundDecimal(sub.course + delta, 3), cmd.data.course);
+			} else {
+				sub.course = Math.max(roundDecimal(sub.course - delta, 3), cmd.data.course);
+			}
+			if (sub.course === cmd.data.course) {
+				this.activeCommands.splice(i, 1);
+			} else {
+				i++;
+			}
 		}
 	}
 
@@ -53,11 +66,14 @@ export class Helm implements Station {
 				return null;
 			}
 			return new Command(
-				this.type,
 				shortText,
-				commandId.SET_COURSE,
+				this.type,
+				commandType.SET_COURSE,
 				{ course, direction: Direction.RIGHT },
-				`Helm, right rudder, steer course ${Speech.toThreeNumbers(course)}`,
+				`Helm, right rudder, steer course ${Speech.toThreeDigits(course)}`,
+				`${Direction.RIGHT} rudder steer course ${Speech.toThreeDigits(course)} Conn Helm aye`,
+				true,
+				`Conn Helm, steady course ${Speech.toThreeDigits(course)}`,
 			);
 		} else if (shortText.startsWith('HLRSC')) {
 			const m = /^HLRSC([0-3][0-9][0-9])$/.exec(shortText);
@@ -69,20 +85,23 @@ export class Helm implements Station {
 				return null;
 			}
 			return new Command(
-				this.type,
 				shortText,
-				commandId.SET_COURSE,
+				this.type,
+				commandType.SET_COURSE,
 				{ course, direction: Direction.LEFT },
-				`Helm, left rudder, steer course ${Speech.toThreeNumbers(course)}`,
+				`Helm, left rudder, steer course ${Speech.toThreeDigits(course)}`,
+				`${Direction.LEFT} rudder steer course ${Speech.toThreeDigits(course)} Conn Helm aye`,
+				true,
+				`Conn Helm, steady course ${Speech.toThreeDigits(course)}`,
 			);
 		}
 		return null;
 	}
 
 	async executeCommand(command: Command) {
-		if (command.id === commandId.SET_COURSE) {
-			await this.speak(`${command.data.direction} rudder, steer course ${Speech.toThreeNumbers(command.data.course)}, Conn Helm, aye`);
-			this.game.getMySub().course = command.data.course;
+		await this.speak(command.responseSpeechText);
+		if (command.needsTimeToComplete) {
+			this.activeCommands.push(command);
 		}
 	}
 }

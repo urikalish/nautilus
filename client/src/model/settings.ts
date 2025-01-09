@@ -11,6 +11,9 @@ export const settings = {
 		test: 800, //feet
 		max: 1600, //feet
 	},
+	steer: {
+		degPerSec: 1,
+	},
 	tube: {
 		count: 4,
 	},
