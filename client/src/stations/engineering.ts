@@ -14,10 +14,6 @@ export class Engineering implements Station {
 		this.game = game;
 	}
 
-	async speak(text: string) {
-		await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
-	}
-
 	async report() {
 		const speed = this.game.getMySub().speed;
 		this.lastReportedSpeed = speed;
@@ -28,7 +24,7 @@ export class Engineering implements Station {
 			[settings.speed.oneThird]: 'one third',
 			0: 'stopped',
 		}[speed];
-		await this.speak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`);
+		await Speech.stationSpeak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`, this.type);
 	}
 
 	async tick() {

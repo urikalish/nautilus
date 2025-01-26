@@ -1,3 +1,5 @@
+import { StationType } from '../model/station-type';
+
 export class SpeakOptions {
 	voiceIndex?: number;
 	pitch?: number;
@@ -17,7 +19,7 @@ export class Speech {
 		window.speechSynthesis.getVoices();
 	}
 
-	static speak(text, options: SpeakOptions) {
+	static speak(text: string, options: SpeakOptions) {
 		return new Promise((resolve: any, reject: any) => {
 			const utterance = new SpeechSynthesisUtterance(text);
 			utterance.voice = Speech.voices[options.voiceIndex || 0];
@@ -28,6 +30,14 @@ export class Speech {
 			utterance.onerror = error => reject(error);
 			window.speechSynthesis.speak(utterance);
 		});
+	}
+
+	static async stationSpeak(text: string, stationType: StationType) {
+		if (stationType === StationType.CONN) {
+			await Speech.speak(text, { pitch: 1.0, rate: 1.5 });
+		} else {
+			await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
+		}
 	}
 
 	static toNatoPhonetic(letter: string): string {

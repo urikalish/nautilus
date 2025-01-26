@@ -1,16 +1,12 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Command } from '../model/command';
+import { Command, CommandType } from '../model/command';
 import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Direction } from '../model/direction';
 import { settings } from '../model/settings';
 import { roundDecimal } from '../services/utils';
-
-enum commandType {
-	SET_COURSE = 'set-course',
-}
 
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
@@ -41,7 +37,7 @@ export class Helm implements Station {
 		let i = 0;
 		while (i < this.activeCommands.length) {
 			const cmd = this.activeCommands[i];
-			const delta = ((Date.now() - cmd.time) / 1000) * settings.steer.degPerSec;
+			const delta = ((Date.now() - cmd.startTime) / 1000) * settings.steer.degPerSec;
 			if (cmd.data.direction === Direction.RIGHT) {
 				sub.course = Math.min(roundDecimal(sub.course + delta, 3), cmd.data.course);
 			} else {
@@ -68,7 +64,7 @@ export class Helm implements Station {
 			return new Command(
 				shortText,
 				this.type,
-				commandType.SET_COURSE,
+				CommandType.SET_COURSE,
 				{ course, direction: Direction.RIGHT },
 				`Helm, right rudder, steer course ${Speech.toThreeDigits(course)}`,
 				`${Direction.RIGHT} rudder steer course ${Speech.toThreeDigits(course)} Conn Helm aye`,
@@ -87,7 +83,7 @@ export class Helm implements Station {
 			return new Command(
 				shortText,
 				this.type,
-				commandType.SET_COURSE,
+				CommandType.SET_COURSE,
 				{ course, direction: Direction.LEFT },
 				`Helm, left rudder, steer course ${Speech.toThreeDigits(course)}`,
 				`${Direction.LEFT} rudder steer course ${Speech.toThreeDigits(course)} Conn Helm aye`,

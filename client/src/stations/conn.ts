@@ -7,22 +7,20 @@ import { StationType } from '../model/station-type';
 import { Engineering } from './engineering';
 import { Helm } from './helm';
 import { Navigation } from './navigation';
+import { Action, ActionType } from '../model/action';
 
 export class Conn implements Station {
 	type: StationType = StationType.CONN;
 	stations: Station[];
 	game: Game;
 	uiHelper: UiHelper;
-	command: Command | null = null;
+	tmpCommand: Command | null = null;
+	actions: Action[] = [];
 
 	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
 		this.stations = [new Navigation(game), new Helm(game), new Engineering(game)];
 		this.uiHelper = uiHelper;
-	}
-
-	async speak(text: string) {
-		await Speech.speak(text, { pitch: 1.0, rate: 1.5 });
 	}
 
 	async report() {}
@@ -32,21 +30,29 @@ export class Conn implements Station {
 			station.tick();
 		});
 		this.uiHelper.tick();
+		if (this.actions.length > 0) {
+			if (this.actions[0].actionType === ActionType.COMMAND) {
+				const cmd = this.actions[0] as Command;
+				this.actions.splice(0, 1);
+				await this.executeCommand(cmd);
+			}
+		}
 		setTimeout(this.tick.bind(this), 1000);
 	}
 
 	async handleCommandInputKeyUp(event) {
 		if (this.uiHelper.inpCommand!.value.trim() === '' || event.key === 'Escape') {
 			this.uiHelper.setCommandInputStatus('empty');
-			this.command = null;
+			this.tmpCommand = null;
 		} else if (event.key === 'Enter') {
-			if (this.command) {
+			if (this.tmpCommand) {
+				this.actions.push(this.tmpCommand);
 				this.uiHelper.setCommandInputStatus('empty');
-				await this.executeCommand(this.command);
+				this.tmpCommand = null;
 			}
 		} else {
-			this.command = this.parseCommand(event.target.value.trim().toUpperCase());
-			if (this.command) {
+			this.tmpCommand = this.parseCommand(event.target.value.trim().toUpperCase());
+			if (this.tmpCommand) {
 				this.uiHelper.setCommandInputStatus('valid');
 			} else {
 				this.uiHelper.setCommandInputStatus('invalid');
@@ -68,7 +74,7 @@ export class Conn implements Station {
 	async executeCommand(command: Command) {
 		for (const station of this.stations) {
 			if (command.stationType === station.type) {
-				await this.speak(command.commandSpeechText);
+				await Speech.stationSpeak(command.commandSpeechText, this.type);
 				await station.executeCommand(command);
 				break;
 			}
@@ -77,7 +83,7 @@ export class Conn implements Station {
 
 	async start() {
 		this.uiHelper.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
-		await this.speak(`Aye, all stations, report`);
+		await Speech.stationSpeak(`Aye, all stations, report`, this.type);
 		this.uiHelper.tick();
 		for (const station of this.stations) {
 			await station.report();

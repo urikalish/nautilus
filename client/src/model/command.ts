@@ -1,9 +1,15 @@
 import { StationType } from './station-type';
 import { getRandomNumber } from '../services/utils';
+import { Action, ActionType } from './action';
 
-export class Command {
+export enum CommandType {
+	SET_COURSE = 'set-course',
+}
+
+export class Command implements Action {
+	actionType: ActionType;
 	id: number;
-	time: number;
+	creationTime: number;
 	shortText: string;
 	stationType: StationType;
 	commandType: string;
@@ -11,6 +17,7 @@ export class Command {
 	commandSpeechText: string;
 	responseSpeechText: string;
 	needsTimeToComplete: boolean;
+	startTime: number;
 	completionSpeechText: string;
 
 	constructor(
@@ -23,8 +30,9 @@ export class Command {
 		needsTimeToComplete: boolean,
 		completionSpeechText: string,
 	) {
+		this.actionType = ActionType.COMMAND;
 		this.id = getRandomNumber(6);
-		this.time = Date.now();
+		this.creationTime = Date.now();
 		this.shortText = shortText;
 		this.stationType = stationType;
 		this.commandType = commandType;
@@ -32,6 +40,7 @@ export class Command {
 		this.commandSpeechText = commandSpeechText;
 		this.responseSpeechText = responseSpeechText;
 		this.needsTimeToComplete = needsTimeToComplete;
+		this.startTime = Date.now();
 		this.completionSpeechText = completionSpeechText;
 	}
 }

@@ -14,17 +14,13 @@ export class Navigation implements Station {
 		this.game = game;
 	}
 
-	async speak(text: string) {
-		await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
-	}
-
 	async report() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
 		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
-		await this.speak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`);
+		await Speech.stationSpeak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`, this.type);
 	}
 
 	async tick() {
