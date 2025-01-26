@@ -1,6 +1,7 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { Command } from '../model/command';
+import { Report } from '../model/report';
 import { UiHelper } from '../services/ui-helper';
 import { Station } from '../model/station';
 import { StationType } from '../model/station-type';
@@ -81,9 +82,14 @@ export class Conn implements Station {
 		}
 	}
 
+	async executeReport(report: Report) {
+		await Speech.stationSpeak(report.reportSpeechText, report.stationType);
+		await Speech.connSpeak(report.responseSpeechText);
+	}
+
 	async start() {
 		this.uiHelper.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
-		await Speech.stationSpeak(`Aye, all stations, report`, this.type);
+		await Speech.connSpeak(`Aye, all stations, report`);
 		this.uiHelper.tick();
 		for (const station of this.stations) {
 			await station.report();

@@ -7,6 +7,7 @@ import { Station } from '../model/station';
 import { Direction } from '../model/direction';
 import { settings } from '../model/settings';
 import { roundDecimal } from '../services/utils';
+import { Report } from '../model/report';
 
 export class Helm implements Station {
 	type: StationType = StationType.HELM;

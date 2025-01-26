@@ -40,6 +40,10 @@ export class Speech {
 		}
 	}
 
+	static async connSpeak(text: string) {
+		await Speech.stationSpeak(text, StationType.CONN);
+	}
+
 	static toNatoPhonetic(letter: string): string {
 		if (!letter) {
 			return '';

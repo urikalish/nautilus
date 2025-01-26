@@ -2,6 +2,10 @@ import { StationType } from './station-type';
 import { getRandomNumber } from '../services/utils';
 import { Action, ActionType } from './action';
 
+export enum ReportType {
+	REPORT = 'report',
+}
+
 export class Report implements Action {
 	actionType: ActionType;
 	id: number;
