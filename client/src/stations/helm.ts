@@ -19,19 +19,6 @@ export class Helm implements Station {
 		this.game = game;
 	}
 
-	async speak(text: string) {
-		await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
-	}
-
-	async report() {
-		// const course = this.game.getMySub().course;
-		// const depth = this.game.getMySub().depth;
-		// this.lastReportedCourse = course;
-		// this.lastReportedDepth = depth;
-		// console.log(`course:${course}, depth:${depth}`);
-		// await this.speak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`);
-	}
-
 	async tick() {
 		const sub: Sub = this.game.getMySub();
 		let i = 0;
@@ -52,8 +39,8 @@ export class Helm implements Station {
 	}
 
 	parseCommand(shortText: string): Command | null {
-		if (shortText === CommandShortText.NAVIGATION_REPORT) {
-			return new Command(CommandShortText.NAVIGATION_REPORT, this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report');
+		if (shortText === CommandShortText.HELM_REPORT) {
+			return new Command(CommandShortText.HELM_REPORT, this.type, CommandType.HELM_REPORT, null, 'Helm, report');
 		} else if (shortText.startsWith(CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE)) {
 			const m = new RegExp(`^${CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
@@ -66,7 +53,7 @@ export class Helm implements Station {
 			return new Command(
 				shortText,
 				this.type,
-				CommandType.SET_COURSE,
+				CommandType.RIGHT_RUDDER_SET_COURSE,
 				{ course, direction: Direction.RIGHT },
 				`Helm, right rudder, steer course ${Speech.toThreeDigits(course)}`,
 				`${Direction.RIGHT} rudder steer course ${Speech.toThreeDigits(course)}, aye`,
@@ -85,7 +72,7 @@ export class Helm implements Station {
 			return new Command(
 				shortText,
 				this.type,
-				CommandType.SET_COURSE,
+				CommandType.LEFT_RUDDER_SET_COURSE,
 				{ course, direction: Direction.LEFT },
 				`Helm, left rudder, steer course ${Speech.toThreeDigits(course)}`,
 				`${Direction.LEFT} rudder steer course ${Speech.toThreeDigits(course)}, aye`,
@@ -97,8 +84,15 @@ export class Helm implements Station {
 	}
 
 	async executeCommand(command: Command) {
-		await Speech.stationSpeak(command.responseSpeechText, this.type);
-		if (command.needsTimeToComplete) {
+		if (command.commandType === CommandType.HELM_REPORT) {
+			const course = this.game.getMySub().course;
+			const depth = this.game.getMySub().depth;
+			this.lastReportedCourse = course;
+			this.lastReportedDepth = depth;
+			console.log(`course:${course}, depth:${depth}`);
+			await Speech.stationSpeak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`, this.type);
+		} else if (command.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
+			await Speech.stationSpeak(command.responseSpeechText, this.type);
 			command.startTime = Date.now();
 			this.activeCommands.push(command);
 		}

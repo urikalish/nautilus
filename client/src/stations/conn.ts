@@ -107,13 +107,11 @@ export class Conn implements Station {
 
 	async start() {
 		await Speech.connSpeak(`Aye`);
+		await this.tick();
+		this.uiHelper.enableCommand();
 		const command = this.parseCommand('ASR');
 		if (command) {
 			this.addCommandAction(command);
 		}
-		setTimeout(() => {
-			this.tick();
-			this.uiHelper.enableCommand();
-		}, 10000);
 	}
 }

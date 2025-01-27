@@ -15,7 +15,8 @@ export enum CommandType {
 	NAVIGATION_REPORT = 'navigation-report',
 	HELM_REPORT = 'helm-report',
 	ENGINEERING_REPORT = 'engineering-report',
-	SET_COURSE = 'set-course',
+	RIGHT_RUDDER_SET_COURSE = 'right-rudder-set-course',
+	LEFT_RUDDER_SET_COURSE = 'left-rudder-set-course',
 }
 
 export class Command implements Action {
