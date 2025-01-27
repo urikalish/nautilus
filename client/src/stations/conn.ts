@@ -31,8 +31,14 @@ export class Conn implements Station {
 			station.tick();
 		});
 		this.uiHelper.tick();
-		if (this.actions.length === 0 || Speech.isTalking) {
-			setTimeout(this.tick.bind(this), 1000);
+	}
+
+	handleActions: () => void = async () => {
+		if (this.actions.length === 0) {
+			return;
+		}
+		if (Speech.isTalking) {
+			setTimeout(this.handleActions, 1000);
 			return;
 		}
 		const action = this.actions[0];
@@ -45,7 +51,9 @@ export class Conn implements Station {
 			this.actions.splice(0, 1);
 			await this.executeReport(report);
 		}
-		setTimeout(this.tick.bind(this), 1000);
+		if (this.actions.length > 0) {
+			setTimeout(this.handleActions, 1000);
+		}
 	}
 
 	parseCommand: (shortText: string) => Command | null = (shortText: string) => {
@@ -61,10 +69,12 @@ export class Conn implements Station {
 
 	addCommandAction: (command: Command) => void = (command: Command) => {
 		this.actions.push(command);
+		setTimeout(this.handleActions, 0);
 	};
 
 	addReportAction: (report: Report) => void = (report: Report) => {
 		this.actions.push(report);
+		setTimeout(this.handleActions, 0);
 	};
 
 	async executeCommand(command: Command) {
