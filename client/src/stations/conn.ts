@@ -31,6 +31,7 @@ export class Conn implements Station {
 			station.tick();
 		});
 		this.uiHelper.tick();
+		setTimeout(this.tick.bind(this), 1000);
 	}
 
 	handleActions: () => void = async () => {
@@ -54,7 +55,7 @@ export class Conn implements Station {
 		if (this.actions.length > 0) {
 			setTimeout(this.handleActions, 1000);
 		}
-	}
+	};
 
 	parseCommand: (shortText: string) => Command | null = (shortText: string) => {
 		let command: Command | null = null;
