@@ -113,7 +113,9 @@ export class Conn implements Station {
 		if (command) {
 			this.addCommandAction(command);
 		}
-		await this.tick();
-		this.uiHelper.enableCommand();
+		setTimeout(() => {
+			this.tick();
+			this.uiHelper.enableCommand();
+		}, 10000);
 	}
 }

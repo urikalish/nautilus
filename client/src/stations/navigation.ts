@@ -20,7 +20,6 @@ export class Navigation implements Station {
 	async report() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
-		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
 		this.onAddReportAction(
@@ -45,7 +44,7 @@ export class Navigation implements Station {
 		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;
-		if (newSector !== this.lastReportedSector) {
+		if (this.lastReportedSector !== '' && newSector !== this.lastReportedSector) {
 			await this.report();
 		}
 	}
@@ -59,7 +58,11 @@ export class Navigation implements Station {
 
 	async executeCommand(command: Command) {
 		if (command.commandType === CommandType.NAVIGATION_REPORT) {
-			await this.report();
+			const sub = this.game.getMySub();
+			const position = sub.position;
+			const sector = position.sector;
+			this.lastReportedSector = sector;
+			await Speech.stationSpeak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`, this.type);
 		}
 	}
 
