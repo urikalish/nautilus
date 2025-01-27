@@ -2,7 +2,7 @@ import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
-import { Command, CommandType } from '../model/command';
+import { Command, CommandShortText, CommandType } from '../model/command';
 import { roundDecimal } from '../services/utils';
 import { Report, ReportType } from '../model/report';
 
@@ -15,21 +15,6 @@ export class Navigation implements Station {
 	constructor(game: Game, onAddReportAction: (report: Report) => void) {
 		this.game = game;
 		this.onAddReportAction = onAddReportAction;
-	}
-
-	async report() {
-		const sub = this.game.getMySub();
-		const position = sub.position;
-		const sector = position.sector;
-		this.lastReportedSector = sector;
-		this.onAddReportAction(
-			new Report(
-				this.type,
-				ReportType.REPORT_SECTOR,
-				`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
-				`Very well`,
-			),
-		);
 	}
 
 	async tick() {
@@ -45,13 +30,24 @@ export class Navigation implements Station {
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;
 		if (this.lastReportedSector !== '' && newSector !== this.lastReportedSector) {
-			await this.report();
+			const sub = this.game.getMySub();
+			const position = sub.position;
+			const sector = position.sector;
+			this.lastReportedSector = sector;
+			this.onAddReportAction(
+				new Report(
+					this.type,
+					ReportType.REPORT_SECTOR,
+					`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
+					`Very well`,
+				),
+			);
 		}
 	}
 
 	parseCommand(shortText: string): Command | null {
-		if (shortText === 'NR') {
-			return new Command('NR', this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report', '', false, '');
+		if (shortText === CommandShortText.NAVIGATION_REPORT) {
+			return new Command(CommandShortText.NAVIGATION_REPORT, this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report');
 		}
 		return null;
 	}

@@ -1,6 +1,6 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Command, CommandType } from '../model/command';
+import { Command, CommandShortText, CommandType } from '../model/command';
 import { Sub } from '../model/sub';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
@@ -52,8 +52,10 @@ export class Helm implements Station {
 	}
 
 	parseCommand(shortText: string): Command | null {
-		if (shortText.startsWith('HRRSC')) {
-			const m = /^HRRSC([0-3][0-9][0-9])$/.exec(shortText);
+		if (shortText === CommandShortText.NAVIGATION_REPORT) {
+			return new Command(CommandShortText.NAVIGATION_REPORT, this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report');
+		} else if (shortText.startsWith(CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE)) {
+			const m = new RegExp(`^${CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
 				return null;
 			}
@@ -71,8 +73,8 @@ export class Helm implements Station {
 				true,
 				`Conn Helm, steady course ${Speech.toThreeDigits(course)}`,
 			);
-		} else if (shortText.startsWith('HLRSC')) {
-			const m = /^HLRSC([0-3][0-9][0-9])$/.exec(shortText);
+		} else if (shortText.startsWith(CommandShortText.HELM_LEFT_RUDDER_SET_COURSE)) {
+			const m = new RegExp(`^${CommandShortText.HELM_LEFT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
 				return null;
 			}

@@ -2,9 +2,19 @@ import { StationType } from './station-type';
 import { getRandomNumber } from '../services/utils';
 import { Action, ActionType } from './action';
 
+export const CommandShortText = {
+	NAVIGATION_REPORT: 'NR',
+	HELM_REPORT: 'HR',
+	ENGINEERING_REPORT: 'ER',
+	HELM_RIGHT_RUDDER_SET_COURSE: 'HRRSC',
+	HELM_LEFT_RUDDER_SET_COURSE: 'HLRSC',
+};
+
 export enum CommandType {
 	ALL_STATIONS_REPORT = 'all-stations-report',
 	NAVIGATION_REPORT = 'navigation-report',
+	HELM_REPORT = 'helm-report',
+	ENGINEERING_REPORT = 'engineering-report',
 	SET_COURSE = 'set-course',
 }
 
@@ -26,11 +36,11 @@ export class Command implements Action {
 		shortText: string,
 		stationType: StationType,
 		commandType: string,
-		data: any,
-		commandSpeechText: string,
-		responseSpeechText: string,
-		needsTimeToComplete: boolean,
-		completionSpeechText: string,
+		data: any = null,
+		commandSpeechText: string = '',
+		responseSpeechText: string = '',
+		needsTimeToComplete: boolean = false,
+		completionSpeechText: string = '',
 	) {
 		this.actionType = ActionType.COMMAND;
 		this.id = getRandomNumber(6);

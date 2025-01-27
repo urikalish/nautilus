@@ -1,6 +1,6 @@
 import { Speech } from '../services/speech';
 import { Game } from '../model/game';
-import { Command, CommandType } from '../model/command';
+import { Command, CommandShortText, CommandType } from '../model/command';
 import { Report } from '../model/report';
 import { UiHelper } from '../services/ui-helper';
 import { Station } from '../model/station';
@@ -23,8 +23,6 @@ export class Conn implements Station {
 		this.uiHelper = uiHelper;
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}
-
-	async report() {}
 
 	async tick() {
 		this.stations.forEach(station => {
@@ -70,7 +68,7 @@ export class Conn implements Station {
 	parseCommand: (shortText: string) => Command | null = (shortText: string) => {
 		let command: Command | null = null;
 		if (shortText === 'ASR') {
-			return new Command(shortText, this.type, CommandType.ALL_STATIONS_REPORT, null, `All stations, report`, '', false, '');
+			return new Command(shortText, this.type, CommandType.ALL_STATIONS_REPORT, null, `All stations, report`);
 		}
 		for (const station of this.stations) {
 			command = station.parseCommand(shortText);
@@ -84,7 +82,7 @@ export class Conn implements Station {
 	async executeCommand(command: Command) {
 		if (command.commandType === CommandType.ALL_STATIONS_REPORT) {
 			await Speech.connSpeak(command.commandSpeechText);
-			['NR'].forEach(cmdStr => {
+			[CommandShortText.NAVIGATION_REPORT, CommandShortText.HELM_REPORT, CommandShortText.ENGINEERING_REPORT].forEach(cmdStr => {
 				const command = this.parseCommand(cmdStr);
 				if (command) {
 					command.commandSpeechText = '';
