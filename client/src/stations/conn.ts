@@ -81,7 +81,7 @@ export class Conn implements Station {
 	async executeCommand(command: Command) {
 		for (const station of this.stations) {
 			if (command.stationType === station.type) {
-				await Speech.stationSpeak(command.commandSpeechText, this.type);
+				await Speech.connSpeak(command.commandSpeechText);
 				await station.executeCommand(command);
 				break;
 			}

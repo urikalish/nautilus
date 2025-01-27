@@ -96,8 +96,9 @@ export class Helm implements Station {
 	}
 
 	async executeCommand(command: Command) {
-		await this.speak(command.responseSpeechText);
+		await Speech.stationSpeak(command.responseSpeechText, this.type);
 		if (command.needsTimeToComplete) {
+			command.startTime = Date.now();
 			this.activeCommands.push(command);
 		}
 	}
