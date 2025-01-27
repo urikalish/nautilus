@@ -3,6 +3,8 @@ import { getRandomNumber } from '../services/utils';
 import { Action, ActionType } from './action';
 
 export enum CommandType {
+	ALL_STATIONS_REPORT = 'all-stations-report',
+	NAVIGATION_REPORT = 'navigation-report',
 	SET_COURSE = 'set-course',
 }
 

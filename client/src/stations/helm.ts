@@ -7,7 +7,6 @@ import { Station } from '../model/station';
 import { Direction } from '../model/direction';
 import { settings } from '../model/settings';
 import { roundDecimal } from '../services/utils';
-import { Report } from '../model/report';
 
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
@@ -25,12 +24,12 @@ export class Helm implements Station {
 	}
 
 	async report() {
-		const course = this.game.getMySub().course;
-		const depth = this.game.getMySub().depth;
-		this.lastReportedCourse = course;
-		this.lastReportedDepth = depth;
-		console.log(`course:${course}, depth:${depth}`);
-		await this.speak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`);
+		// const course = this.game.getMySub().course;
+		// const depth = this.game.getMySub().depth;
+		// this.lastReportedCourse = course;
+		// this.lastReportedDepth = depth;
+		// console.log(`course:${course}, depth:${depth}`);
+		// await this.speak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`);
 	}
 
 	async tick() {

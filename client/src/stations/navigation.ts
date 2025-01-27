@@ -2,7 +2,7 @@ import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
-import { Command } from '../model/command';
+import { Command, CommandType } from '../model/command';
 import { roundDecimal } from '../services/utils';
 import { Report, ReportType } from '../model/report';
 
@@ -51,10 +51,17 @@ export class Navigation implements Station {
 	}
 
 	parseCommand(shortText: string): Command | null {
+		if (shortText === 'NR') {
+			return new Command('NR', this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report', '', false, '');
+		}
 		return null;
 	}
 
-	async executeCommand(command: Command) {}
+	async executeCommand(command: Command) {
+		if (command.commandType === CommandType.NAVIGATION_REPORT) {
+			await this.report();
+		}
+	}
 
 	static calcDistance(x1: number, y1: number, x2: number, y2: number): number {
 		return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);

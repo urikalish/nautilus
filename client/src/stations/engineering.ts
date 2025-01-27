@@ -1,5 +1,3 @@
-import { settings } from '../model/settings';
-import { Speech } from '../services/speech';
 import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
@@ -15,16 +13,16 @@ export class Engineering implements Station {
 	}
 
 	async report() {
-		const speed = this.game.getMySub().speed;
-		this.lastReportedSpeed = speed;
-		console.log(`speed: ${speed}`);
-		const engineStatus: string = {
-			[settings.speed.full]: 'full',
-			[settings.speed.twoThirds]: 'two thirds',
-			[settings.speed.oneThird]: 'one third',
-			0: 'stopped',
-		}[speed];
-		await Speech.stationSpeak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`, this.type);
+		// const speed = this.game.getMySub().speed;
+		// this.lastReportedSpeed = speed;
+		// console.log(`speed: ${speed}`);
+		// const engineStatus: string = {
+		// 	[settings.speed.full]: 'full',
+		// 	[settings.speed.twoThirds]: 'two thirds',
+		// 	[settings.speed.oneThird]: 'one third',
+		// 	0: 'stopped',
+		// }[speed];
+		// await Speech.stationSpeak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`, this.type);
 	}
 
 	async tick() {
