@@ -3,7 +3,7 @@ import { getRandomNumber } from '../services/utils';
 import { Action, ActionType } from './action';
 
 export enum ReportType {
-	REPORT = 'report',
+	REPORT_SECTOR = 'report-sector',
 }
 
 export class Report implements Action {
@@ -15,7 +15,7 @@ export class Report implements Action {
 	reportSpeechText: string;
 	responseSpeechText: string;
 
-	constructor(shortText: string, stationType: StationType, reportType: string, reportSpeechText: string, responseSpeechText: string) {
+	constructor(stationType: StationType, reportType: string, reportSpeechText: string, responseSpeechText: string) {
 		this.actionType = ActionType.REPORT;
 		this.id = getRandomNumber(6);
 		this.creationTime = Date.now();

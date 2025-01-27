@@ -19,7 +19,7 @@ export class Conn implements Station {
 
 	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
-		this.stations = [new Navigation(game), new Helm(game), new Engineering(game)];
+		this.stations = [new Navigation(game, this.addReportAction), new Helm(game), new Engineering(game)];
 		this.uiHelper = uiHelper;
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}
@@ -31,12 +31,19 @@ export class Conn implements Station {
 			station.tick();
 		});
 		this.uiHelper.tick();
-		if (this.actions.length > 0) {
-			if (this.actions[0].actionType === ActionType.COMMAND) {
-				const cmd = this.actions[0] as Command;
-				this.actions.splice(0, 1);
-				await this.executeCommand(cmd);
-			}
+		if (this.actions.length === 0 || Speech.isTalking) {
+			setTimeout(this.tick.bind(this), 1000);
+			return;
+		}
+		const action = this.actions[0];
+		if (action.actionType === ActionType.COMMAND) {
+			const command = action as Command;
+			this.actions.splice(0, 1);
+			await this.executeCommand(command);
+		} else if (this.actions[0].actionType === ActionType.REPORT) {
+			const report = action as Report;
+			this.actions.splice(0, 1);
+			await this.executeReport(report);
 		}
 		setTimeout(this.tick.bind(this), 1000);
 	}
@@ -54,6 +61,10 @@ export class Conn implements Station {
 
 	addCommandAction: (command: Command) => void = (command: Command) => {
 		this.actions.push(command);
+	};
+
+	addReportAction: (report: Report) => void = (report: Report) => {
+		this.actions.push(report);
 	};
 
 	async executeCommand(command: Command) {

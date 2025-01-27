@@ -68,7 +68,7 @@ export class Helm implements Station {
 				CommandType.SET_COURSE,
 				{ course, direction: Direction.RIGHT },
 				`Helm, right rudder, steer course ${Speech.toThreeDigits(course)}`,
-				`${Direction.RIGHT} rudder steer course ${Speech.toThreeDigits(course)} Conn Helm aye`,
+				`${Direction.RIGHT} rudder steer course ${Speech.toThreeDigits(course)}, aye`,
 				true,
 				`Conn Helm, steady course ${Speech.toThreeDigits(course)}`,
 			);
@@ -87,7 +87,7 @@ export class Helm implements Station {
 				CommandType.SET_COURSE,
 				{ course, direction: Direction.LEFT },
 				`Helm, left rudder, steer course ${Speech.toThreeDigits(course)}`,
-				`${Direction.LEFT} rudder steer course ${Speech.toThreeDigits(course)} Conn Helm aye`,
+				`${Direction.LEFT} rudder steer course ${Speech.toThreeDigits(course)}, aye`,
 				true,
 				`Conn Helm, steady course ${Speech.toThreeDigits(course)}`,
 			);

@@ -4,14 +4,17 @@ import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Command } from '../model/command';
 import { roundDecimal } from '../services/utils';
+import { Report, ReportType } from '../model/report';
 
 export class Navigation implements Station {
 	type: StationType = StationType.NAVIGATION;
 	game: Game;
+	onAddReportAction: (report: Report) => void;
 	lastReportedSector: string = '';
 
-	constructor(game: Game) {
+	constructor(game: Game, onAddReportAction: (report: Report) => void) {
 		this.game = game;
+		this.onAddReportAction = onAddReportAction;
 	}
 
 	async report() {
@@ -20,7 +23,14 @@ export class Navigation implements Station {
 		console.log(`position: ${position}`);
 		const sector = position.sector;
 		this.lastReportedSector = sector;
-		await Speech.stationSpeak(`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`, this.type);
+		this.onAddReportAction(
+			new Report(
+				this.type,
+				ReportType.REPORT_SECTOR,
+				`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
+				`Very well`,
+			),
+		);
 	}
 
 	async tick() {
