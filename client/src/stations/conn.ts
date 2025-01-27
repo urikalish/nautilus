@@ -15,13 +15,13 @@ export class Conn implements Station {
 	stations: Station[];
 	game: Game;
 	uiHelper: UiHelper;
-	tmpCommand: Command | null = null;
 	actions: Action[] = [];
 
 	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
 		this.stations = [new Navigation(game), new Helm(game), new Engineering(game)];
 		this.uiHelper = uiHelper;
+		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}
 
 	async report() {}
@@ -41,27 +41,7 @@ export class Conn implements Station {
 		setTimeout(this.tick.bind(this), 1000);
 	}
 
-	async handleCommandInputKeyUp(event) {
-		if (this.uiHelper.inpCommand!.value.trim() === '' || event.key === 'Escape') {
-			this.uiHelper.setCommandInputStatus('empty');
-			this.tmpCommand = null;
-		} else if (event.key === 'Enter') {
-			if (this.tmpCommand) {
-				this.actions.push(this.tmpCommand);
-				this.uiHelper.setCommandInputStatus('empty');
-				this.tmpCommand = null;
-			}
-		} else {
-			this.tmpCommand = this.parseCommand(event.target.value.trim().toUpperCase());
-			if (this.tmpCommand) {
-				this.uiHelper.setCommandInputStatus('valid');
-			} else {
-				this.uiHelper.setCommandInputStatus('invalid');
-			}
-		}
-	}
-
-	parseCommand(shortText: string): Command | null {
+	parseCommand: (shortText: string) => Command | null = (shortText: string) => {
 		let command: Command | null = null;
 		for (const station of this.stations) {
 			command = station.parseCommand(shortText);
@@ -70,7 +50,11 @@ export class Conn implements Station {
 			}
 		}
 		return command;
-	}
+	};
+
+	addCommandAction: (command: Command) => void = (command: Command) => {
+		this.actions.push(command);
+	};
 
 	async executeCommand(command: Command) {
 		for (const station of this.stations) {
@@ -88,7 +72,6 @@ export class Conn implements Station {
 	}
 
 	async start() {
-		this.uiHelper.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp.bind(this));
 		await Speech.connSpeak(`Aye, all stations, report`);
 		this.uiHelper.tick();
 		for (const station of this.stations) {

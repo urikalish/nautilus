@@ -1,4 +1,5 @@
 import { Game } from '../model/game';
+import { Command } from '../model/command';
 
 export class UiHelper {
 	game: Game;
@@ -9,6 +10,9 @@ export class UiHelper {
 	imgWheel2Outer: HTMLImageElement | null = null;
 	commandPane: HTMLDivElement | null = null;
 	inpCommand: HTMLInputElement | null = null;
+	tmpCommand: Command | null = null;
+	onParseCommand: ((shortText: string) => Command | null) | null = null;
+	onAddCommandAction: ((command: Command) => void) | null = null;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -20,6 +24,11 @@ export class UiHelper {
 
 	static hideElement(elm: HTMLElement | null) {
 		elm?.classList.add('display--none');
+	}
+
+	setCallbacks(parseCommandCB: (shortText: string) => Command | null, addCommandActionCB: (command: Command) => void) {
+		this.onParseCommand = parseCommandCB;
+		this.onAddCommandAction = addCommandActionCB;
 	}
 
 	enableCommand() {
@@ -51,6 +60,26 @@ export class UiHelper {
 		}
 	}
 
+	handleCommandInputKeyUp: (event) => void = event => {
+		if (this.inpCommand!.value.trim() === '' || event.key === 'Escape') {
+			this.setCommandInputStatus('empty');
+			this.tmpCommand = null;
+		} else if (event.key === 'Enter') {
+			if (this.tmpCommand) {
+				this.onAddCommandAction!(this.tmpCommand);
+				this.setCommandInputStatus('empty');
+				this.tmpCommand = null;
+			}
+		} else {
+			this.tmpCommand = this.onParseCommand!(event.target.value.trim().toUpperCase());
+			if (this.tmpCommand) {
+				this.setCommandInputStatus('valid');
+			} else {
+				this.setCommandInputStatus('invalid');
+			}
+		}
+	};
+
 	tick() {
 		const mySub = this.game.getMySub();
 		const enemySub = this.game.getEnemySub();
@@ -72,6 +101,7 @@ export class UiHelper {
 		this.imgWheel2Outer = document.getElementById('img-wheel-2-outer') as HTMLImageElement;
 		this.commandPane = document.getElementById('command-pane') as HTMLDivElement;
 		this.inpCommand = document.getElementById('inp-command') as HTMLInputElement;
+		this.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp);
 		this.createBoardSectorElements();
 	}
 

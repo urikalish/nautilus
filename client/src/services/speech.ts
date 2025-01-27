@@ -8,6 +8,7 @@ export class SpeakOptions {
 }
 
 export class Speech {
+	static isTalking: boolean = false;
 	static synth: SpeechSynthesis;
 	static voices: SpeechSynthesisVoice[] = [];
 
@@ -26,8 +27,12 @@ export class Speech {
 			utterance.pitch = options.pitch || 1;
 			utterance.rate = options.rate || 1;
 			utterance.volume = options.volume || 1;
-			utterance.onend = () => resolve();
+			utterance.onend = () => {
+				Speech.isTalking = false;
+				resolve();
+			};
 			utterance.onerror = error => reject(error);
+			Speech.isTalking = true;
 			window.speechSynthesis.speak(utterance);
 		});
 	}
