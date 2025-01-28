@@ -26,9 +26,13 @@ export class Helm implements Station {
 			const cmd = this.activeCommands[i];
 			const delta = ((Date.now() - cmd.startTime) / 1000) * settings.steer.degPerSec;
 			if (cmd.data.direction === Direction.RIGHT) {
-				sub.course = Math.min(roundDecimal(sub.course + delta, 3), cmd.data.course);
+				sub.rotation = Math.min(roundDecimal(sub.course + delta, 3), cmd.data.course);
 			} else {
-				sub.course = Math.max(roundDecimal(sub.course - delta, 3), cmd.data.course);
+				sub.rotation = Math.max(roundDecimal(sub.course - delta, 3), cmd.data.course);
+			}
+			sub.course = sub.rotation % 360;
+			if (sub.course < 0) {
+				sub.course += 360;
 			}
 			if (sub.course === cmd.data.course) {
 				this.activeCommands.splice(i, 1);
@@ -89,7 +93,6 @@ export class Helm implements Station {
 			const depth = this.game.getMySub().depth;
 			this.lastReportedCourse = course;
 			this.lastReportedDepth = depth;
-			console.log(`course:${course}, depth:${depth}`);
 			await Speech.stationSpeak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`, this.type);
 		} else if (command.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
 			await Speech.stationSpeak(command.responseSpeechText, this.type);

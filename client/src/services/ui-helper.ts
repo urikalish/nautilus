@@ -89,8 +89,8 @@ export class UiHelper {
 		this.boardMarkerEnemySub!.style.left = `${12.5 * enemySub.position.x}%`;
 		this.boardMarkerEnemySub!.style.bottom = `${12.5 * enemySub.position.y}%`;
 		UiHelper.showElement(this.boardMarkerEnemySub);
-		this.pane1sub!.style.transform = `rotate(${mySub.course}deg`;
-		this.imgWheel2Outer!.style.transform = `rotate(-${mySub.course}deg`;
+		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
+		this.imgWheel2Outer!.style.transform = `rotate(-${mySub.rotation}deg`;
 	}
 
 	start() {
