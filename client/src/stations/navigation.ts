@@ -24,8 +24,8 @@ export class Navigation implements Station {
 		const dTime = newTime - position.time;
 		const dDistance = (sub.speed / 3600000) * dTime;
 		const angleRad = ((sub.course - 90) * Math.PI) / 180;
-		const newX = position.x + dDistance * Math.cos(angleRad);
-		const newY = position.y - dDistance * Math.sin(angleRad);
+		const newX = roundDecimal(position.x + dDistance * Math.cos(angleRad), 6);
+		const newY = roundDecimal(position.y - dDistance * Math.sin(angleRad), 6);
 		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;
