@@ -95,8 +95,11 @@ export class Speech {
 		return natoPhonetic[letter.toUpperCase()];
 	}
 
-	static toNatoPhoneticThreeDigits(num: number): string {
-		const numStr = toThreeDigits(num);
-		return `${Speech.toNatoPhonetic(numStr[0])} ${Speech.toNatoPhonetic(numStr[1])} ${Speech.toNatoPhonetic(numStr[2])}`;
+	static toNatoPhoneticDigits(numStr: string): string {
+		let str = '';
+		for (let i = 0; i < numStr.length; i++) {
+			str += Speech.toNatoPhonetic(numStr[i]);
+		}
+		return str;
 	}
 }

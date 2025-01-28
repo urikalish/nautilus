@@ -6,7 +6,7 @@ import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Direction } from '../model/direction';
 import { settings } from '../model/settings';
-import { roundDecimal } from '../services/utils';
+import { roundDecimal, toThreeDigits } from '../services/utils';
 import { Report, ReportType } from '../model/report';
 
 export class Helm implements Station {
@@ -48,7 +48,7 @@ export class Helm implements Station {
 				sub.course = roundDecimal(this.getCourseByRotation(sub.rotation), 6);
 				if (sub.course === cmd.data.course) {
 					this.activeCommands.splice(i, 1);
-					const threeDigitsCourse = Speech.toNatoPhoneticThreeDigits(sub.course);
+					const threeDigitsCourse = Speech.toNatoPhoneticDigits(toThreeDigits(sub.course));
 					this.onAddReportAction(
 						new Report(
 							this.type,
@@ -96,7 +96,7 @@ export class Helm implements Station {
 			if (course >= 360) {
 				return null;
 			}
-			const coursePhonetic = Speech.toNatoPhoneticThreeDigits(course);
+			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
 			return new Command(
 				shortText,
 				this.type,
@@ -116,7 +116,7 @@ export class Helm implements Station {
 			if (course >= 360) {
 				return null;
 			}
-			const coursePhonetic = Speech.toNatoPhoneticThreeDigits(course);
+			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
 			return new Command(
 				shortText,
 				this.type,
@@ -136,15 +136,16 @@ export class Helm implements Station {
 			if (depth < 0 || depth > settings.depth.max) {
 				return null;
 			}
+			const depthPhonetic = Speech.toNatoPhoneticDigits('' + depth);
 			return new Command(
 				shortText,
 				this.type,
 				CommandType.MAKE_MY_DEPTH,
 				{ depth },
-				`Make my depth ${depth} feet`,
-				`Make my depth ${depth} feet, aye`,
+				`Make my depth ${depthPhonetic} feet`,
+				`Make my depth ${depthPhonetic} feet, aye`,
 				true,
-				`Conn Helm, depth ${depth} feet`,
+				`Conn Helm, depth ${depthPhonetic} feet`,
 			);
 		}
 		return null;
@@ -154,7 +155,7 @@ export class Helm implements Station {
 		if (command.commandType === CommandType.HELM_REPORT) {
 			const course = this.game.getMySub().course;
 			const depth = this.game.getMySub().depth;
-			const coursePhonetic = Speech.toNatoPhoneticThreeDigits(course);
+			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
 			await Speech.stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${depth} feet`, this.type);
 		} else if (command.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
 			await Speech.stationSpeak(command.responseSpeechText, this.type);
