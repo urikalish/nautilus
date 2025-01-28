@@ -5,6 +5,7 @@ import { Action, ActionType } from './action';
 export enum ReportType {
 	REPORT_SECTOR = 'report-sector',
 	REPORT_COURSE = 'report-course',
+	REPORT_DEPTH = 'report-depth',
 }
 
 export class Report implements Action {

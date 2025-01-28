@@ -28,16 +28,16 @@ export class Conn implements Station {
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}
 
-	updateStationsAndUI() {
-		this.stations.forEach(station => {
-			station.tick();
-		});
+	async updateStationsAndUI() {
+		for (const station of this.stations) {
+			await station.tick();
+		}
 		this.uiHelper.tick();
 	}
 
 	async tick() {
-		this.updateStationsAndUI();
-		setTimeout(this.tick.bind(this), 500);
+		await this.updateStationsAndUI();
+		setTimeout(this.tick.bind(this), 1000);
 	}
 
 	handleActions: () => void = async () => {
@@ -48,7 +48,7 @@ export class Conn implements Station {
 			setTimeout(this.handleActions, 1000);
 			return;
 		}
-		this.updateStationsAndUI();
+		await this.updateStationsAndUI();
 		const action = this.actions[0];
 		if (action.actionType === ActionType.COMMAND) {
 			const command = action as Command;
@@ -59,7 +59,7 @@ export class Conn implements Station {
 			this.actions.splice(0, 1);
 			await this.executeReport(report);
 		}
-		this.updateStationsAndUI();
+		await this.updateStationsAndUI();
 		if (this.actions.length > 0) {
 			setTimeout(this.handleActions, 1000);
 		}
@@ -120,7 +120,7 @@ export class Conn implements Station {
 		await Speech.connSpeak(`Aye`);
 		await this.tick();
 		this.uiHelper.enableCommand();
-		const command = this.parseCommand('ASR');
+		const command = this.parseCommand(CommandShortText.ALL_STATIONS_REPORT);
 		if (command) {
 			this.addCommandAction(command);
 		}

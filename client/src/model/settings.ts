@@ -10,6 +10,7 @@ export const settings = {
 	depth: {
 		test: 800, //feet
 		max: 1600, //feet
+		feetPerSec: 3,
 	},
 	steer: {
 		degPerSec: 1,

@@ -3,11 +3,13 @@ import { getRandomNumber } from '../services/utils';
 import { Action, ActionType } from './action';
 
 export const CommandShortText = {
+	ALL_STATIONS_REPORT: 'ASR',
 	NAVIGATION_REPORT: 'NR',
 	HELM_REPORT: 'HR',
 	ENGINEERING_REPORT: 'ER',
-	HELM_RIGHT_RUDDER_SET_COURSE: 'HRRSC',
-	HELM_LEFT_RUDDER_SET_COURSE: 'HLRSC',
+	RIGHT_RUDDER_SET_COURSE: 'RRSC',
+	LEFT_RUDDER_SET_COURSE: 'LRSC',
+	MAKE_MY_DEPTH: 'MMD',
 };
 
 export enum CommandType {
@@ -17,6 +19,7 @@ export enum CommandType {
 	ENGINEERING_REPORT = 'engineering-report',
 	RIGHT_RUDDER_SET_COURSE = 'right-rudder-set-course',
 	LEFT_RUDDER_SET_COURSE = 'left-rudder-set-course',
+	MAKE_MY_DEPTH = 'make-my-depth',
 }
 
 export class Command implements Action {

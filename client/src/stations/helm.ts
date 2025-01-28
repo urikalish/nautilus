@@ -61,14 +61,34 @@ export class Helm implements Station {
 					i++;
 				}
 			}
+			if (cmd.commandType === CommandType.MAKE_MY_DEPTH) {
+				const delta = roundDecimal(((Date.now() - cmd.startTime) / 1000) * settings.depth.feetPerSec, 6);
+				let d, depth;
+				if (cmd.data.depth > sub.depth) {
+					d = roundDecimal(cmd.data.depth - sub.depth - delta, 6);
+					depth = d >= 0 ? sub.depth + delta : sub.depth + delta + d;
+				} else {
+					d = roundDecimal(sub.depth - cmd.data.depth - delta, 6);
+					depth = d >= 0 ? sub.depth - delta : sub.depth - delta - d;
+				}
+				sub.depth = roundDecimal(depth, 6);
+				if (sub.depth === cmd.data.depth) {
+					this.activeCommands.splice(i, 1);
+					this.onAddReportAction(
+						new Report(this.type, ReportType.REPORT_DEPTH, `Conn Helm, current depth ${sub.depth} feet`, `${sub.depth} feet, aye`),
+					);
+				} else {
+					i++;
+				}
+			}
 		}
 	}
 
 	parseCommand(shortText: string): Command | null {
 		if (shortText === CommandShortText.HELM_REPORT) {
 			return new Command(CommandShortText.HELM_REPORT, this.type, CommandType.HELM_REPORT, null, 'Helm, report');
-		} else if (shortText.startsWith(CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE)) {
-			const m = new RegExp(`^${CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
+		} else if (shortText.startsWith(CommandShortText.RIGHT_RUDDER_SET_COURSE)) {
+			const m = new RegExp(`^${CommandShortText.RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
 				return null;
 			}
@@ -82,13 +102,13 @@ export class Helm implements Station {
 				this.type,
 				CommandType.RIGHT_RUDDER_SET_COURSE,
 				{ course, direction: Direction.RIGHT },
-				`Helm, right rudder, steer course ${coursePhonetic}`,
-				`${Direction.RIGHT} rudder steer course ${coursePhonetic}, aye`,
+				`Right rudder steer course ${coursePhonetic}`,
+				`Right rudder steer course ${coursePhonetic}, aye`,
 				true,
 				`Conn Helm, steady course ${coursePhonetic}`,
 			);
-		} else if (shortText.startsWith(CommandShortText.HELM_LEFT_RUDDER_SET_COURSE)) {
-			const m = new RegExp(`^${CommandShortText.HELM_LEFT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
+		} else if (shortText.startsWith(CommandShortText.LEFT_RUDDER_SET_COURSE)) {
+			const m = new RegExp(`^${CommandShortText.LEFT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
 				return null;
 			}
@@ -102,10 +122,29 @@ export class Helm implements Station {
 				this.type,
 				CommandType.LEFT_RUDDER_SET_COURSE,
 				{ course, direction: Direction.LEFT },
-				`Helm, left rudder, steer course ${coursePhonetic}`,
-				`${Direction.LEFT} rudder steer course ${coursePhonetic}, aye`,
+				`Left rudder steer course ${coursePhonetic}`,
+				`Left rudder steer course ${coursePhonetic}, aye`,
 				true,
 				`Conn Helm, steady course ${coursePhonetic}`,
+			);
+		} else if (shortText.startsWith(CommandShortText.MAKE_MY_DEPTH)) {
+			const m = new RegExp(`^${CommandShortText.MAKE_MY_DEPTH}(\\d{0,4})F$`).exec(shortText);
+			if (!m) {
+				return null;
+			}
+			const depth = parseInt(m[1]);
+			if (depth < 0 || depth > settings.depth.max) {
+				return null;
+			}
+			return new Command(
+				shortText,
+				this.type,
+				CommandType.MAKE_MY_DEPTH,
+				{ depth },
+				`Make my depth ${depth} feet`,
+				`Make my depth ${depth} feet, aye`,
+				true,
+				`Conn Helm, depth ${depth} feet`,
 			);
 		}
 		return null;
@@ -123,6 +162,19 @@ export class Helm implements Station {
 			while (i < this.activeCommands.length) {
 				const cmd = this.activeCommands[i];
 				if (cmd.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
+					this.activeCommands.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
+			command.startTime = Date.now();
+			this.activeCommands.push(command);
+		} else if (command.commandType === CommandType.MAKE_MY_DEPTH) {
+			await Speech.stationSpeak(command.responseSpeechText, this.type);
+			let i = 0;
+			while (i < this.activeCommands.length) {
+				const cmd = this.activeCommands[i];
+				if (cmd.commandType === CommandType.MAKE_MY_DEPTH) {
 					this.activeCommands.splice(i, 1);
 				} else {
 					i++;

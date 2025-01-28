@@ -90,14 +90,14 @@ export class UiHelper {
 		const mySub = this.game.getMySub();
 		this.infoPane!.innerHTML = '';
 		const info = [
-			'sector',
+			'SECTOR',
 			mySub.position.sector,
-			'course',
-			toThreeDigits(Math.round(mySub.course)) + ' deg',
-			'depth',
-			toFourDigits(Math.round(mySub.depth)) + ' feet',
-			'speed',
-			toTwoDigits(Math.round(mySub.speed)) + ' knots',
+			'COURSE',
+			toThreeDigits(Math.round(mySub.course)),
+			'DEPTH (ft)',
+			Math.round(mySub.depth),
+			'SPEED (kn)',
+			Math.round(mySub.speed),
 		];
 		for (let i = 0; i < info.length; i += 2) {
 			const labelElm = document.createElement('div');
