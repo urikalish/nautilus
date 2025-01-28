@@ -19,7 +19,11 @@ export class Conn implements Station {
 
 	constructor(game: Game, uiHelper: UiHelper) {
 		this.game = game;
-		this.stations = [new Navigation(game, this.addReportAction), new Helm(game, this.addReportAction), new Engineering(game, this.addReportAction)];
+		this.stations = [
+			new Navigation(game, this.addReportAction),
+			new Helm(game, this.addReportAction),
+			new Engineering(game, this.addReportAction),
+		];
 		this.uiHelper = uiHelper;
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}

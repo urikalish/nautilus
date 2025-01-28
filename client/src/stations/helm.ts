@@ -50,7 +50,12 @@ export class Helm implements Station {
 					this.activeCommands.splice(i, 1);
 					const threeDigitsCourse = Speech.toThreeDigits(sub.course);
 					this.onAddReportAction(
-						new Report(this.type, ReportType.REPORT_COURSE, `Conn Helm, current course, ${threeDigitsCourse}`, `${threeDigitsCourse}, aye`),
+						new Report(
+							this.type,
+							ReportType.REPORT_COURSE,
+							`Conn Helm, current course, ${threeDigitsCourse}`,
+							`${threeDigitsCourse}, aye`,
+						),
 					);
 				} else {
 					i++;
