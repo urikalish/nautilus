@@ -7,16 +7,25 @@ import { Station } from '../model/station';
 import { Direction } from '../model/direction';
 import { settings } from '../model/settings';
 import { roundDecimal } from '../services/utils';
+import { Report, ReportType } from '../model/report';
 
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
 	game: Game;
-	lastReportedCourse: number = -1;
-	lastReportedDepth: number = -1;
+	onAddReportAction: (report: Report) => void;
 	activeCommands: Command[] = [];
 
-	constructor(game: Game) {
+	constructor(game: Game, onAddReportAction: (report: Report) => void) {
 		this.game = game;
+		this.onAddReportAction = onAddReportAction;
+	}
+
+	getCourseByRotation(rotation: number) {
+		let course = rotation % 360;
+		if (course < 0) {
+			course += 360;
+		}
+		return course;
 	}
 
 	async tick() {
@@ -24,20 +33,28 @@ export class Helm implements Station {
 		let i = 0;
 		while (i < this.activeCommands.length) {
 			const cmd = this.activeCommands[i];
-			const delta = ((Date.now() - cmd.startTime) / 1000) * settings.steer.degPerSec;
-			if (cmd.data.direction === Direction.RIGHT) {
-				sub.rotation = Math.min(roundDecimal(sub.course + delta, 3), cmd.data.course);
-			} else {
-				sub.rotation = Math.max(roundDecimal(sub.course - delta, 3), cmd.data.course);
-			}
-			sub.course = sub.rotation % 360;
-			if (sub.course < 0) {
-				sub.course += 360;
-			}
-			if (sub.course === cmd.data.course) {
-				this.activeCommands.splice(i, 1);
-			} else {
-				i++;
+			if (cmd.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
+				const delta = roundDecimal(((Date.now() - cmd.startTime) / 1000) * settings.steer.degPerSec, 6);
+				let d;
+				if (cmd.data.direction === Direction.RIGHT) {
+					const targetCourse = cmd.data.course >= sub.course ? cmd.data.course : cmd.data.course + 360;
+					d = roundDecimal(targetCourse - sub.course - delta, 6);
+					sub.rotation = d >= 0 ? sub.rotation + delta : sub.rotation + delta + d;
+				} else {
+					const sourceCourse = sub.course >= cmd.data.course ? sub.course : sub.course + 360;
+					d = roundDecimal(sourceCourse - cmd.data.course - delta, 6);
+					sub.rotation = d >= 0 ? sub.rotation - delta : sub.rotation - delta - d;
+				}
+				sub.course = roundDecimal(this.getCourseByRotation(sub.rotation), 6);
+				if (sub.course === cmd.data.course) {
+					this.activeCommands.splice(i, 1);
+					const threeDigitsCourse = Speech.toThreeDigits(sub.course);
+					this.onAddReportAction(
+						new Report(this.type, ReportType.REPORT_COURSE, `Conn Helm, current course, ${threeDigitsCourse}`, `${threeDigitsCourse}, aye`),
+					);
+				} else {
+					i++;
+				}
 			}
 		}
 	}
@@ -91,8 +108,6 @@ export class Helm implements Station {
 		if (command.commandType === CommandType.HELM_REPORT) {
 			const course = this.game.getMySub().course;
 			const depth = this.game.getMySub().depth;
-			this.lastReportedCourse = course;
-			this.lastReportedDepth = depth;
 			await Speech.stationSpeak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`, this.type);
 		} else if (command.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
 			await Speech.stationSpeak(command.responseSpeechText, this.type);

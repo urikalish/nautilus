@@ -3,13 +3,16 @@ import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Command, CommandShortText, CommandType } from '../model/command';
 import { Speech } from '../services/speech';
+import { Report } from '../model/report';
 
 export class Engineering implements Station {
 	type: StationType = StationType.ENGINEERING;
 	game: Game;
+	onAddReportAction: (report: Report) => void;
 
-	constructor(game: Game) {
+	constructor(game: Game, onAddReportAction: (report: Report) => void) {
 		this.game = game;
+		this.onAddReportAction = onAddReportAction;
 	}
 
 	async tick() {}
