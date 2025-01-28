@@ -93,6 +93,15 @@ export class Helm implements Station {
 			await Speech.stationSpeak(`Conn Helm, course ${Speech.toThreeDigits(course)}, depth ${depth} feet`, this.type);
 		} else if (command.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
 			await Speech.stationSpeak(command.responseSpeechText, this.type);
+			let i = 0;
+			while (i < this.activeCommands.length) {
+				const cmd = this.activeCommands[i];
+				if (cmd.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
+					this.activeCommands.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
 			command.startTime = Date.now();
 			this.activeCommands.push(command);
 		}
