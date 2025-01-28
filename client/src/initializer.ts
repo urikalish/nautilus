@@ -37,9 +37,11 @@ export class Initializer {
 		const btnStart = document.getElementById('btn-start');
 		btnStart!.addEventListener('click', async () => {
 			UiHelper.hideElement(btnStart);
-			const wrapperElm = document.getElementById('wrapper');
-			UiHelper.showElement(wrapperElm);
 			await this.start();
+			setTimeout(() => {
+				const wrapperElm = document.getElementById('wrapper');
+				UiHelper.showElement(wrapperElm);
+			}, 2000);
 		});
 	}
 }
