@@ -37,7 +37,7 @@ export class Conn implements Station {
 
 	async tick() {
 		await this.updateStationsAndUI();
-		setTimeout(this.tick.bind(this), 1000);
+		setTimeout(this.tick.bind(this), 500);
 	}
 
 	handleActions: () => void = async () => {
@@ -57,7 +57,7 @@ export class Conn implements Station {
 		} else if (this.actions[0].actionType === ActionType.REPORT) {
 			const report = action as Report;
 			this.actions.splice(0, 1);
-			await this.executeReport(report);
+			this.executeReport(report);
 		}
 		await this.updateStationsAndUI();
 		if (this.actions.length > 0) {
@@ -104,14 +104,14 @@ export class Conn implements Station {
 		for (const station of this.stations) {
 			if (command.stationType === station.type) {
 				await Speech.connSpeak(command.commandSpeechText);
-				this.updateStationsAndUI();
+				await this.updateStationsAndUI();
 				await station.executeCommand(command);
 				break;
 			}
 		}
 	}
 
-	async executeReport(report: Report) {
+	executeReport(report: Report) {
 		Speech.stationSpeak(report.reportSpeechText, report.stationType).then(() => {});
 		Speech.connSpeak(report.responseSpeechText).then(() => {});
 	}
