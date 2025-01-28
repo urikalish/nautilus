@@ -96,7 +96,7 @@ export class UiHelper {
 			toThreeDigits(Math.round(mySub.course)),
 			'DEPTH (ft)',
 			Math.round(mySub.depth),
-			'SPEED (kn)',
+			'SPEED (kts)',
 			Math.round(mySub.speed),
 		];
 		for (let i = 0; i < info.length; i += 2) {
