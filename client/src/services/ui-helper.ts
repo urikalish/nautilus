@@ -123,9 +123,6 @@ export class UiHelper {
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		const invertedRotation = -mySub.rotation;
 		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
-
-		console.log(this.pane1sub!.style.transform + ' ' + this.imgWheel2Outer!.style.transform);
-
 		this.refreshInfo();
 	}
 
