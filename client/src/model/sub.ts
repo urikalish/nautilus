@@ -4,6 +4,7 @@ export class Sub {
 	index: number;
 	position: Position;
 	course: number; //degrees
+	rotation: number; //degrees
 	speed: number; //knots
 	depth: number; //feet
 
@@ -11,6 +12,7 @@ export class Sub {
 		this.index = index;
 		this.position = position;
 		this.course = course;
+		this.rotation = course <= 180 ? course : course - 360;
 		this.speed = speed;
 		this.depth = depth;
 	}

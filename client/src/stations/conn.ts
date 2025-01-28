@@ -24,12 +24,16 @@ export class Conn implements Station {
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}
 
-	async tick() {
+	updateStationsAndUI() {
 		this.stations.forEach(station => {
 			station.tick();
 		});
 		this.uiHelper.tick();
-		setTimeout(this.tick.bind(this), 1000);
+	}
+
+	async tick() {
+		this.updateStationsAndUI();
+		setTimeout(this.tick.bind(this), 500);
 	}
 
 	handleActions: () => void = async () => {
@@ -40,6 +44,7 @@ export class Conn implements Station {
 			setTimeout(this.handleActions, 1000);
 			return;
 		}
+		this.updateStationsAndUI();
 		const action = this.actions[0];
 		if (action.actionType === ActionType.COMMAND) {
 			const command = action as Command;
@@ -50,6 +55,7 @@ export class Conn implements Station {
 			this.actions.splice(0, 1);
 			await this.executeReport(report);
 		}
+		this.updateStationsAndUI();
 		if (this.actions.length > 0) {
 			setTimeout(this.handleActions, 1000);
 		}
@@ -94,6 +100,7 @@ export class Conn implements Station {
 		for (const station of this.stations) {
 			if (command.stationType === station.type) {
 				await Speech.connSpeak(command.commandSpeechText);
+				this.updateStationsAndUI();
 				await station.executeCommand(command);
 				break;
 			}
@@ -101,8 +108,8 @@ export class Conn implements Station {
 	}
 
 	async executeReport(report: Report) {
-		await Speech.stationSpeak(report.reportSpeechText, report.stationType);
-		await Speech.connSpeak(report.responseSpeechText);
+		Speech.stationSpeak(report.reportSpeechText, report.stationType).then(() => {});
+		Speech.connSpeak(report.responseSpeechText).then(() => {});
 	}
 
 	async start() {
