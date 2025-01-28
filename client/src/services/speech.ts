@@ -1,4 +1,5 @@
 import { StationType } from '../model/station-type';
+import { toThreeDigits } from './utils';
 
 export class SpeakOptions {
 	voiceIndex?: number;
@@ -94,13 +95,8 @@ export class Speech {
 		return natoPhonetic[letter.toUpperCase()];
 	}
 
-	static toThreeDigits(num: number): string {
-		let numStr = num.toString();
-		if (numStr.length === 1) {
-			numStr = '00' + numStr;
-		} else if (numStr.length === 2) {
-			numStr = '0' + numStr;
-		}
+	static toNatoPhoneticThreeDigits(num: number): string {
+		const numStr = toThreeDigits(num);
 		return `${Speech.toNatoPhonetic(numStr[0])} ${Speech.toNatoPhonetic(numStr[1])} ${Speech.toNatoPhonetic(numStr[2])}`;
 	}
 }

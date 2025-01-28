@@ -1,5 +1,6 @@
 import { Game } from '../model/game';
 import { Command } from '../model/command';
+import { toFourDigits, toThreeDigits, toTwoDigits } from './utils';
 
 export class UiHelper {
 	game: Game;
@@ -13,6 +14,7 @@ export class UiHelper {
 	tmpCommand: Command | null = null;
 	onParseCommand: ((shortText: string) => Command | null) | null = null;
 	onAddCommandAction: ((command: Command) => void) | null = null;
+	infoPane: HTMLDivElement | null = null;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -24,6 +26,10 @@ export class UiHelper {
 
 	static hideElement(elm: HTMLElement | null) {
 		elm?.classList.add('display--none');
+	}
+
+	static getElm(elmId: string): HTMLElement | null {
+		return document.getElementById(elmId) || null;
 	}
 
 	setCallbacks(parseCommandCB: (shortText: string) => Command | null, addCommandActionCB: (command: Command) => void) {
@@ -80,6 +86,31 @@ export class UiHelper {
 		}
 	};
 
+	refreshInfo() {
+		const mySub = this.game.getMySub();
+		this.infoPane!.innerHTML = '';
+		const info = [
+			'sector',
+			mySub.position.sector,
+			'course',
+			toThreeDigits(Math.round(mySub.course)) + ' deg',
+			'depth',
+			toFourDigits(Math.round(mySub.depth)) + ' feet',
+			'speed',
+			toTwoDigits(Math.round(mySub.speed)) + ' knots',
+		];
+		for (let i = 0; i < info.length; i += 2) {
+			const labelElm = document.createElement('div');
+			labelElm.classList.add('info-label');
+			labelElm.textContent = '' + info[i];
+			this.infoPane!.appendChild(labelElm);
+			const dataElm = document.createElement('div');
+			dataElm.classList.add('info-data');
+			dataElm.textContent = '' + info[i + 1];
+			this.infoPane!.appendChild(dataElm);
+		}
+	}
+
 	tick() {
 		const mySub = this.game.getMySub();
 		const enemySub = this.game.getEnemySub();
@@ -91,17 +122,19 @@ export class UiHelper {
 		UiHelper.showElement(this.boardMarkerEnemySub);
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		this.imgWheel2Outer!.style.transform = `rotate(-${mySub.rotation}deg`;
+		this.refreshInfo();
 	}
 
 	start() {
-		this.board = document.getElementById('board') as HTMLDivElement;
-		this.boardMarkerMySub = document.getElementById('board-marker-my-sub') as HTMLImageElement;
-		this.boardMarkerEnemySub = document.getElementById('board-marker-enemy-sub') as HTMLImageElement;
-		this.pane1sub = document.getElementById('pn-1-sub') as HTMLDivElement;
-		this.imgWheel2Outer = document.getElementById('img-wheel-2-outer') as HTMLImageElement;
-		this.commandPane = document.getElementById('command-pane') as HTMLDivElement;
-		this.inpCommand = document.getElementById('inp-command') as HTMLInputElement;
+		this.board = UiHelper.getElm('board') as HTMLDivElement;
+		this.boardMarkerMySub = UiHelper.getElm('board-marker-my-sub') as HTMLImageElement;
+		this.boardMarkerEnemySub = UiHelper.getElm('board-marker-enemy-sub') as HTMLImageElement;
+		this.pane1sub = UiHelper.getElm('pn-1-sub') as HTMLDivElement;
+		this.imgWheel2Outer = UiHelper.getElm('img-wheel-2-outer') as HTMLImageElement;
+		this.commandPane = UiHelper.getElm('command-pane') as HTMLDivElement;
+		this.inpCommand = UiHelper.getElm('inp-command') as HTMLInputElement;
 		this.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp);
+		this.infoPane = UiHelper.getElm('info-pane') as HTMLDivElement;
 		this.createBoardSectorElements();
 	}
 

@@ -17,3 +17,33 @@ export function getDateTime(date: Date) {
 export function roundDecimal(number: number, decimalPlaces: number): number {
 	return Math.round(number * 10 ** decimalPlaces) / 10 ** decimalPlaces;
 }
+
+export function toTwoDigits(num: number): string {
+	let numStr = num.toString();
+	if (numStr.length === 1) {
+		numStr = '0' + numStr;
+	}
+	return numStr;
+}
+
+export function toThreeDigits(num: number): string {
+	let numStr = num.toString();
+	if (numStr.length === 1) {
+		numStr = '00' + numStr;
+	} else if (numStr.length === 2) {
+		numStr = '0' + numStr;
+	}
+	return numStr;
+}
+
+export function toFourDigits(num: number): string {
+	let numStr = num.toString();
+	if (numStr.length === 1) {
+		numStr = '000' + numStr;
+	} else if (numStr.length === 2) {
+		numStr = '00' + numStr;
+	} else if (numStr.length === 3) {
+		numStr = '0' + numStr;
+	}
+	return numStr;
+}
