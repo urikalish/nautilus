@@ -1,6 +1,6 @@
 import { Game } from '../model/game';
 import { Command } from '../model/command';
-import { toFourDigits, toThreeDigits, toTwoDigits } from './utils';
+import { toThreeDigits } from './utils';
 
 export class UiHelper {
 	game: Game;
@@ -121,7 +121,11 @@ export class UiHelper {
 		this.boardMarkerEnemySub!.style.bottom = `${12.5 * enemySub.position.y}%`;
 		UiHelper.showElement(this.boardMarkerEnemySub);
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
-		this.imgWheel2Outer!.style.transform = `rotate(-${mySub.rotation}deg`;
+		const invertedRotation = -mySub.rotation;
+		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
+
+		console.log(this.pane1sub!.style.transform + ' ' + this.imgWheel2Outer!.style.transform);
+
 		this.refreshInfo();
 	}
 
