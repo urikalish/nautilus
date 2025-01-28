@@ -24,8 +24,8 @@ export class Navigation implements Station {
 		const dTime = newTime - position.time;
 		const dDistance = (sub.speed / 3600000) * dTime;
 		const angleRad = ((sub.course - 90) * Math.PI) / 180;
-		const newX = roundDecimal(position.x + dDistance * Math.cos(angleRad), 3);
-		const newY = roundDecimal(position.y - dDistance * Math.sin(angleRad), 3);
+		const newX = position.x + dDistance * Math.cos(angleRad);
+		const newY = position.y - dDistance * Math.sin(angleRad);
 		position.setPosition(newTime, newX, newY);
 		const newPosition = sub.position;
 		const newSector = newPosition.sector;
@@ -34,13 +34,9 @@ export class Navigation implements Station {
 			const position = sub.position;
 			const sector = position.sector;
 			this.lastReportedSector = sector;
+			const sectorPhonetics = `${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`;
 			this.onAddReportAction(
-				new Report(
-					this.type,
-					ReportType.REPORT_SECTOR,
-					`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
-					`Very well`,
-				),
+				new Report(this.type, ReportType.REPORT_SECTOR, `Conn Navigation, current sector, ${sectorPhonetics}`, `${sectorPhonetics}, aye`),
 			);
 		}
 	}

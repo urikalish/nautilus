@@ -2,7 +2,6 @@ import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Command, CommandShortText, CommandType } from '../model/command';
-import { settings } from '../model/settings';
 import { Speech } from '../services/speech';
 
 export class Engineering implements Station {
@@ -25,13 +24,7 @@ export class Engineering implements Station {
 	async executeCommand(command: Command) {
 		if (command.shortText === CommandShortText.ENGINEERING_REPORT) {
 			const speed = this.game.getMySub().speed;
-			const engineStatus: string = {
-				[settings.speed.full]: 'full',
-				[settings.speed.twoThirds]: 'two thirds',
-				[settings.speed.oneThird]: 'one third',
-				0: 'stopped',
-			}[speed];
-			await Speech.stationSpeak(`Conn Engineering, engine ${engineStatus}, speed ${speed} knots`, this.type);
+			await Speech.stationSpeak(`Conn Engineering, speed ${speed} knots`, this.type);
 		}
 	}
 }
