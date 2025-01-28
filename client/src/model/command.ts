@@ -33,7 +33,7 @@ export class Command implements Action {
 	commandSpeechText: string;
 	responseSpeechText: string;
 	needsTimeToComplete: boolean;
-	startTime: number;
+	lastTickTime: number;
 	completionSpeechText: string;
 
 	constructor(
@@ -56,7 +56,7 @@ export class Command implements Action {
 		this.commandSpeechText = commandSpeechText;
 		this.responseSpeechText = responseSpeechText;
 		this.needsTimeToComplete = needsTimeToComplete;
-		this.startTime = Date.now();
+		this.lastTickTime = Date.now();
 		this.completionSpeechText = completionSpeechText;
 	}
 }

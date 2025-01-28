@@ -34,7 +34,7 @@ export class Helm implements Station {
 		while (i < this.activeCommands.length) {
 			const cmd = this.activeCommands[i];
 			if (cmd.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
-				const delta = roundDecimal(((Date.now() - cmd.startTime) / 1000) * settings.steer.degPerSec, 6);
+				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.steer.degPerSec, 6);
 				let d;
 				if (cmd.data.direction === Direction.RIGHT) {
 					const targetCourse = cmd.data.course >= sub.course ? cmd.data.course : cmd.data.course + 360;
@@ -46,6 +46,7 @@ export class Helm implements Station {
 					sub.rotation = d >= 0 ? sub.rotation - delta : sub.rotation - delta - d;
 				}
 				sub.course = roundDecimal(this.getCourseByRotation(sub.rotation), 6);
+				cmd.lastTickTime = Date.now();
 				if (sub.course === cmd.data.course) {
 					this.activeCommands.splice(i, 1);
 					const threeDigitsCourse = Speech.toNatoPhoneticDigits(toThreeDigits(sub.course));
@@ -62,7 +63,7 @@ export class Helm implements Station {
 				}
 			}
 			if (cmd.commandType === CommandType.MAKE_MY_DEPTH) {
-				const delta = roundDecimal(((Date.now() - cmd.startTime) / 1000) * settings.depth.feetPerSec, 6);
+				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.depth.feetPerSec, 6);
 				let d, depth;
 				if (cmd.data.depth > sub.depth) {
 					d = roundDecimal(cmd.data.depth - sub.depth - delta, 6);
@@ -72,6 +73,7 @@ export class Helm implements Station {
 					depth = d >= 0 ? sub.depth - delta : sub.depth - delta - d;
 				}
 				sub.depth = roundDecimal(depth, 6);
+				cmd.lastTickTime = Date.now();
 				if (sub.depth === cmd.data.depth) {
 					this.activeCommands.splice(i, 1);
 					this.onAddReportAction(
@@ -168,7 +170,7 @@ export class Helm implements Station {
 					i++;
 				}
 			}
-			command.startTime = Date.now();
+			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
 		} else if (command.commandType === CommandType.MAKE_MY_DEPTH) {
 			await Speech.stationSpeak(command.responseSpeechText, this.type);
@@ -181,7 +183,7 @@ export class Helm implements Station {
 					i++;
 				}
 			}
-			command.startTime = Date.now();
+			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
 		}
 	}

@@ -13,7 +13,7 @@ export const settings = {
 		feetPerSec: 3,
 	},
 	steer: {
-		degPerSec: 1,
+		degPerSec: 3,
 	},
 	tube: {
 		count: 4,
