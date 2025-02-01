@@ -1,6 +1,6 @@
 import { getRandomNumber } from '../services/utils';
 
-export class Torpedo {
+export class Contact {
 	id: number;
 
 	constructor() {

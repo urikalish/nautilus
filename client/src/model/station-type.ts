@@ -1,10 +1,10 @@
 export enum StationType {
 	NA = '',
 	CONN = 'conn',
-	ENGINEERING = 'engineering',
-	HELM = 'helm',
 	NAVIGATION = 'navigation',
-	RADIO = 'radio',
+	HELM = 'helm',
+	ENGINEERING = 'engineering',
 	SONAR = 'sonar',
+	RADIO = 'radio',
 	WEAPONS = 'weapons',
 }

@@ -1,6 +1,8 @@
 import { Position } from './position';
+import { getRandomNumber } from '../services/utils';
 
 export class Sub {
+	id: number;
 	index: number;
 	position: Position;
 	course: number; //degrees
@@ -9,6 +11,7 @@ export class Sub {
 	depth: number; //feet
 
 	constructor(index: number, position: Position, course: number, speed: number, depth: number) {
+		this.id = getRandomNumber(6);
 		this.index = index;
 		this.position = position;
 		this.course = course;

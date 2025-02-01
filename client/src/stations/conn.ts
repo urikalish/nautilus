@@ -9,6 +9,7 @@ import { Engineering } from './engineering';
 import { Helm } from './helm';
 import { Navigation } from './navigation';
 import { Action, ActionType } from '../model/action';
+import { Sonar } from './sonar';
 
 export class Conn implements Station {
 	type: StationType = StationType.CONN;
@@ -23,6 +24,7 @@ export class Conn implements Station {
 			new Navigation(game, this.addReportAction),
 			new Helm(game, this.addReportAction),
 			new Engineering(game, this.addReportAction),
+			new Sonar(game, this.addReportAction),
 		];
 		this.uiHelper = uiHelper;
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
