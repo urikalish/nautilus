@@ -1,4 +1,4 @@
-import { Speech } from '../services/speech';
+import { connSpeak, Speech, stationSpeak } from '../services/speech';
 import { Game } from '../model/game';
 import { Command, CommandShortText, CommandType } from '../model/command';
 import { Report } from '../model/report';
@@ -31,7 +31,7 @@ export class Conn implements Station {
 	}
 
 	async start() {
-		await Speech.connSpeak(`Aye`);
+		await connSpeak(`Aye`);
 		await this.tick();
 		this.uiHelper.enableCommand();
 		const command = this.parseCommand(CommandShortText.ALL_STATIONS_REPORT);
@@ -56,7 +56,7 @@ export class Conn implements Station {
 
 	async executeCommand(command: Command) {
 		if (command.commandType === CommandType.ALL_STATIONS_REPORT) {
-			await Speech.connSpeak(command.commandSpeechText);
+			await connSpeak(command.commandSpeechText);
 			[
 				CommandShortText.NAVIGATION_REPORT,
 				CommandShortText.HELM_REPORT,
@@ -73,7 +73,7 @@ export class Conn implements Station {
 		}
 		for (const station of this.stations) {
 			if (command.stationType === station.type) {
-				await Speech.connSpeak(command.commandSpeechText);
+				await connSpeak(command.commandSpeechText);
 				await this.updateStationsAndUI();
 				await station.executeCommand(command);
 				break;
@@ -82,8 +82,8 @@ export class Conn implements Station {
 	}
 
 	executeReport(report: Report) {
-		Speech.stationSpeak(report.reportSpeechText, report.stationType).then(() => {});
-		Speech.connSpeak(report.responseSpeechText).then(() => {});
+		stationSpeak(report.reportSpeechText, report.stationType).then(() => {});
+		connSpeak(report.responseSpeechText).then(() => {});
 	}
 
 	async updateStationsAndUI() {

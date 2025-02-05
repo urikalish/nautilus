@@ -2,7 +2,7 @@ import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Command, CommandShortText, CommandType } from '../model/command';
-import { Speech } from '../services/speech';
+import { stationSpeak, toNatoPhoneticDigits } from '../services/speech';
 import { Report } from '../model/report';
 import { EngineState } from '../model/engine-state';
 import { settings } from '../model/settings';
@@ -76,8 +76,8 @@ export class Maneuvering implements Station {
 		if (command.shortText === CommandShortText.MANEUVERING_REPORT) {
 			const state = this.game.getMySub().engineState;
 			const speed = this.game.getMySub().speed;
-			await Speech.stationSpeak(
-				`Conn maneuvering, engine ${this.getEngineStateSpeechByEngineState(state)}, speed ${Speech.toNatoPhoneticDigits(speed.toString())} knots`,
+			await stationSpeak(
+				`Conn maneuvering, engine ${this.getEngineStateSpeechByEngineState(state)}, speed ${toNatoPhoneticDigits(speed.toString())} knots`,
 				this.type,
 			);
 		}

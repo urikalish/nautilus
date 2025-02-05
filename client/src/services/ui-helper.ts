@@ -3,6 +3,18 @@ import { Command } from '../model/command';
 import { toThreeDigits } from './utils';
 import { settings } from '../model/settings';
 
+export function showElement(elm: HTMLElement | null) {
+	elm?.classList.remove('display--none');
+}
+
+export function hideElement(elm: HTMLElement | null) {
+	elm?.classList.add('display--none');
+}
+
+function getElm(elmId: string): HTMLElement | null {
+	return document.getElementById(elmId) || null;
+}
+
 export class UiHelper {
 	game: Game;
 	board: HTMLDivElement | null = null;
@@ -20,18 +32,6 @@ export class UiHelper {
 
 	constructor(game: Game) {
 		this.game = game;
-	}
-
-	static showElement(elm: HTMLElement | null) {
-		elm?.classList.remove('display--none');
-	}
-
-	static hideElement(elm: HTMLElement | null) {
-		elm?.classList.add('display--none');
-	}
-
-	static getElm(elmId: string): HTMLElement | null {
-		return document.getElementById(elmId) || null;
 	}
 
 	setCallbacks(parseCommandCB: (shortText: string) => Command | null, addCommandActionCB: (command: Command) => void) {
@@ -132,10 +132,10 @@ export class UiHelper {
 		const enemySub = this.game.getEnemySub();
 		this.boardMarkerMySub!.style.left = `${12.5 * mySub.position.x}%`;
 		this.boardMarkerMySub!.style.bottom = `${12.5 * mySub.position.y}%`;
-		UiHelper.showElement(this.boardMarkerMySub);
+		showElement(this.boardMarkerMySub);
 		this.boardMarkerEnemySub!.style.left = `${12.5 * enemySub.position.x}%`;
 		this.boardMarkerEnemySub!.style.bottom = `${12.5 * enemySub.position.y}%`;
-		UiHelper.showElement(this.boardMarkerEnemySub);
+		showElement(this.boardMarkerEnemySub);
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		const invertedRotation = -mySub.rotation;
 		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
@@ -144,18 +144,18 @@ export class UiHelper {
 	}
 
 	start() {
-		this.board = UiHelper.getElm('board') as HTMLDivElement;
-		this.boardMarkerMySub = UiHelper.getElm('board-marker-my-sub') as HTMLImageElement;
-		this.boardMarkerEnemySub = UiHelper.getElm('board-marker-enemy-sub') as HTMLImageElement;
-		this.pane1sub = UiHelper.getElm('pn-1-sub') as HTMLDivElement;
-		this.imgWheel2Outer = UiHelper.getElm('img-wheel-2-outer') as HTMLImageElement;
-		this.commandPane = UiHelper.getElm('command-pane') as HTMLDivElement;
-		this.inpCommand = UiHelper.getElm('inp-command') as HTMLInputElement;
+		this.board = getElm('board') as HTMLDivElement;
+		this.boardMarkerMySub = getElm('board-marker-my-sub') as HTMLImageElement;
+		this.boardMarkerEnemySub = getElm('board-marker-enemy-sub') as HTMLImageElement;
+		this.pane1sub = getElm('pn-1-sub') as HTMLDivElement;
+		this.imgWheel2Outer = getElm('img-wheel-2-outer') as HTMLImageElement;
+		this.commandPane = getElm('command-pane') as HTMLDivElement;
+		this.inpCommand = getElm('inp-command') as HTMLInputElement;
 		this.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp);
-		this.cnvWaterfall = UiHelper.getElm('cnv-waterfall') as HTMLCanvasElement;
+		this.cnvWaterfall = getElm('cnv-waterfall') as HTMLCanvasElement;
 		this.cnvWaterfall.width = 360;
 		this.cnvWaterfall.height = settings.sonar.waterfallRows;
-		this.infoPane = UiHelper.getElm('info-pane') as HTMLDivElement;
+		this.infoPane = getElm('info-pane') as HTMLDivElement;
 		this.createBoardSectorElements();
 	}
 

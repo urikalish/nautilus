@@ -1,4 +1,4 @@
-import { Speech } from '../services/speech';
+import { stationSpeak, toNatoPhoneticDigits } from '../services/speech';
 import { Game } from '../model/game';
 import { Command, CommandShortText, CommandType } from '../model/command';
 import { Sub } from '../model/sub';
@@ -32,7 +32,7 @@ export class Helm implements Station {
 			if (course >= 360) {
 				return null;
 			}
-			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
+			const coursePhonetic = toNatoPhoneticDigits(toThreeDigits(course));
 			return new Command(
 				shortText,
 				this.type,
@@ -51,7 +51,7 @@ export class Helm implements Station {
 			if (course >= 360) {
 				return null;
 			}
-			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
+			const coursePhonetic = toNatoPhoneticDigits(toThreeDigits(course));
 			return new Command(
 				shortText,
 				this.type,
@@ -70,7 +70,7 @@ export class Helm implements Station {
 			if (depth < 0 || depth > settings.depth.max) {
 				return null;
 			}
-			const depthPhonetic = Speech.toNatoPhoneticDigits('' + depth);
+			const depthPhonetic = toNatoPhoneticDigits('' + depth);
 			return new Command(
 				shortText,
 				this.type,
@@ -88,13 +88,13 @@ export class Helm implements Station {
 		if (command.commandType === CommandType.HELM_REPORT) {
 			const course = this.game.getMySub().course;
 			const depth = this.game.getMySub().depth;
-			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
-			await Speech.stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${Speech.toNatoPhoneticDigits(depth.toString())} feet`, this.type);
+			const coursePhonetic = toNatoPhoneticDigits(toThreeDigits(course));
+			await stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${toNatoPhoneticDigits(depth.toString())} feet`, this.type);
 		} else if (
 			command.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE ||
 			command.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE
 		) {
-			await Speech.stationSpeak(command.responseSpeechText, this.type);
+			await stationSpeak(command.responseSpeechText, this.type);
 			let i = 0;
 			while (i < this.activeCommands.length) {
 				const cmd = this.activeCommands[i];
@@ -107,7 +107,7 @@ export class Helm implements Station {
 			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
 		} else if (command.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
-			await Speech.stationSpeak(command.responseSpeechText, this.type);
+			await stationSpeak(command.responseSpeechText, this.type);
 			let i = 0;
 			while (i < this.activeCommands.length) {
 				const cmd = this.activeCommands[i];
@@ -151,7 +151,7 @@ export class Helm implements Station {
 				cmd.lastTickTime = Date.now();
 				if (sub.course === cmd.data.course) {
 					this.activeCommands.splice(i, 1);
-					const threeDigitsCourse = Speech.toNatoPhoneticDigits(toThreeDigits(sub.course));
+					const threeDigitsCourse = toNatoPhoneticDigits(toThreeDigits(sub.course));
 					this.onAddReportAction(
 						new Report(
 							this.type,

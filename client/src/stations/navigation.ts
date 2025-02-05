@@ -1,4 +1,4 @@
-import { Speech } from '../services/speech';
+import { stationSpeak, toNatoPhonetic } from '../services/speech';
 import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
@@ -30,10 +30,7 @@ export class Navigation implements Station {
 			const position = sub.position;
 			const sector = position.sector;
 			this.lastReportedSector = sector;
-			await Speech.stationSpeak(
-				`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
-				this.type,
-			);
+			await stationSpeak(`Conn Navigation, current sector, ${toNatoPhonetic(sector[0])} ${toNatoPhonetic(sector[1])}`, this.type);
 		}
 	}
 
@@ -54,7 +51,7 @@ export class Navigation implements Station {
 			const position = sub.position;
 			const sector = position.sector;
 			this.lastReportedSector = sector;
-			const sectorPhonetics = `${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`;
+			const sectorPhonetics = `${toNatoPhonetic(sector[0])} ${toNatoPhonetic(sector[1])}`;
 			this.onAddReportAction(
 				new Report(this.type, ReportType.REPORT_SECTOR, `Conn Navigation, current sector, ${sectorPhonetics}`, `${sectorPhonetics}, aye`),
 			);

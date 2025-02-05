@@ -2,7 +2,7 @@ import { Game } from '../model/game';
 import { StationType } from '../model/station-type';
 import { Station } from '../model/station';
 import { Command, CommandShortText, CommandType } from '../model/command';
-import { Speech } from '../services/speech';
+import { stationSpeak } from '../services/speech';
 import { Report } from '../model/report';
 import { Contact } from '../model/contact';
 import { Sub } from '../model/sub';
@@ -59,9 +59,9 @@ export class Sonar implements Station {
 		const contacts = sub.contacts;
 		if (command.shortText === CommandShortText.SONAR_REPORT) {
 			if (contacts.length) {
-				await Speech.stationSpeak(`Conn Sonar, tracking ${contacts.length} contacts`, this.type);
+				await stationSpeak(`Conn Sonar, tracking ${contacts.length} contacts`, this.type);
 			} else {
-				await Speech.stationSpeak(`Conn Sonar, no contacts`, this.type);
+				await stationSpeak(`Conn Sonar, no contacts`, this.type);
 			}
 		}
 	}

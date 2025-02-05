@@ -6,7 +6,7 @@ import { settings } from './model/settings';
 import { calcDistance, getRandomNumber } from './services/utils';
 import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
-import { UiHelper } from './services/ui-helper';
+import { hideElement, showElement } from './services/ui-helper';
 import { EngineState } from './model/engine-state';
 
 export class Initializer {
@@ -50,11 +50,11 @@ export class Initializer {
 		Speech.init();
 		const btnStart = document.getElementById('btn-start');
 		btnStart!.addEventListener('click', async () => {
-			UiHelper.hideElement(btnStart);
+			hideElement(btnStart);
 			await this.start();
 			setTimeout(() => {
 				const wrapperElm = document.getElementById('wrapper');
-				UiHelper.showElement(wrapperElm);
+				showElement(wrapperElm);
 			}, 2000);
 		});
 	}
