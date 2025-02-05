@@ -6,6 +6,7 @@ export enum ReportType {
 	REPORT_SECTOR = 'report-sector',
 	REPORT_COURSE = 'report-course',
 	REPORT_DEPTH = 'report-depth',
+	REPORT_SPEED = 'report-speed',
 }
 
 export class Report implements Action {
