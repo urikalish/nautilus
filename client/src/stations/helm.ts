@@ -89,7 +89,7 @@ export class Helm implements Station {
 			const course = this.game.getMySub().course;
 			const depth = this.game.getMySub().depth;
 			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
-			await Speech.stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${depth} feet`, this.type);
+			await Speech.stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${Speech.toNatoPhoneticDigits(depth.toString())} feet`, this.type);
 		} else if (
 			command.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE ||
 			command.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE

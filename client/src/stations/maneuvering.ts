@@ -76,7 +76,10 @@ export class Maneuvering implements Station {
 		if (command.shortText === CommandShortText.MANEUVERING_REPORT) {
 			const state = this.game.getMySub().engineState;
 			const speed = this.game.getMySub().speed;
-			await Speech.stationSpeak(`Conn maneuvering, engine ${this.getEngineStateSpeechByEngineState(state)}, speed ${speed} knots`, this.type);
+			await Speech.stationSpeak(
+				`Conn maneuvering, engine ${this.getEngineStateSpeechByEngineState(state)}, speed ${Speech.toNatoPhoneticDigits(speed.toString())} knots`,
+				this.type,
+			);
 		}
 	}
 }
