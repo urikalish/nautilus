@@ -31,6 +31,7 @@ export class Navigation implements Station {
 			const sector = position.sector;
 			this.lastReportedSector = sector;
 			await stationSpeak(`Conn Navigation, current sector, ${toNatoPhonetic(sector[0])} ${toNatoPhonetic(sector[1])}`, this.type);
+			return;
 		}
 	}
 

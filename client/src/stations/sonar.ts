@@ -63,6 +63,7 @@ export class Sonar implements Station {
 			} else {
 				await stationSpeak(`Conn Sonar, no contacts`, this.type);
 			}
+			return;
 		}
 	}
 }

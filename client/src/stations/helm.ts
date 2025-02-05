@@ -91,19 +91,21 @@ export class Helm implements Station {
 			const depth = this.game.getMySub().depth;
 			const coursePhonetic = toNatoPhoneticDigits(toThreeDigits(course));
 			await stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${toNatoPhoneticDigits(depth.toString())} feet`, this.type);
-		} else if (
-			command.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE ||
-			command.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE
-		) {
+			return;
+		}
+		if (command.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE) {
 			await stationSpeak(command.responseSpeechText, this.type);
 			removeActiveCommands(this.activeCommands, [CommandType.HELM_RIGHT_RUDDER_SET_COURSE, CommandType.HELM_LEFT_RUDDER_SET_COURSE]);
 			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
-		} else if (command.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
+			return;
+		}
+		if (command.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
 			await stationSpeak(command.responseSpeechText, this.type);
 			removeActiveCommands(this.activeCommands, [CommandType.HELM_MAKE_MY_DEPTH]);
 			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
+			return;
 		}
 	}
 
