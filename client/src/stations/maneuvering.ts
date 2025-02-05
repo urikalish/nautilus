@@ -21,6 +21,23 @@ export class Maneuvering implements Station {
 		this.onAddReportAction = onAddReportAction;
 	}
 
+	getEngineStateByCommandType(commandType: CommandType): EngineState {
+		if (commandType === CommandType.MANEUVERING_FULL_STOP) {
+			return EngineState.FULL_STOP;
+		} else if (commandType === CommandType.MANEUVERING_ALL_AHEAD_THIRD) {
+			return EngineState.THIRD;
+		} else if (commandType === CommandType.MANEUVERING_ALL_AHEAD_TWO_THIRDS) {
+			return EngineState.TWO_THIRDS;
+		} else if (commandType === CommandType.MANEUVERING_ALL_AHEAD_STANDARD) {
+			return EngineState.STANDARD;
+		} else if (commandType === CommandType.MANEUVERING_ALL_AHEAD_FULL) {
+			return EngineState.FULL;
+		} else if (commandType === CommandType.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE) {
+			return EngineState.FLANK;
+		}
+		return EngineState.FULL_STOP;
+	}
+
 	getTargetSpeedByEngineState(state: EngineState): number {
 		if (state === EngineState.FULL_STOP) {
 			return 0;
@@ -42,86 +59,58 @@ export class Maneuvering implements Station {
 		if (state === EngineState.FULL_STOP) {
 			return 'full stop';
 		} else if (state === EngineState.THIRD) {
-			return 'one third';
+			return 'all ahead one third';
 		} else if (state === EngineState.TWO_THIRDS) {
-			return 'two thirds';
+			return 'all ahead two thirds';
 		} else if (state === EngineState.STANDARD) {
-			return 'standard';
+			return 'all ahead standard';
 		} else if (state === EngineState.FULL) {
-			return 'full';
+			return 'all ahead full';
 		} else if (state === EngineState.FLANK) {
-			return 'flank cavitating';
+			return 'all ahead flank cavitating';
 		}
 		return 'unknown';
+	}
+
+	getCommandTypeByShortText(shortText: string): CommandType {
+		if (shortText === CommandShortText.MANEUVERING_FULL_STOP) {
+			return CommandType.MANEUVERING_FULL_STOP;
+		} else if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_THIRD) {
+			return CommandType.MANEUVERING_ALL_AHEAD_THIRD;
+		} else if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_TWO_THIRDS) {
+			return CommandType.MANEUVERING_ALL_AHEAD_TWO_THIRDS;
+		} else if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_STANDARD) {
+			return CommandType.MANEUVERING_ALL_AHEAD_STANDARD;
+		} else if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_FULL) {
+			return CommandType.MANEUVERING_ALL_AHEAD_FULL;
+		} else if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE) {
+			return CommandType.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE;
+		}
+		return CommandType.MANEUVERING_FULL_STOP;
 	}
 
 	parseCommand(shortText: string): Command | null {
 		if (shortText === CommandShortText.MANEUVERING_REPORT) {
 			return new Command(CommandShortText.MANEUVERING_REPORT, this.type, CommandType.MANEUVERING_REPORT, null, 'Maneuvering, report');
 		}
-		if (shortText === CommandShortText.MANEUVERING_FULL_STOP) {
+		if (
+			shortText === CommandShortText.MANEUVERING_FULL_STOP ||
+			shortText === CommandShortText.MANEUVERING_ALL_AHEAD_THIRD ||
+			shortText === CommandShortText.MANEUVERING_ALL_AHEAD_TWO_THIRDS ||
+			shortText === CommandShortText.MANEUVERING_ALL_AHEAD_STANDARD ||
+			shortText === CommandShortText.MANEUVERING_ALL_AHEAD_FULL ||
+			shortText === CommandShortText.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE
+		) {
+			const commandType = this.getCommandTypeByShortText(shortText);
+			const engineState = this.getEngineStateByCommandType(commandType);
+			const engineStateSpeech = this.getEngineStateSpeechByEngineState(engineState);
 			return new Command(
 				shortText,
 				this.type,
-				CommandType.MANEUVERING_FULL_STOP,
-				{ engineState: EngineState.FULL_STOP },
-				`Maneuvering, full stop`,
-				`Full stop, Maneuvering aye`,
-				true,
-			);
-		}
-		if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_THIRD) {
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.MANEUVERING_ALL_AHEAD_THIRD,
-				{ engineState: EngineState.THIRD },
-				`Maneuvering, all ahead third`,
-				`All ahead third, Maneuvering aye`,
-				true,
-			);
-		}
-		if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_TWO_THIRDS) {
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.MANEUVERING_ALL_AHEAD_TWO_THIRDS,
-				{ engineState: EngineState.TWO_THIRDS },
-				`Maneuvering, all ahead two thirds`,
-				`All ahead two thirds, Maneuvering aye`,
-				true,
-			);
-		}
-		if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_STANDARD) {
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.MANEUVERING_ALL_AHEAD_STANDARD,
-				{ engineState: EngineState.STANDARD },
-				`Maneuvering, all ahead standard`,
-				`All ahead standard, Maneuvering aye`,
-				true,
-			);
-		}
-		if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_FULL) {
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.MANEUVERING_ALL_AHEAD_FULL,
-				{ engineState: EngineState.FULL },
-				`Maneuvering, all ahead full`,
-				`All ahead full, Maneuvering aye`,
-				true,
-			);
-		}
-		if (shortText === CommandShortText.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE) {
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE,
-				{ engineState: EngineState.FLANK },
-				`Maneuvering, all ahead flank cavitate`,
-				`All ahead flank cavitate, Maneuvering aye`,
+				commandType,
+				{ engineState: this.getEngineStateByCommandType(commandType) },
+				`Maneuvering, ${engineStateSpeech}`,
+				`${engineStateSpeech}, Maneuvering aye`,
 				true,
 			);
 		}
