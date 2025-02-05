@@ -3,11 +3,10 @@ import { Player } from './model/player';
 import { Sub } from './model/sub';
 import { Position } from './model/position';
 import { settings } from './model/settings';
-import { getRandomNumber } from './services/utils';
+import { calcDistance, getRandomNumber } from './services/utils';
 import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
 import { UiHelper } from './services/ui-helper';
-import { Navigation } from './stations/navigation';
 
 export class Initializer {
 	async start() {
@@ -18,7 +17,7 @@ export class Initializer {
 		let d = 0;
 		do {
 			p = [Math.random() * 6 + 1, Math.random() * 6 + 1, Math.random() * 6 + 1, Math.random() * 6 + 1];
-			d = Navigation.calcDistance(p[0], p[1], p[2], p[3]);
+			d = calcDistance(p[0], p[1], p[2], p[3]);
 		} while (d < 7);
 
 		const subs = [

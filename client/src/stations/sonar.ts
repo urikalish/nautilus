@@ -7,11 +7,12 @@ import { Report } from '../model/report';
 import { Contact } from '../model/contact';
 import { Sub } from '../model/sub';
 import { settings } from '../model/settings';
+import { ContactType } from '../model/contact-type';
+import { calcBearing } from '../services/utils';
 
 export class Sonar implements Station {
 	type: StationType = StationType.SONAR;
 	game: Game;
-	contacts: Contact[] = [];
 	onAddReportAction: (report: Report) => void;
 
 	constructor(game: Game, onAddReportAction: (report: Report) => void) {
@@ -22,10 +23,26 @@ export class Sonar implements Station {
 	async tick() {
 		const sub: Sub = this.game.getMySub();
 		const waterfall = sub.waterfall;
+		const contacts = sub.contacts;
+		if (contacts.length === 0) {
+			contacts.push(new Contact(ContactType.SUB, 'S1'));
+		}
 		const newRow: number[] = [];
 		for (let c = 0; c < 360; c++) {
 			newRow[c] = Math.random() * settings.sonar.waterfallNoiseMax;
+			newRow[90] = settings.sonar.waterfallSection;
+			newRow[180] = settings.sonar.waterfallSection;
+			newRow[270] = settings.sonar.waterfallSection;
 		}
+		contacts.forEach(c => {
+			if (c.type === ContactType.SUB) {
+				const enemy = this.game.getEnemySub();
+				c.x = enemy.position.x;
+				c.y = enemy.position.y;
+				const bearing = calcBearing(sub.position.x, sub.position.y, enemy.position.x, enemy.position.y, sub.course);
+				newRow[(Math.round(bearing) + 180) % 360] = 1;
+			}
+		});
 		waterfall.unshift(newRow);
 		waterfall.length = settings.sonar.waterfallRows;
 	}
@@ -38,9 +55,11 @@ export class Sonar implements Station {
 	}
 
 	async executeCommand(command: Command) {
+		const sub: Sub = this.game.getMySub();
+		const contacts = sub.contacts;
 		if (command.shortText === CommandShortText.SONAR_REPORT) {
-			if (this.contacts.length) {
-				await Speech.stationSpeak(`Conn Sonar, tracking ${this.contacts.length} contacts`, this.type);
+			if (contacts.length) {
+				await Speech.stationSpeak(`Conn Sonar, tracking ${contacts.length} contacts`, this.type);
 			} else {
 				await Speech.stationSpeak(`Conn Sonar, no contacts`, this.type);
 			}

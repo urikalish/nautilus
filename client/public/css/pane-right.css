@@ -7,10 +7,11 @@
 .waterfall-pane {
 	width: 362px;
 	height: 182px;
-	border: 1px solid #0f03;
+	border: 1px solid #fff4;
 }
 
 .cnv-waterfall {
+	opacity: 0.8;
 }
 
 .info-pane {

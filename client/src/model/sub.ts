@@ -29,6 +29,9 @@ export class Sub {
 			for (let c = 0; c < 360; c++) {
 				row[c] = Math.random() * settings.sonar.waterfallNoiseMax;
 			}
+			row[90] = settings.sonar.waterfallSection;
+			row[180] = settings.sonar.waterfallSection;
+			row[270] = settings.sonar.waterfallSection;
 			this.waterfall.push(row);
 		}
 	}

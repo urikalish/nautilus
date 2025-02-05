@@ -47,3 +47,15 @@ export function toFourDigits(num: number): string {
 	}
 	return numStr;
 }
+
+export function calcDistance(x1: number, y1: number, x2: number, y2: number): number {
+	return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+}
+
+export function calcAngle(x1: number, y1: number, x2: number, y2: number): number {
+	return ((Math.atan2(x2 - x1, y2 - y1) * 180) / Math.PI + 360) % 360;
+}
+
+export function calcBearing(x1: number, y1: number, x2: number, y2: number, ownCourse: number): number {
+	return (calcAngle(x1, y1, x2, y2) - ownCourse + 360) % 360;
+}

@@ -96,7 +96,7 @@ export class UiHelper {
 		const mySub = this.game.getMySub();
 		for (let r = 0; r < mySub.waterfall.length; r++) {
 			for (let c = 0; c < mySub.waterfall[r].length; c++) {
-				context.fillStyle = `hsl(120, 100%, ${Math.trunc(mySub.waterfall[r][c] * 100)}%)`;
+				context.fillStyle = `hsl(120, 100%, ${Math.trunc((mySub.waterfall[r][c] * 100) / 2)}%)`;
 				context.fillRect(c, r, 1, 1);
 			}
 		}
