@@ -30,52 +30,15 @@ export class Conn implements Station {
 		this.uiHelper.setCallbacks(this.parseCommand, this.addCommandAction);
 	}
 
-	async updateStationsAndUI() {
-		for (const station of this.stations) {
-			await station.tick();
+	async start() {
+		await Speech.connSpeak(`Aye`);
+		await this.tick();
+		this.uiHelper.enableCommand();
+		const command = this.parseCommand(CommandShortText.ALL_STATIONS_REPORT);
+		if (command) {
+			this.addCommandAction(command);
 		}
-		this.uiHelper.tick();
 	}
-
-	async tick() {
-		await this.updateStationsAndUI();
-		setTimeout(this.tick.bind(this), 500);
-	}
-
-	handleActions: () => void = async () => {
-		if (this.actions.length === 0) {
-			return;
-		}
-		if (Speech.isTalking) {
-			setTimeout(this.handleActions, 1000);
-			return;
-		}
-		await this.updateStationsAndUI();
-		const action = this.actions[0];
-		if (action.actionType === ActionType.COMMAND) {
-			const command = action as Command;
-			this.actions.splice(0, 1);
-			await this.executeCommand(command);
-		} else if (this.actions[0].actionType === ActionType.REPORT) {
-			const report = action as Report;
-			this.actions.splice(0, 1);
-			this.executeReport(report);
-		}
-		await this.updateStationsAndUI();
-		if (this.actions.length > 0) {
-			setTimeout(this.handleActions, 1000);
-		}
-	};
-
-	addCommandAction: (command: Command) => void = (command: Command) => {
-		this.actions.push(command);
-		setTimeout(this.handleActions, 0);
-	};
-
-	addReportAction: (report: Report) => void = (report: Report) => {
-		this.actions.push(report);
-		setTimeout(this.handleActions, 0);
-	};
 
 	parseCommand: (shortText: string) => Command | null = (shortText: string) => {
 		let command: Command | null = null;
@@ -123,13 +86,50 @@ export class Conn implements Station {
 		Speech.connSpeak(report.responseSpeechText).then(() => {});
 	}
 
-	async start() {
-		await Speech.connSpeak(`Aye`);
-		await this.tick();
-		this.uiHelper.enableCommand();
-		const command = this.parseCommand(CommandShortText.ALL_STATIONS_REPORT);
-		if (command) {
-			this.addCommandAction(command);
+	async updateStationsAndUI() {
+		for (const station of this.stations) {
+			await station.tick();
 		}
+		this.uiHelper.tick();
 	}
+
+	async tick() {
+		await this.updateStationsAndUI();
+		setTimeout(this.tick.bind(this), 500);
+	}
+
+	handleActions: () => void = async () => {
+		if (this.actions.length === 0) {
+			return;
+		}
+		if (Speech.isTalking) {
+			setTimeout(this.handleActions, 1000);
+			return;
+		}
+		await this.updateStationsAndUI();
+		const action = this.actions[0];
+		if (action.actionType === ActionType.COMMAND) {
+			const command = action as Command;
+			this.actions.splice(0, 1);
+			await this.executeCommand(command);
+		} else if (this.actions[0].actionType === ActionType.REPORT) {
+			const report = action as Report;
+			this.actions.splice(0, 1);
+			this.executeReport(report);
+		}
+		await this.updateStationsAndUI();
+		if (this.actions.length > 0) {
+			setTimeout(this.handleActions, 1000);
+		}
+	};
+
+	addCommandAction: (command: Command) => void = (command: Command) => {
+		this.actions.push(command);
+		setTimeout(this.handleActions, 0);
+	};
+
+	addReportAction: (report: Report) => void = (report: Report) => {
+		this.actions.push(report);
+		setTimeout(this.handleActions, 0);
+	};
 }

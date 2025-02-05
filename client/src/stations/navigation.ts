@@ -17,6 +17,26 @@ export class Navigation implements Station {
 		this.onAddReportAction = onAddReportAction;
 	}
 
+	parseCommand(shortText: string): Command | null {
+		if (shortText === CommandShortText.NAVIGATION_REPORT) {
+			return new Command(CommandShortText.NAVIGATION_REPORT, this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report');
+		}
+		return null;
+	}
+
+	async executeCommand(command: Command) {
+		if (command.commandType === CommandType.NAVIGATION_REPORT) {
+			const sub = this.game.getMySub();
+			const position = sub.position;
+			const sector = position.sector;
+			this.lastReportedSector = sector;
+			await Speech.stationSpeak(
+				`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
+				this.type,
+			);
+		}
+	}
+
 	async tick() {
 		const sub = this.game.getMySub();
 		const position = sub.position;
@@ -37,26 +57,6 @@ export class Navigation implements Station {
 			const sectorPhonetics = `${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`;
 			this.onAddReportAction(
 				new Report(this.type, ReportType.REPORT_SECTOR, `Conn Navigation, current sector, ${sectorPhonetics}`, `${sectorPhonetics}, aye`),
-			);
-		}
-	}
-
-	parseCommand(shortText: string): Command | null {
-		if (shortText === CommandShortText.NAVIGATION_REPORT) {
-			return new Command(CommandShortText.NAVIGATION_REPORT, this.type, CommandType.NAVIGATION_REPORT, null, 'Navigation, report');
-		}
-		return null;
-	}
-
-	async executeCommand(command: Command) {
-		if (command.commandType === CommandType.NAVIGATION_REPORT) {
-			const sub = this.game.getMySub();
-			const position = sub.position;
-			const sector = position.sector;
-			this.lastReportedSector = sector;
-			await Speech.stationSpeak(
-				`Conn Navigation, current sector, ${Speech.toNatoPhonetic(sector[0])} ${Speech.toNatoPhonetic(sector[1])}`,
-				this.type,
 			);
 		}
 	}

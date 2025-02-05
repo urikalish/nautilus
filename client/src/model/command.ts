@@ -8,9 +8,15 @@ export const CommandShortText = {
 	HELM_REPORT: 'HR',
 	MANEUVERING_REPORT: 'MR',
 	SONAR_REPORT: 'SR',
-	RIGHT_RUDDER_SET_COURSE: 'HRRSC',
-	LEFT_RUDDER_SET_COURSE: 'HLRSC',
-	MAKE_MY_DEPTH: 'HMMD',
+	HELM_RIGHT_RUDDER_SET_COURSE: 'HRRSC',
+	HELM_LEFT_RUDDER_SET_COURSE: 'HLRSC',
+	HELM_MAKE_MY_DEPTH: 'HMMD',
+	MANEUVERING_FULL_STOP: 'MFS',
+	MANEUVERING_ALL_AHEAD_ONE_THIRD: 'MAA13',
+	MANEUVERING_ALL_AHEAD_TWO_THIRDS: 'MAA23',
+	MANEUVERING_ALL_AHEAD_STANDARD: 'MAAS',
+	MANEUVERING_ALL_AHEAD_FULL: 'MAAF',
+	MANEUVERING_ALL_AHEAD_FLANK_CAVITATE: 'MAAFC',
 };
 
 export enum CommandType {
@@ -19,9 +25,15 @@ export enum CommandType {
 	HELM_REPORT = 'helm-report',
 	MANEUVERING_REPORT = 'maneuvering-report',
 	SONAR_REPORT = 'sonar-report',
-	RIGHT_RUDDER_SET_COURSE = 'right-rudder-set-course',
-	LEFT_RUDDER_SET_COURSE = 'left-rudder-set-course',
-	MAKE_MY_DEPTH = 'make-my-depth',
+	HELM_RIGHT_RUDDER_SET_COURSE = 'helm-right-rudder-set-course',
+	HELM_LEFT_RUDDER_SET_COURSE = 'helm-left-rudder-set-course',
+	HELM_MAKE_MY_DEPTH = 'helm-make-my-depth',
+	MANEUVERING_FULL_STOP = 'maneuvering-full-stop',
+	MANEUVERING_ALL_AHEAD_ONE_THIRD = 'maneuvering-all-ahead-one-third',
+	MANEUVERING_ALL_AHEAD_TWO_THIRDS = 'maneuvering-all-ahead-two-thirds',
+	MANEUVERING_ALL_AHEAD_STANDARD = 'maneuvering-all-ahead-standard',
+	MANEUVERING_ALL_AHEAD_FULL = 'maneuvering-all-ahead-full',
+	MANEUVERING_ALL_AHEAD_FLANK_CAVITATE = 'maneuvering-all-ahead-flank-cavitate',
 }
 
 export class Command implements Action {
@@ -36,7 +48,6 @@ export class Command implements Action {
 	responseSpeechText: string;
 	needsTimeToComplete: boolean;
 	lastTickTime: number;
-	completionSpeechText: string;
 
 	constructor(
 		shortText: string,
@@ -46,7 +57,6 @@ export class Command implements Action {
 		commandSpeechText: string = '',
 		responseSpeechText: string = '',
 		needsTimeToComplete: boolean = false,
-		completionSpeechText: string = '',
 	) {
 		this.actionType = ActionType.COMMAND;
 		this.id = getRandomNumber(6);
@@ -59,6 +69,5 @@ export class Command implements Action {
 		this.responseSpeechText = responseSpeechText;
 		this.needsTimeToComplete = needsTimeToComplete;
 		this.lastTickTime = Date.now();
-		this.completionSpeechText = completionSpeechText;
 	}
 }

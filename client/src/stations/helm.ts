@@ -20,6 +20,108 @@ export class Helm implements Station {
 		this.onAddReportAction = onAddReportAction;
 	}
 
+	parseCommand(shortText: string): Command | null {
+		if (shortText === CommandShortText.HELM_REPORT) {
+			return new Command(CommandShortText.HELM_REPORT, this.type, CommandType.HELM_REPORT, null, 'Helm, report');
+		} else if (shortText.startsWith(CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE)) {
+			const m = new RegExp(`^${CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
+			if (!m) {
+				return null;
+			}
+			const course = parseInt(m[1]);
+			if (course >= 360) {
+				return null;
+			}
+			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
+			return new Command(
+				shortText,
+				this.type,
+				CommandType.HELM_RIGHT_RUDDER_SET_COURSE,
+				{ course, direction: Direction.RIGHT },
+				`Helm, right rudder steer course ${coursePhonetic}`,
+				`Right rudder steer course ${coursePhonetic}, aye`,
+				true,
+			);
+		} else if (shortText.startsWith(CommandShortText.HELM_LEFT_RUDDER_SET_COURSE)) {
+			const m = new RegExp(`^${CommandShortText.HELM_LEFT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
+			if (!m) {
+				return null;
+			}
+			const course = parseInt(m[1]);
+			if (course >= 360) {
+				return null;
+			}
+			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
+			return new Command(
+				shortText,
+				this.type,
+				CommandType.HELM_LEFT_RUDDER_SET_COURSE,
+				{ course, direction: Direction.LEFT },
+				`Helm, left rudder steer course ${coursePhonetic}`,
+				`Left rudder steer course ${coursePhonetic}, aye`,
+				true,
+			);
+		} else if (shortText.startsWith(CommandShortText.HELM_MAKE_MY_DEPTH)) {
+			const m = new RegExp(`^${CommandShortText.HELM_MAKE_MY_DEPTH}(\\d{0,4})F$`).exec(shortText);
+			if (!m) {
+				return null;
+			}
+			const depth = parseInt(m[1]);
+			if (depth < 0 || depth > settings.depth.max) {
+				return null;
+			}
+			const depthPhonetic = Speech.toNatoPhoneticDigits('' + depth);
+			return new Command(
+				shortText,
+				this.type,
+				CommandType.HELM_MAKE_MY_DEPTH,
+				{ depth },
+				`Helm, make my depth ${depthPhonetic} feet`,
+				`Make my depth ${depthPhonetic} feet, aye`,
+				true,
+			);
+		}
+		return null;
+	}
+
+	async executeCommand(command: Command) {
+		if (command.commandType === CommandType.HELM_REPORT) {
+			const course = this.game.getMySub().course;
+			const depth = this.game.getMySub().depth;
+			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
+			await Speech.stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${depth} feet`, this.type);
+		} else if (
+			command.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE ||
+			command.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE
+		) {
+			await Speech.stationSpeak(command.responseSpeechText, this.type);
+			let i = 0;
+			while (i < this.activeCommands.length) {
+				const cmd = this.activeCommands[i];
+				if (cmd.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE) {
+					this.activeCommands.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
+			command.lastTickTime = Date.now();
+			this.activeCommands.push(command);
+		} else if (command.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
+			await Speech.stationSpeak(command.responseSpeechText, this.type);
+			let i = 0;
+			while (i < this.activeCommands.length) {
+				const cmd = this.activeCommands[i];
+				if (cmd.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
+					this.activeCommands.splice(i, 1);
+				} else {
+					i++;
+				}
+			}
+			command.lastTickTime = Date.now();
+			this.activeCommands.push(command);
+		}
+	}
+
 	getCourseByRotation(rotation: number) {
 		let course = rotation % 360;
 		if (course < 0) {
@@ -33,7 +135,7 @@ export class Helm implements Station {
 		let i = 0;
 		while (i < this.activeCommands.length) {
 			const cmd = this.activeCommands[i];
-			if (cmd.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
+			if (cmd.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE) {
 				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.steer.degPerSec, 6);
 				let d;
 				if (cmd.data.direction === Direction.RIGHT) {
@@ -62,7 +164,7 @@ export class Helm implements Station {
 					i++;
 				}
 			}
-			if (cmd.commandType === CommandType.MAKE_MY_DEPTH) {
+			if (cmd.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
 				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.depth.feetPerSec, 6);
 				let d, depth;
 				if (cmd.data.depth > sub.depth) {
@@ -83,108 +185,6 @@ export class Helm implements Station {
 					i++;
 				}
 			}
-		}
-	}
-
-	parseCommand(shortText: string): Command | null {
-		if (shortText === CommandShortText.HELM_REPORT) {
-			return new Command(CommandShortText.HELM_REPORT, this.type, CommandType.HELM_REPORT, null, 'Helm, report');
-		} else if (shortText.startsWith(CommandShortText.RIGHT_RUDDER_SET_COURSE)) {
-			const m = new RegExp(`^${CommandShortText.RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
-			if (!m) {
-				return null;
-			}
-			const course = parseInt(m[1]);
-			if (course >= 360) {
-				return null;
-			}
-			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.RIGHT_RUDDER_SET_COURSE,
-				{ course, direction: Direction.RIGHT },
-				`Helm, right rudder steer course ${coursePhonetic}`,
-				`Right rudder steer course ${coursePhonetic}, aye`,
-				true,
-				`Conn Helm, steady course ${coursePhonetic}`,
-			);
-		} else if (shortText.startsWith(CommandShortText.LEFT_RUDDER_SET_COURSE)) {
-			const m = new RegExp(`^${CommandShortText.LEFT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
-			if (!m) {
-				return null;
-			}
-			const course = parseInt(m[1]);
-			if (course >= 360) {
-				return null;
-			}
-			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.LEFT_RUDDER_SET_COURSE,
-				{ course, direction: Direction.LEFT },
-				`Helm, left rudder steer course ${coursePhonetic}`,
-				`Left rudder steer course ${coursePhonetic}, aye`,
-				true,
-				`Conn Helm, steady course ${coursePhonetic}`,
-			);
-		} else if (shortText.startsWith(CommandShortText.MAKE_MY_DEPTH)) {
-			const m = new RegExp(`^${CommandShortText.MAKE_MY_DEPTH}(\\d{0,4})F$`).exec(shortText);
-			if (!m) {
-				return null;
-			}
-			const depth = parseInt(m[1]);
-			if (depth < 0 || depth > settings.depth.max) {
-				return null;
-			}
-			const depthPhonetic = Speech.toNatoPhoneticDigits('' + depth);
-			return new Command(
-				shortText,
-				this.type,
-				CommandType.MAKE_MY_DEPTH,
-				{ depth },
-				`Helm, make my depth ${depthPhonetic} feet`,
-				`Make my depth ${depthPhonetic} feet, aye`,
-				true,
-				`Conn Helm, depth ${depthPhonetic} feet`,
-			);
-		}
-		return null;
-	}
-
-	async executeCommand(command: Command) {
-		if (command.commandType === CommandType.HELM_REPORT) {
-			const course = this.game.getMySub().course;
-			const depth = this.game.getMySub().depth;
-			const coursePhonetic = Speech.toNatoPhoneticDigits(toThreeDigits(course));
-			await Speech.stationSpeak(`Conn Helm, course ${coursePhonetic}, depth ${depth} feet`, this.type);
-		} else if (command.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || command.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
-			await Speech.stationSpeak(command.responseSpeechText, this.type);
-			let i = 0;
-			while (i < this.activeCommands.length) {
-				const cmd = this.activeCommands[i];
-				if (cmd.commandType === CommandType.RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.LEFT_RUDDER_SET_COURSE) {
-					this.activeCommands.splice(i, 1);
-				} else {
-					i++;
-				}
-			}
-			command.lastTickTime = Date.now();
-			this.activeCommands.push(command);
-		} else if (command.commandType === CommandType.MAKE_MY_DEPTH) {
-			await Speech.stationSpeak(command.responseSpeechText, this.type);
-			let i = 0;
-			while (i < this.activeCommands.length) {
-				const cmd = this.activeCommands[i];
-				if (cmd.commandType === CommandType.MAKE_MY_DEPTH) {
-					this.activeCommands.splice(i, 1);
-				} else {
-					i++;
-				}
-			}
-			command.lastTickTime = Date.now();
-			this.activeCommands.push(command);
 		}
 	}
 }

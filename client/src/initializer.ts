@@ -7,6 +7,7 @@ import { calcDistance, getRandomNumber } from './services/utils';
 import { Speech } from './services/speech';
 import { GameManager } from './game-manager';
 import { UiHelper } from './services/ui-helper';
+import { EngineState } from './model/engine-state';
 
 export class Initializer {
 	async start() {
@@ -21,8 +22,22 @@ export class Initializer {
 		} while (d < 7);
 
 		const subs = [
-			new Sub(0, new Position(startTime, p[0], p[1]), Math.trunc(Math.random() * 360), settings.speed.oneThird, settings.depth.test),
-			new Sub(1, new Position(startTime, p[2], p[3]), Math.trunc(Math.random() * 360), settings.speed.oneThird, settings.depth.test),
+			new Sub(
+				0,
+				new Position(startTime, p[0], p[1]),
+				Math.trunc(Math.random() * 360),
+				EngineState.STANDARD,
+				settings.speed.standard,
+				settings.depth.test,
+			),
+			new Sub(
+				1,
+				new Position(startTime, p[2], p[3]),
+				Math.trunc(Math.random() * 360),
+				EngineState.STANDARD,
+				settings.speed.standard,
+				settings.depth.test,
+			),
 		];
 		const ind = 0;
 		const game = new Game(getRandomNumber(3), startDate, ind, players, subs);
