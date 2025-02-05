@@ -5,7 +5,7 @@ import { Report } from '../model/report';
 import { UiHelper } from '../services/ui-helper';
 import { Station } from '../model/station';
 import { StationType } from '../model/station-type';
-import { Engineering } from './engineering';
+import { Maneuvering } from './maneuvering';
 import { Helm } from './helm';
 import { Navigation } from './navigation';
 import { Action, ActionType } from '../model/action';
@@ -23,7 +23,7 @@ export class Conn implements Station {
 		this.stations = [
 			new Navigation(game, this.addReportAction),
 			new Helm(game, this.addReportAction),
-			new Engineering(game, this.addReportAction),
+			new Maneuvering(game, this.addReportAction),
 			new Sonar(game, this.addReportAction),
 		];
 		this.uiHelper = uiHelper;
@@ -97,7 +97,7 @@ export class Conn implements Station {
 			[
 				CommandShortText.NAVIGATION_REPORT,
 				CommandShortText.HELM_REPORT,
-				CommandShortText.ENGINEERING_REPORT,
+				CommandShortText.MANEUVERING_REPORT,
 				CommandShortText.SONAR_REPORT,
 			].forEach(cmdStr => {
 				const command = this.parseCommand(cmdStr);
