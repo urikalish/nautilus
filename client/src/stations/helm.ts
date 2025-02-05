@@ -8,6 +8,7 @@ import { Direction } from '../model/direction';
 import { settings } from '../model/settings';
 import { roundDecimal, toThreeDigits } from '../services/utils';
 import { Report, ReportType } from '../model/report';
+import { removeActiveCommands } from '../services/station-helper';
 
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
@@ -95,28 +96,12 @@ export class Helm implements Station {
 			command.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE
 		) {
 			await stationSpeak(command.responseSpeechText, this.type);
-			let i = 0;
-			while (i < this.activeCommands.length) {
-				const cmd = this.activeCommands[i];
-				if (cmd.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE) {
-					this.activeCommands.splice(i, 1);
-				} else {
-					i++;
-				}
-			}
+			removeActiveCommands(this.activeCommands, [CommandType.HELM_RIGHT_RUDDER_SET_COURSE, CommandType.HELM_LEFT_RUDDER_SET_COURSE]);
 			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
 		} else if (command.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
 			await stationSpeak(command.responseSpeechText, this.type);
-			let i = 0;
-			while (i < this.activeCommands.length) {
-				const cmd = this.activeCommands[i];
-				if (cmd.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
-					this.activeCommands.splice(i, 1);
-				} else {
-					i++;
-				}
-			}
+			removeActiveCommands(this.activeCommands, [CommandType.HELM_MAKE_MY_DEPTH]);
 			command.lastTickTime = Date.now();
 			this.activeCommands.push(command);
 		}
