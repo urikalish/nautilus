@@ -139,6 +139,9 @@ body {
 }
 
 .command-pane {
+	width: 420px;
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 16px;
 	place-content: center;
 }
 
@@ -173,8 +176,8 @@ body {
 .board-container {
 	--board-gutter-width: 40px;
 	position: relative;
-	height: 400px;
-	width: 400px;
+	height: 500px;
+	width: 500px;
 	padding: var(--board-gutter-width);
 }
 .board {
