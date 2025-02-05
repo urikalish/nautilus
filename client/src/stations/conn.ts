@@ -39,7 +39,7 @@ export class Conn implements Station {
 
 	async tick() {
 		await this.updateStationsAndUI();
-		setTimeout(this.tick.bind(this), 500);
+		setTimeout(this.tick.bind(this), 1000);
 	}
 
 	handleActions: () => void = async () => {

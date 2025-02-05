@@ -4,6 +4,15 @@
 	place-content: space-around;
 }
 
+.waterfall-pane {
+	width: 362px;
+	height: 182px;
+	border: 1px solid #0f03;
+}
+
+.cnv-waterfall {
+}
+
 .info-pane {
 	display: grid;
 	grid-template-columns: auto 100px;

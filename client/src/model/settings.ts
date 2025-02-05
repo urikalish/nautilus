@@ -23,4 +23,8 @@ export const settings = {
 		type: 'Mark 48',
 		speed: 55, //knots
 	},
+	sonar: {
+		waterfallRows: 180,
+		waterfallNoiseMax: 0.1,
+	},
 };

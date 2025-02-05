@@ -1,6 +1,7 @@
 import { Game } from '../model/game';
 import { Command } from '../model/command';
 import { toThreeDigits } from './utils';
+import { settings } from '../model/settings';
 
 export class UiHelper {
 	game: Game;
@@ -15,6 +16,7 @@ export class UiHelper {
 	onParseCommand: ((shortText: string) => Command | null) | null = null;
 	onAddCommandAction: ((command: Command) => void) | null = null;
 	infoPane: HTMLDivElement | null = null;
+	cnvWaterfall: HTMLCanvasElement | null = null;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -86,6 +88,20 @@ export class UiHelper {
 		}
 	};
 
+	refreshCanvas() {
+		const context = this.cnvWaterfall!.getContext('2d');
+		if (!context) {
+			return;
+		}
+		const mySub = this.game.getMySub();
+		for (let r = 0; r < mySub.waterfall.length; r++) {
+			for (let c = 0; c < mySub.waterfall[r].length; c++) {
+				context.fillStyle = `hsl(120, 100%, ${Math.trunc(mySub.waterfall[r][c] * 100)}%)`;
+				context.fillRect(c, r, 1, 1);
+			}
+		}
+	}
+
 	refreshInfo() {
 		const mySub = this.game.getMySub();
 		this.infoPane!.innerHTML = '';
@@ -123,6 +139,7 @@ export class UiHelper {
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		const invertedRotation = -mySub.rotation;
 		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
+		this.refreshCanvas();
 		this.refreshInfo();
 	}
 
@@ -135,6 +152,9 @@ export class UiHelper {
 		this.commandPane = UiHelper.getElm('command-pane') as HTMLDivElement;
 		this.inpCommand = UiHelper.getElm('inp-command') as HTMLInputElement;
 		this.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp);
+		this.cnvWaterfall = UiHelper.getElm('cnv-waterfall') as HTMLCanvasElement;
+		this.cnvWaterfall.width = 360;
+		this.cnvWaterfall.height = settings.sonar.waterfallRows;
 		this.infoPane = UiHelper.getElm('info-pane') as HTMLDivElement;
 		this.createBoardSectorElements();
 	}

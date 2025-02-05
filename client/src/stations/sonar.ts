@@ -5,6 +5,8 @@ import { Command, CommandShortText, CommandType } from '../model/command';
 import { Speech } from '../services/speech';
 import { Report } from '../model/report';
 import { Contact } from '../model/contact';
+import { Sub } from '../model/sub';
+import { settings } from '../model/settings';
 
 export class Sonar implements Station {
 	type: StationType = StationType.SONAR;
@@ -17,7 +19,16 @@ export class Sonar implements Station {
 		this.onAddReportAction = onAddReportAction;
 	}
 
-	async tick() {}
+	async tick() {
+		const sub: Sub = this.game.getMySub();
+		const waterfall = sub.waterfall;
+		const newRow: number[] = [];
+		for (let c = 0; c < 360; c++) {
+			newRow[c] = Math.random() * settings.sonar.waterfallNoiseMax;
+		}
+		waterfall.unshift(newRow);
+		waterfall.length = settings.sonar.waterfallRows;
+	}
 
 	parseCommand(shortText: string): Command | null {
 		if (shortText === CommandShortText.SONAR_REPORT) {
