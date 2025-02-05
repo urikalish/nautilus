@@ -33,49 +33,16 @@
 		<div id="wrapper" class="wrapper grid display--none">
 			<div id="main" class="main grid">
 				<div id="pane-left" class="pane-left">
-					<div class="wheel wheel-1">
-						<img
-							id="img-wheel-1-outer"
-							class="img-wheel img-wheel-1-outer"
-							src="./img/angles-wheel-1.png"
-							alt="course wheel"
-							aria-hidden="true"
-						/>
-						<div id="pn-1-sub" class="pn-sub pn-sub-1">
-							<div class="side-port"></div>
-							<div class="side-starboard"></div>
-							<img
-								id="img-wheel-1-inner"
-								class="img-wheel img-wheel-1-inner"
-								src="./img/angles-wheel-1.png"
-								alt="bearing wheel"
-								aria-hidden="true"
-							/>
-							<img id="img-sub-1" class="img-sub img-sub-1" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
-						</div>
+					<div id="command-pane" class="command-pane grid visibility--hidden">
+						<input id="inp-command" class="inp-command empty" />
+						<label for="inp-command" class="lbl-command">Command</label>
 					</div>
-					<div class="wheel wheel-2">
-						<img
-							id="img-wheel-2-outer"
-							class="img-wheel img-wheel-2-outer"
-							src="./img/angles-wheel-1.png"
-							alt="course wheel"
-							aria-hidden="true"
-						/>
-						<div id="pn-2-sub" class="pn-sub pn-sub-2">
-							<div class="side-port"></div>
-							<div class="side-starboard"></div>
-							<img
-								id="img-wheel-2-inner"
-								class="img-wheel img-wheel-2-inner"
-								src="./img/angles-wheel-1.png"
-								alt="bearing wheel"
-								aria-hidden="true"
-							/>
-							<img id="img-sub-2" class="img-sub img-sub-2" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
-						</div>
+					<div id="waterfall-pane" class="waterfall-pane">
+						<canvas id="cnv-waterfall" class="cnv-waterfall"></canvas>
 					</div>
+					<div id="info-pane" class="info-pane"></div>
 				</div>
+
 				<div id="pane-center" class="pane-center">
 					<div class="board-container">
 						<div class="board-gutters">
@@ -137,14 +104,48 @@
 					</div>
 				</div>
 				<div id="pane-right" class="pane-right">
-					<div id="command-pane" class="command-pane grid visibility--hidden">
-						<input id="inp-command" class="inp-command empty" />
-						<label for="inp-command" class="lbl-command">Command</label>
+					<div class="wheel wheel-1">
+						<img
+							id="img-wheel-1-outer"
+							class="img-wheel img-wheel-1-outer"
+							src="./img/angles-wheel-1.png"
+							alt="course wheel"
+							aria-hidden="true"
+						/>
+						<div id="pn-1-sub" class="pn-sub pn-sub-1">
+							<div class="side-port"></div>
+							<div class="side-starboard"></div>
+							<img
+								id="img-wheel-1-inner"
+								class="img-wheel img-wheel-1-inner"
+								src="./img/angles-wheel-1.png"
+								alt="bearing wheel"
+								aria-hidden="true"
+							/>
+							<img id="img-sub-1" class="img-sub img-sub-1" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
+						</div>
 					</div>
-					<div id="waterfall-pane" class="waterfall-pane">
-						<canvas id="cnv-waterfall" class="cnv-waterfall"></canvas>
+					<div class="wheel wheel-2">
+						<img
+							id="img-wheel-2-outer"
+							class="img-wheel img-wheel-2-outer"
+							src="./img/angles-wheel-1.png"
+							alt="course wheel"
+							aria-hidden="true"
+						/>
+						<div id="pn-2-sub" class="pn-sub pn-sub-2">
+							<div class="side-port"></div>
+							<div class="side-starboard"></div>
+							<img
+								id="img-wheel-2-inner"
+								class="img-wheel img-wheel-2-inner"
+								src="./img/angles-wheel-1.png"
+								alt="bearing wheel"
+								aria-hidden="true"
+							/>
+							<img id="img-sub-2" class="img-sub img-sub-2" src="./img/sub-top.png" alt="sub image" aria-hidden="true" />
+						</div>
 					</div>
-					<div id="info-pane" class="info-pane"></div>
 				</div>
 			</div>
 		</div>
