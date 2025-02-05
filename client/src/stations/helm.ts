@@ -40,7 +40,7 @@ export class Helm implements Station {
 				CommandType.HELM_RIGHT_RUDDER_SET_COURSE,
 				{ course, direction: Direction.RIGHT },
 				`Helm, right rudder steer course ${coursePhonetic}`,
-				`Right rudder steer course ${coursePhonetic}, aye`,
+				`Right rudder steer course ${coursePhonetic}, Helm aye`,
 				true,
 			);
 		} else if (shortText.startsWith(CommandShortText.HELM_LEFT_RUDDER_SET_COURSE)) {
@@ -59,7 +59,7 @@ export class Helm implements Station {
 				CommandType.HELM_LEFT_RUDDER_SET_COURSE,
 				{ course, direction: Direction.LEFT },
 				`Helm, left rudder steer course ${coursePhonetic}`,
-				`Left rudder steer course ${coursePhonetic}, aye`,
+				`Left rudder steer course ${coursePhonetic}, Helm aye`,
 				true,
 			);
 		} else if (shortText.startsWith(CommandShortText.HELM_MAKE_MY_DEPTH)) {
@@ -78,7 +78,7 @@ export class Helm implements Station {
 				CommandType.HELM_MAKE_MY_DEPTH,
 				{ depth },
 				`Helm, make my depth ${depthPhonetic} feet`,
-				`Make my depth ${depthPhonetic} feet, aye`,
+				`Make my depth ${depthPhonetic} feet, Helm aye`,
 				true,
 			);
 		}

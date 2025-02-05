@@ -66,7 +66,7 @@ export class Maneuvering implements Station {
 				CommandType.MANEUVERING_FULL_STOP,
 				{ engineState: EngineState.FULL_STOP },
 				`Maneuvering, full stop`,
-				`Full stop, aye`,
+				`Full stop, Maneuvering aye`,
 				true,
 			);
 		}
@@ -77,7 +77,7 @@ export class Maneuvering implements Station {
 				CommandType.MANEUVERING_ALL_AHEAD_THIRD,
 				{ engineState: EngineState.THIRD },
 				`Maneuvering, all ahead third`,
-				`All ahead third, aye`,
+				`All ahead third, Maneuvering aye`,
 				true,
 			);
 		}
@@ -88,7 +88,7 @@ export class Maneuvering implements Station {
 				CommandType.MANEUVERING_ALL_AHEAD_TWO_THIRDS,
 				{ engineState: EngineState.TWO_THIRDS },
 				`Maneuvering, all ahead two thirds`,
-				`All ahead two thirds, aye`,
+				`All ahead two thirds, Maneuvering aye`,
 				true,
 			);
 		}
@@ -99,7 +99,7 @@ export class Maneuvering implements Station {
 				CommandType.MANEUVERING_ALL_AHEAD_STANDARD,
 				{ engineState: EngineState.STANDARD },
 				`Maneuvering, all ahead standard`,
-				`All ahead standard, aye`,
+				`All ahead standard, Maneuvering aye`,
 				true,
 			);
 		}
@@ -110,7 +110,7 @@ export class Maneuvering implements Station {
 				CommandType.MANEUVERING_ALL_AHEAD_FULL,
 				{ engineState: EngineState.FULL },
 				`Maneuvering, all ahead full`,
-				`All ahead full, aye`,
+				`All ahead full, Maneuvering aye`,
 				true,
 			);
 		}
@@ -121,7 +121,7 @@ export class Maneuvering implements Station {
 				CommandType.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE,
 				{ engineState: EngineState.FLANK },
 				`Maneuvering, all ahead flank cavitate`,
-				`All ahead flank cavitate, aye`,
+				`All ahead flank cavitate, Maneuvering aye`,
 				true,
 			);
 		}
