@@ -1,0 +1,118 @@
+.pane-center {
+	position: relative;
+	display: grid;
+	place-items: center;
+}
+
+.command-pane {
+	width: 420px;
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 16px;
+	place-content: center;
+}
+
+.inp-command {
+	width: 20vw;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--color--gray--light);
+	background-color: transparent;
+	padding: 8px 0;
+	font-size: 56px;
+	text-transform: uppercase;
+	user-select: none;
+}
+.inp-command.empty {
+	color: var(--color--gray--lightest);
+}
+.inp-command.invalid {
+	color: var(--color--invalid);
+}
+.inp-command.valid {
+	color: var(--color--valid);
+}
+.lbl-command {
+	position: relative;
+	top: 4px;
+	font-size: 16px;
+	color: var(--color--gray--light);
+	user-select: none;
+}
+
+.board-container {
+	--board-gutter-width: 40px;
+	position: relative;
+	height: 500px;
+	width: 500px;
+	padding: var(--board-gutter-width);
+}
+.board {
+	position: relative;
+	height: 100%;
+	opacity: 1;
+	z-index: -1;
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	border-bottom: 1px dashed var(--board-color);
+	border-right: 1px dashed var(--board-color);
+}
+.board-gutters {
+	position: absolute;
+	inset: var(--board-gutter-width);
+}
+.board-gutter {
+	position: absolute;
+	display: grid;
+	user-select: none;
+}
+.board-gutter:nth-child(1) {
+	inset: calc(-1 * var(--board-gutter-width)) 0 auto 0;
+	height: var(--board-gutter-width);
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: 1fr;
+}
+.board-gutter:nth-child(2) {
+	inset: 0 calc(-1 * var(--board-gutter-width)) 0 auto;
+	width: var(--board-gutter-width);
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(8, 1fr);
+}
+.board-gutter:nth-child(3) {
+	inset: auto 0 calc(-1 * var(--board-gutter-width)) 0;
+	height: var(--board-gutter-width);
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: 1fr;
+}
+.board-gutter:nth-child(4) {
+	inset: 0 auto 0 calc(-1 * var(--board-gutter-width));
+	width: var(--board-gutter-width);
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(8, 1fr);
+}
+.board-gutter-label {
+	margin: auto;
+	font-size: 16px;
+	color: #fff;
+	user-select: none;
+}
+.board-cell {
+	display: grid;
+	place-items: center;
+	color: var(--board-color);
+	border-top: 1px dashed var(--board-color);
+	border-left: 1px dashed var(--board-color);
+	font-size: 0;
+	user-select: none;
+}
+.board-marker-my-sub {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	transform: translate(-12px, 12px);
+}
+.board-marker-enemy-sub {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	transform: translate(-12px, 12px) rotate(45deg);
+}
