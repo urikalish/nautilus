@@ -117,7 +117,7 @@ export class Maneuvering implements Station {
 	}
 
 	async executeCommand(command: Command) {
-		if (command.shortText === CommandShortText.MANEUVERING_REPORT) {
+		if (command.commandType === CommandType.MANEUVERING_REPORT) {
 			const state = this.game.getMySub().engineState;
 			const speed = this.game.getMySub().speed;
 			await stationSpeak(

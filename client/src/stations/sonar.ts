@@ -57,7 +57,7 @@ export class Sonar implements Station {
 	async executeCommand(command: Command) {
 		const sub: Sub = this.game.getMySub();
 		const contacts = sub.contacts;
-		if (command.shortText === CommandShortText.SONAR_REPORT) {
+		if (command.commandType === CommandType.SONAR_REPORT) {
 			if (contacts.length) {
 				await stationSpeak(`Conn Sonar, tracking ${contacts.length} contacts`, this.type);
 			} else {
