@@ -42,7 +42,7 @@ export class Speech {
 		if (stationType === StationType.CONN) {
 			await Speech.speak(text, { pitch: 1.0, rate: 1.5 });
 		} else {
-			await Speech.speak(text, { pitch: 2.0, rate: 1.5 });
+			await Speech.speak(text, { pitch: 2.5, rate: 2.0 });
 		}
 	}
 

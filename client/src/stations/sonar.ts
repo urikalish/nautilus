@@ -4,10 +4,12 @@ import { Station } from '../model/station';
 import { Command, CommandShortText, CommandType } from '../model/command';
 import { Speech } from '../services/speech';
 import { Report } from '../model/report';
+import { Contact } from '../model/contact';
 
 export class Sonar implements Station {
 	type: StationType = StationType.SONAR;
 	game: Game;
+	contacts: Contact[] = [];
 	onAddReportAction: (report: Report) => void;
 
 	constructor(game: Game, onAddReportAction: (report: Report) => void) {
@@ -26,8 +28,11 @@ export class Sonar implements Station {
 
 	async executeCommand(command: Command) {
 		if (command.shortText === CommandShortText.SONAR_REPORT) {
-			const speed = this.game.getMySub().speed;
-			await Speech.stationSpeak(`Conn Sonar, no contacts`, this.type);
+			if (this.contacts.length) {
+				await Speech.stationSpeak(`Conn Sonar, tracking ${this.contacts.length} contacts`, this.type);
+			} else {
+				await Speech.stationSpeak(`Conn Sonar, no contacts`, this.type);
+			}
 		}
 	}
 }

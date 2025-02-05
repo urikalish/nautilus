@@ -94,7 +94,12 @@ export class Conn implements Station {
 	async executeCommand(command: Command) {
 		if (command.commandType === CommandType.ALL_STATIONS_REPORT) {
 			await Speech.connSpeak(command.commandSpeechText);
-			[CommandShortText.NAVIGATION_REPORT, CommandShortText.HELM_REPORT, CommandShortText.ENGINEERING_REPORT].forEach(cmdStr => {
+			[
+				CommandShortText.NAVIGATION_REPORT,
+				CommandShortText.HELM_REPORT,
+				CommandShortText.ENGINEERING_REPORT,
+				CommandShortText.SONAR_REPORT,
+			].forEach(cmdStr => {
 				const command = this.parseCommand(cmdStr);
 				if (command) {
 					command.commandSpeechText = '';
