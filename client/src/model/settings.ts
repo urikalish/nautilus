@@ -8,7 +8,7 @@ export const settings = {
 		standard: 25, //knots
 		full: 30, //knots
 		flank: 40, //knots
-		changePerSec: 3, //knots
+		changePerSec: 2, //knots
 	},
 	depth: {
 		test: 800, //feet
