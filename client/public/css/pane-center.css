@@ -1,10 +1,11 @@
+@import './speed.css';
 @import './board.css';
 @import './depth.css';
 
 .pane-center {
 	position: relative;
 	display: grid;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: auto 1fr auto;
 	place-items: center;
 	gap: 40px;
 }

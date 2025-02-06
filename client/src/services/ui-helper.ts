@@ -29,6 +29,7 @@ export class UiHelper {
 	onAddCommandAction: ((command: Command) => void) | null = null;
 	infoPane: HTMLDivElement | null = null;
 	cnvWaterfall: HTMLCanvasElement | null = null;
+	speedGaugeCurSpeed: HTMLDivElement | null = null;
 	depthGaugeCurDepth: HTMLDivElement | null = null;
 
 	constructor(game: Game) {
@@ -55,6 +56,24 @@ export class UiHelper {
 				this.board?.appendChild(cell);
 			}
 		}
+	}
+
+	start() {
+		this.board = getElm('board') as HTMLDivElement;
+		this.boardMarkerMySub = getElm('board-marker-my-sub') as HTMLImageElement;
+		this.boardMarkerEnemySub = getElm('board-marker-enemy-sub') as HTMLImageElement;
+		this.pane1sub = getElm('pn-1-sub') as HTMLDivElement;
+		this.imgWheel2Outer = getElm('img-wheel-2-outer') as HTMLImageElement;
+		this.commandPane = getElm('command-pane') as HTMLDivElement;
+		this.inpCommand = getElm('inp-command') as HTMLInputElement;
+		this.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp);
+		this.cnvWaterfall = getElm('cnv-waterfall') as HTMLCanvasElement;
+		this.cnvWaterfall.width = 360;
+		this.cnvWaterfall.height = settings.sonar.waterfallRows;
+		this.infoPane = getElm('info-pane') as HTMLDivElement;
+		this.speedGaugeCurSpeed = getElm('speed-gauge-cur-speed') as HTMLDivElement;
+		this.depthGaugeCurDepth = getElm('depth-gauge-cur-depth') as HTMLDivElement;
+		this.createBoardSectorElements();
 	}
 
 	setCommandInputStatus(status: string) {
@@ -89,7 +108,7 @@ export class UiHelper {
 		}
 	};
 
-	refreshCanvas() {
+	refreshWaterfallCanvas() {
 		const context = this.cnvWaterfall!.getContext('2d');
 		if (!context) {
 			return;
@@ -128,7 +147,7 @@ export class UiHelper {
 		}
 	}
 
-	tick() {
+	refreshBoard() {
 		const mySub = this.game.getMySub();
 		const enemySub = this.game.getEnemySub();
 		this.boardMarkerMySub!.style.left = `${12.5 * mySub.position.x}%`;
@@ -137,37 +156,36 @@ export class UiHelper {
 		this.boardMarkerEnemySub!.style.left = `${12.5 * enemySub.position.x}%`;
 		this.boardMarkerEnemySub!.style.bottom = `${12.5 * enemySub.position.y}%`;
 		showElement(this.boardMarkerEnemySub);
+	}
+
+	refreshGauges() {
+		const mySub = this.game.getMySub();
+		this.speedGaugeCurSpeed!.style.bottom = `${(mySub.speed * 420) / 40 - 7}px`;
+		this.speedGaugeCurSpeed!.dataset.speed = Math.round(mySub.speed).toString();
+		this.depthGaugeCurDepth!.style.top = `${(mySub.depth * 420) / 1700 - 7}px`;
+		this.depthGaugeCurDepth!.dataset.depth = Math.round(mySub.depth).toString();
+	}
+
+	refreshWheels() {
+		const mySub = this.game.getMySub();
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		const invertedRotation = -mySub.rotation;
 		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
-		this.depthGaugeCurDepth!.style.top = `${(mySub.depth * 420) / 1700 - 7}px`;
-		this.depthGaugeCurDepth!.dataset.depth = Math.round(mySub.depth).toString();
-		this.refreshCanvas();
+	}
+
+	tick() {
+		this.refreshWaterfallCanvas();
 		this.refreshInfo();
+		this.refreshBoard();
+		this.refreshGauges();
+		this.refreshWheels();
 	}
 
-	start() {
-		this.board = getElm('board') as HTMLDivElement;
-		this.boardMarkerMySub = getElm('board-marker-my-sub') as HTMLImageElement;
-		this.boardMarkerEnemySub = getElm('board-marker-enemy-sub') as HTMLImageElement;
-		this.pane1sub = getElm('pn-1-sub') as HTMLDivElement;
-		this.imgWheel2Outer = getElm('img-wheel-2-outer') as HTMLImageElement;
-		this.commandPane = getElm('command-pane') as HTMLDivElement;
-		this.inpCommand = getElm('inp-command') as HTMLInputElement;
-		this.inpCommand!.addEventListener('keyup', this.handleCommandInputKeyUp);
-		this.cnvWaterfall = getElm('cnv-waterfall') as HTMLCanvasElement;
-		this.cnvWaterfall.width = 360;
-		this.cnvWaterfall.height = settings.sonar.waterfallRows;
-		this.infoPane = getElm('info-pane') as HTMLDivElement;
-		this.depthGaugeCurDepth = getElm('depth-gauge-cur-depth') as HTMLDivElement;
-		this.createBoardSectorElements();
-	}
-
-	rotateElement(element, degrees, direction = 'right') {
-		const currentTransform = window.getComputedStyle(element).getPropertyValue('rotate');
-		const currentRotation = currentTransform === 'none' ? 0 : parseInt(currentTransform.replace('deg', ''));
-		const rotationAmount = direction.toLowerCase() === 'left' ? -degrees : degrees;
-		const newRotation = currentRotation + rotationAmount;
-		element.style.rotate = `${newRotation}deg`;
-	}
+	// rotateElement(element, degrees, direction = 'right') {
+	// 	const currentTransform = window.getComputedStyle(element).getPropertyValue('rotate');
+	// 	const currentRotation = currentTransform === 'none' ? 0 : parseInt(currentTransform.replace('deg', ''));
+	// 	const rotationAmount = direction.toLowerCase() === 'left' ? -degrees : degrees;
+	// 	const newRotation = currentRotation + rotationAmount;
+	// 	element.style.rotate = `${newRotation}deg`;
+	// }
 }

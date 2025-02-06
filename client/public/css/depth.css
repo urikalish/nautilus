@@ -4,8 +4,8 @@
 	--color--depth-gauge--shalow: #77f;
 	--color--depth-gauge--deep: #44c;
 	--color--depth-gauge--danger: #c33;
-	--color--depth-gauge--cur-depth: #0f0;
 	--color--depth-gauge--labels: #fff;
+	--color--depth-gauge--cur-depth: #0f0;
 	margin-right: 50px;
 	position: relative;
 	height: 420px;
@@ -55,6 +55,7 @@
 	border-right: 7px solid var(--color--depth-gauge--cur-depth);
 	width: 0;
 	height: 0;
+	transition: all 2s linear;
 }
 .depth-gauge-cur-depth:after {
 	content: attr(data-depth) ' ft';

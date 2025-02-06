@@ -8,15 +8,15 @@ export const settings = {
 		standard: 25, //knots
 		full: 30, //knots
 		flank: 40, //knots
-		changePerSec: 2, //knots
+		changePerSec: 1, //knots
 	},
 	depth: {
 		init: 600, //feet
 		max: 1600, //feet
-		feetPerSec: 6,
+		changePerSec: 6,
 	},
 	steer: {
-		degPerSec: 3,
+		changePerSec: 3,
 	},
 	tube: {
 		count: 4,
