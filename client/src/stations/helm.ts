@@ -9,6 +9,7 @@ import { settings } from '../model/settings';
 import { roundDecimal, toThreeDigits } from '../services/utils';
 import { Report, ReportType } from '../model/report';
 import { addActiveCommand } from '../services/station-helper';
+import { EngineState } from '../model/engine-state';
 
 export class Helm implements Station {
 	type: StationType = StationType.HELM;
@@ -24,7 +25,12 @@ export class Helm implements Station {
 	parseCommand(shortText: string): Command | null {
 		if (shortText === CommandShortText.HELM_REPORT) {
 			return new Command(CommandShortText.HELM_REPORT, this.type, CommandType.HELM_REPORT, null, 'Helm, report');
-		} else if (shortText.startsWith(CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE)) {
+		}
+		const sub: Sub = this.game.getMySub();
+		if (sub.engineState === EngineState.FULL_STOP) {
+			return null;
+		}
+		if (shortText.startsWith(CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE)) {
 			const m = new RegExp(`^${CommandShortText.HELM_RIGHT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
 				return null;
@@ -43,7 +49,8 @@ export class Helm implements Station {
 				`Right rudder steer course ${coursePhonetic}, Helm aye`,
 				true,
 			);
-		} else if (shortText.startsWith(CommandShortText.HELM_LEFT_RUDDER_SET_COURSE)) {
+		}
+		if (shortText.startsWith(CommandShortText.HELM_LEFT_RUDDER_SET_COURSE)) {
 			const m = new RegExp(`^${CommandShortText.HELM_LEFT_RUDDER_SET_COURSE}([0-3][0-9][0-9])$`).exec(shortText);
 			if (!m) {
 				return null;
@@ -62,7 +69,8 @@ export class Helm implements Station {
 				`Left rudder steer course ${coursePhonetic}, Helm aye`,
 				true,
 			);
-		} else if (shortText.startsWith(CommandShortText.HELM_MAKE_MY_DEPTH)) {
+		}
+		if (shortText.startsWith(CommandShortText.HELM_MAKE_MY_DEPTH)) {
 			const m = new RegExp(`^${CommandShortText.HELM_MAKE_MY_DEPTH}(\\d{0,4})F$`).exec(shortText);
 			if (!m) {
 				return null;
