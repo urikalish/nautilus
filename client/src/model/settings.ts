@@ -27,7 +27,7 @@ export const settings = {
 	},
 	sonar: {
 		waterfallRows: 180,
-		waterfallNoiseMax: 0.2,
-		waterfallSection: 0.25,
+		waterfallNoiseMax: 0.25,
+		waterfallSection: 0,
 	},
 };
