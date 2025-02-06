@@ -123,11 +123,12 @@ export class Helm implements Station {
 
 	async tick() {
 		const sub: Sub = this.game.getMySub();
+		const speedFactor = sub.speed / settings.speed.full;
 		let i = 0;
 		while (i < this.activeCommands.length) {
 			const cmd = this.activeCommands[i];
 			if (cmd.commandType === CommandType.HELM_RIGHT_RUDDER_SET_COURSE || cmd.commandType === CommandType.HELM_LEFT_RUDDER_SET_COURSE) {
-				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.steer.degPerSec, 6);
+				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.steer.degPerSec * speedFactor, 6);
 				let d;
 				if (cmd.data.direction === Direction.RIGHT) {
 					const targetCourse = cmd.data.course >= sub.course ? cmd.data.course : cmd.data.course + 360;
@@ -156,7 +157,7 @@ export class Helm implements Station {
 				}
 			}
 			if (cmd.commandType === CommandType.HELM_MAKE_MY_DEPTH) {
-				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.depth.feetPerSec, 6);
+				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.depth.feetPerSec * speedFactor, 6);
 				let d, depth;
 				if (cmd.data.depth > sub.depth) {
 					d = roundDecimal(cmd.data.depth - sub.depth - delta, 6);
