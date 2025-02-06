@@ -40,7 +40,9 @@ export class Sonar implements Station {
 				c.x = enemy.position.x;
 				c.y = enemy.position.y;
 				const bearing = calcBearing(sub.position.x, sub.position.y, enemy.position.x, enemy.position.y, sub.course);
-				newRow[(Math.round(bearing) + 180) % 360] = 1;
+				[-1, 0, 1].forEach(i => {
+					newRow[(Math.round(bearing) + 180 + i) % 360] = 1;
+				});
 			}
 		});
 		waterfall.unshift(newRow);

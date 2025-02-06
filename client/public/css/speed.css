@@ -3,12 +3,12 @@
 .speed-gauge {
 	--color--speed-gauge--speed-35-40: #c33;
 	--color--speed-gauge--speed-30-35: #c33;
-	--color--speed-gauge--speed-25-30: #993;
-	--color--speed-gauge--speed-20-25: #993;
-	--color--speed-gauge--speed-15-20: #383;
-	--color--speed-gauge--speed-10-15: #383;
-	--color--speed-gauge--speed-5-10: #383;
-	--color--speed-gauge--speed-0-5: #383;
+	--color--speed-gauge--speed-25-30: #884;
+	--color--speed-gauge--speed-20-25: #884;
+	--color--speed-gauge--speed-15-20: #363;
+	--color--speed-gauge--speed-10-15: #363;
+	--color--speed-gauge--speed-5-10: #363;
+	--color--speed-gauge--speed-0-5: #363;
 	--color--speed-gauge--labels: #fff;
 	--color--speed-gauge--cur-speed: #0f0;
 	margin-left: 50px;
