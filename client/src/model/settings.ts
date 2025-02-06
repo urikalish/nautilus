@@ -11,7 +11,7 @@ export const settings = {
 		changePerSec: 2, //knots
 	},
 	depth: {
-		init: 400, //feet
+		init: 600, //feet
 		max: 1600, //feet
 		feetPerSec: 6,
 	},

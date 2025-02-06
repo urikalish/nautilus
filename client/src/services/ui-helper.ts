@@ -140,7 +140,7 @@ export class UiHelper {
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		const invertedRotation = -mySub.rotation;
 		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
-		this.depthGaugeCurDepth!.style.top = `${mySub.depth / 4 - 7}px`;
+		this.depthGaugeCurDepth!.style.top = `${(mySub.depth * 420) / 1700 - 7}px`;
 		this.depthGaugeCurDepth!.dataset.depth = Math.round(mySub.depth).toString();
 		this.refreshCanvas();
 		this.refreshInfo();

@@ -93,46 +93,72 @@
 	display: flex;
 	flex-direction: column;
 	color: #fff;
-	font-size: 11px;
+	font-size: 12px;
 }
-.depth-gauge-shallow {
+.depth-gauge-0-400 {
 	position: relative;
 	flex: 400 0 0;
 	background-color: #77f;
 	opacity: 0.9;
 }
-.depth-gauge-shallow::after {
-	content: 'SURF 0 ft';
+.depth-gauge-0-400::after {
+	content: '0 ft';
 	width: 35px;
 	position: absolute;
 	left: 11px;
 	top: -2px;
 }
-.depth-gauge-deep {
+.depth-gauge-400-800 {
 	position: relative;
-	flex: 1200 0 0;
+	flex: 400 0 0;
 	background-color: #44c;
 	opacity: 0.9;
 }
-.depth-gauge-deep::after {
-	content: 'THERMO 400 ft';
+.depth-gauge-400-800::after {
+	content: '400 ft';
 	width: 48px;
 	position: absolute;
 	left: 11px;
-	top: -2px;
+	top: -6px;
 }
-.depth-gauge-danger {
+.depth-gauge-800-1200 {
 	position: relative;
-	flex: 84 0 0;
-	background-color: #c33;
+	flex: 400 0 0;
+	background-color: #44c;
 	opacity: 0.9;
 }
-.depth-gauge-danger::after {
-	content: 'MAX 1600 ft';
+.depth-gauge-800-1200::after {
+	content: '800 ft';
 	width: 51px;
 	position: absolute;
 	left: 11px;
-	top: -2px;
+	top: -6px;
+}
+.depth-gauge-1200-1600 {
+	position: relative;
+	flex: 400 0 0;
+	background-color: #44c;
+	opacity: 0.9;
+}
+.depth-gauge-1200-1600::after {
+	content: '1200 ft';
+	width: 51px;
+	position: absolute;
+	left: 11px;
+	top: -6px;
+}
+.depth-gauge-1600-1700 {
+	position: relative;
+	flex: 100 0 0;
+	background-color: #c33;
+	opacity: 0.9;
+}
+.depth-gauge-1600-1700::after {
+	content: '1600 ft';
+	width: 51px;
+	position: absolute;
+	left: 11px;
+	top: -6px;
 }
 .depth-gauge-cur-depth {
 	position: absolute;
