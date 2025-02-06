@@ -28,7 +28,7 @@ export class Initializer {
 				Math.trunc(Math.random() * 360),
 				EngineState.STANDARD,
 				settings.speed.standard,
-				settings.depth.test,
+				settings.depth.init,
 			),
 			new Sub(
 				1,
@@ -36,7 +36,7 @@ export class Initializer {
 				Math.trunc(Math.random() * 360),
 				EngineState.STANDARD,
 				settings.speed.standard,
-				settings.depth.test,
+				settings.depth.init,
 			),
 		];
 		const ind = 0;

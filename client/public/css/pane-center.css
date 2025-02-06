@@ -3,7 +3,7 @@
 	display: grid;
 	grid-template-columns: 1fr auto;
 	place-items: center;
-	gap: 24px;
+	gap: 40px;
 }
 
 .board-container {
@@ -87,6 +87,7 @@
 .depth-gauge-pane {
 }
 .depth-gauge {
+	position: relative;
 	height: 420px;
 	width: 8px;
 	display: flex;
@@ -114,7 +115,7 @@
 	opacity: 0.9;
 }
 .depth-gauge-deep::after {
-	content: 'DEEP 400 ft';
+	content: 'THERMO 400 ft';
 	width: 48px;
 	position: absolute;
 	left: 11px;
@@ -132,4 +133,19 @@
 	position: absolute;
 	left: 11px;
 	top: -2px;
+}
+.depth-gauge-cur-depth {
+	position: absolute;
+	left: -7px;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	border-left: 7px solid #fff;
+	width: 0;
+	height: 0;
+}
+.depth-gauge-cur-depth:after {
+	content: attr(data-depth);
+	position: absolute;
+	right: 9px;
+	top: -6px;
 }

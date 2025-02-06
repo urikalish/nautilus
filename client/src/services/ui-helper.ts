@@ -29,6 +29,7 @@ export class UiHelper {
 	onAddCommandAction: ((command: Command) => void) | null = null;
 	infoPane: HTMLDivElement | null = null;
 	cnvWaterfall: HTMLCanvasElement | null = null;
+	depthGaugeCurDepth: HTMLDivElement | null = null;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -139,6 +140,8 @@ export class UiHelper {
 		this.pane1sub!.style.transform = `rotate(${mySub.rotation}deg`;
 		const invertedRotation = -mySub.rotation;
 		this.imgWheel2Outer!.style.transform = `rotate(${invertedRotation}deg`;
+		this.depthGaugeCurDepth!.style.top = `${mySub.depth / 4 - 7}px`;
+		this.depthGaugeCurDepth!.dataset.depth = Math.round(mySub.depth).toString();
 		this.refreshCanvas();
 		this.refreshInfo();
 	}
@@ -156,6 +159,7 @@ export class UiHelper {
 		this.cnvWaterfall.width = 360;
 		this.cnvWaterfall.height = settings.sonar.waterfallRows;
 		this.infoPane = getElm('info-pane') as HTMLDivElement;
+		this.depthGaugeCurDepth = getElm('depth-gauge-cur-depth') as HTMLDivElement;
 		this.createBoardSectorElements();
 	}
 
