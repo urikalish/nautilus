@@ -32,9 +32,9 @@ export class Sub {
 			for (let c = 0; c < 360; c++) {
 				row[c] = Math.random() * settings.sonar.waterfallNoiseMax;
 			}
-			row[90] = settings.sonar.waterfallSection;
-			row[180] = settings.sonar.waterfallSection;
-			row[270] = settings.sonar.waterfallSection;
+			[89, 90, 91, 179, 180, 181, 269, 270, 271].forEach(p => {
+				row[p] = settings.sonar.waterfallSection;
+			});
 			this.waterfall.push(row);
 		}
 	}

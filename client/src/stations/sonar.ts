@@ -30,9 +30,9 @@ export class Sonar implements Station {
 		const newRow: number[] = [];
 		for (let c = 0; c < 360; c++) {
 			newRow[c] = Math.random() * settings.sonar.waterfallNoiseMax;
-			newRow[90] = settings.sonar.waterfallSection;
-			newRow[180] = settings.sonar.waterfallSection;
-			newRow[270] = settings.sonar.waterfallSection;
+			[89, 90, 91, 179, 180, 181, 269, 270, 271].forEach(p => {
+				newRow[p] = settings.sonar.waterfallSection;
+			});
 		}
 		contacts.forEach(c => {
 			if (c.type === ContactType.SUB) {
