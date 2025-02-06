@@ -1,0 +1,14 @@
+.info-pane {
+	display: grid;
+	grid-template-columns: auto 100px;
+	gap: 4px;
+}
+.info-label {
+	color: lime;
+	padding: 4px 6px;
+}
+.info-data {
+	background-color: #000;
+	color: lime;
+	padding: 4px 6px;
+}

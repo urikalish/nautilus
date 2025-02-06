@@ -1,0 +1,35 @@
+.command-pane {
+	width: 362px;
+	border: 1px solid #666;
+	background-color: #0004;
+	padding: 16px;
+	place-content: center;
+}
+
+.inp-command {
+	width: 300px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--color--gray--light);
+	background-color: transparent;
+	padding: 4px 0;
+	font-size: 40px;
+	text-transform: uppercase;
+	user-select: none;
+}
+.inp-command.empty {
+	color: var(--color--gray--lightest);
+}
+.inp-command.invalid {
+	color: var(--color--invalid);
+}
+.inp-command.valid {
+	color: var(--color--valid);
+}
+.lbl-command {
+	position: relative;
+	top: 4px;
+	font-size: 16px;
+	color: var(--color--gray--light);
+	user-select: none;
+}

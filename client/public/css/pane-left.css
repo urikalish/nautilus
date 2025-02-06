@@ -1,66 +1,9 @@
+@import './command.css';
+@import './waterfall.css';
+@import './info.css';
+
 .pane-left {
 	position: relative;
 	display: grid;
 	place-content: space-around;
-}
-
-.command-pane {
-	width: 362px;
-	border: 1px solid #666;
-	background-color: #0004;
-	padding: 16px;
-	place-content: center;
-}
-
-.inp-command {
-	width: 300px;
-	outline: none;
-	border: none;
-	border-bottom: 1px solid var(--color--gray--light);
-	background-color: transparent;
-	padding: 4px 0;
-	font-size: 44px;
-	text-transform: uppercase;
-	user-select: none;
-}
-.inp-command.empty {
-	color: var(--color--gray--lightest);
-}
-.inp-command.invalid {
-	color: var(--color--invalid);
-}
-.inp-command.valid {
-	color: var(--color--valid);
-}
-.lbl-command {
-	position: relative;
-	top: 4px;
-	font-size: 16px;
-	color: var(--color--gray--light);
-	user-select: none;
-}
-
-.waterfall-pane {
-	width: 362px;
-	height: 182px;
-	border: 1px solid #666;
-}
-
-.cnv-waterfall {
-	opacity: 0.8;
-}
-
-.info-pane {
-	display: grid;
-	grid-template-columns: auto 100px;
-	gap: 4px;
-}
-.info-label {
-	color: lime;
-	padding: 4px 6px;
-}
-.info-data {
-	background-color: #000;
-	color: lime;
-	padding: 4px 6px;
 }
