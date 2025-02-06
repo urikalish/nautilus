@@ -88,12 +88,17 @@
 .depth-gauge-pane {
 }
 .depth-gauge {
+	--color--depth-gauge--shalow: #77f;
+	--color--depth-gauge--deep: #44c;
+	--color--depth-gauge--danger: #c33;
+	--color--depth-gauge--cur-depth: #0f0;
+	--color--depth-gauge--labels: #fff;
+	margin-right: 50px;
 	position: relative;
 	height: 420px;
 	width: 8px;
 	display: flex;
 	flex-direction: column;
-	color: #fff;
 	font-size: 12px;
 }
 .depth-gauge-0-400,
@@ -115,38 +120,34 @@
 	top: -6px;
 	width: max-content;
 	font-size: 12px;
-	color: #fff;
+	color: var(--color--depth-gauge--labels);
 }
 .depth-gauge-0-400 {
-	background-color: #77f;
+	background-color: var(--color--depth-gauge--shalow);
 }
-.depth-gauge-400-800 {
-	background-color: #44c;
-}
-.depth-gauge-800-1200 {
-	background-color: #44c;
-}
+.depth-gauge-400-800,
+.depth-gauge-800-1200,
 .depth-gauge-1200-1600 {
-	background-color: #44c;
+	background-color: var(--color--depth-gauge--deep);
 }
 .depth-gauge-1600-1700 {
 	flex: 100 0 0;
-	background-color: #c33;
+	background-color: var(--color--depth-gauge--danger);
 }
 .depth-gauge-cur-depth {
 	position: absolute;
 	left: 8px;
 	border-top: 7px solid transparent;
 	border-bottom: 7px solid transparent;
-	border-right: 7px solid #0f0;
+	border-right: 7px solid var(--color--depth-gauge--cur-depth);
 	width: 0;
 	height: 0;
 }
 .depth-gauge-cur-depth:after {
-	content: attr(data-depth) " ft";
+	content: attr(data-depth) ' ft';
 	position: absolute;
 	left: 10px;
 	top: -6px;
 	width: max-content;
-	color: #0f0;
+	color: var(--color--depth-gauge--cur-depth);
 }
