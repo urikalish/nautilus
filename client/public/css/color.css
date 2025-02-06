@@ -25,7 +25,6 @@
 
 	--color--background: var(--color--gray--darkest);
 	--color--text: var(--color--gray--lightest);
-	--board-color: var(--color--gray--medium);
 	--color--invalid: red;
 	--color--valid: lime;
 }

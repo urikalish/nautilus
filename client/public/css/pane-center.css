@@ -14,14 +14,15 @@
 	padding: var(--board-gutter-width);
 }
 .board {
+	--color--board: var(--color--gray--medium);
 	position: relative;
 	height: 100%;
 	opacity: 1;
 	z-index: -1;
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
-	border-bottom: 1px dashed var(--board-color);
-	border-right: 1px dashed var(--board-color);
+	border-bottom: 1px dashed var(--color--board);
+	border-right: 1px dashed var(--color--board);
 }
 .board-gutters {
 	position: absolute;
@@ -65,9 +66,9 @@
 .board-cell {
 	display: grid;
 	place-items: center;
-	color: var(--board-color);
-	border-top: 1px dashed var(--board-color);
-	border-left: 1px dashed var(--board-color);
+	color: var(--color--board);
+	border-top: 1px dashed var(--color--board);
+	border-left: 1px dashed var(--color--board);
 	font-size: 0;
 	user-select: none;
 }
