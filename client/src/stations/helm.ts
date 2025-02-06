@@ -139,7 +139,7 @@ export class Helm implements Station {
 						new Report(
 							this.type,
 							ReportType.REPORT_COURSE,
-							`Conn Helm, current course, ${threeDigitsCourse}`,
+							`Conn Helm, steady course, ${threeDigitsCourse}`,
 							`${threeDigitsCourse}, aye`,
 						),
 					);

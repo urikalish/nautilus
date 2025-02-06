@@ -38,11 +38,11 @@ export class Maneuvering implements Station {
 		return EngineState.FULL_STOP;
 	}
 
-	getTargetSpeedByEngineState(state: EngineState): number {
+	getTargetSpeed(state: EngineState): number {
 		if (state === EngineState.FULL_STOP) {
 			return 0;
 		} else if (state === EngineState.THIRD) {
-			return settings.speed.oneThird;
+			return settings.speed.third;
 		} else if (state === EngineState.TWO_THIRDS) {
 			return settings.speed.twoThirds;
 		} else if (state === EngineState.STANDARD) {
@@ -55,11 +55,11 @@ export class Maneuvering implements Station {
 		return 0;
 	}
 
-	getEngineStateSpeechByEngineState(state: EngineState): string {
+	getEngineStateCommandSpeech(state: EngineState): string {
 		if (state === EngineState.FULL_STOP) {
 			return 'full stop';
 		} else if (state === EngineState.THIRD) {
-			return 'all ahead one third';
+			return 'all ahead third';
 		} else if (state === EngineState.TWO_THIRDS) {
 			return 'all ahead two thirds';
 		} else if (state === EngineState.STANDARD) {
@@ -67,7 +67,24 @@ export class Maneuvering implements Station {
 		} else if (state === EngineState.FULL) {
 			return 'all ahead full';
 		} else if (state === EngineState.FLANK) {
-			return 'all ahead flank cavitating';
+			return 'all ahead flank cavitate';
+		}
+		return 'unknown';
+	}
+
+	getEngineStateReportSpeech(state: EngineState): string {
+		if (state === EngineState.FULL_STOP) {
+			return 'stopped';
+		} else if (state === EngineState.THIRD) {
+			return 'ahead third';
+		} else if (state === EngineState.TWO_THIRDS) {
+			return 'ahead two thirds';
+		} else if (state === EngineState.STANDARD) {
+			return 'ahead standard';
+		} else if (state === EngineState.FULL) {
+			return 'ahead full';
+		} else if (state === EngineState.FLANK) {
+			return 'ahead flank cavitating';
 		}
 		return 'unknown';
 	}
@@ -103,7 +120,7 @@ export class Maneuvering implements Station {
 		) {
 			const commandType = this.getCommandTypeByShortText(shortText);
 			const engineState = this.getEngineStateByCommandType(commandType);
-			const engineStateSpeech = this.getEngineStateSpeechByEngineState(engineState);
+			const engineStateSpeech = this.getEngineStateCommandSpeech(engineState);
 			return new Command(
 				shortText,
 				this.type,
@@ -118,11 +135,12 @@ export class Maneuvering implements Station {
 	}
 
 	async executeCommand(command: Command) {
+		const sub = this.game.getMySub();
 		if (command.commandType === CommandType.MANEUVERING_REPORT) {
-			const state = this.game.getMySub().engineState;
-			const speed = this.game.getMySub().speed;
+			const state = sub.engineState;
+			const speed = sub.speed;
 			await stationSpeak(
-				`Conn maneuvering, engine ${this.getEngineStateSpeechByEngineState(state)}, speed ${toNatoPhoneticDigits(speed.toString())} knots`,
+				`Conn maneuvering, engine ${this.getEngineStateReportSpeech(state)}, speed ${toNatoPhoneticDigits(speed.toString())} knots`,
 				this.type,
 			);
 			return;
@@ -136,6 +154,7 @@ export class Maneuvering implements Station {
 			command.commandType === CommandType.MANEUVERING_ALL_AHEAD_FLANK_CAVITATE
 		) {
 			await stationSpeak(command.responseSpeechText, this.type);
+			sub.engineState = command.data.engineState;
 			addActiveCommand(command, this.activeCommands, [
 				CommandType.MANEUVERING_FULL_STOP,
 				CommandType.MANEUVERING_ALL_AHEAD_THIRD,
@@ -162,7 +181,7 @@ export class Maneuvering implements Station {
 			) {
 				const sub: Sub = this.game.getMySub();
 				const delta = roundDecimal(((Date.now() - cmd.lastTickTime) / 1000) * settings.speed.changePerSec, 6);
-				const targetSpeed = this.getTargetSpeedByEngineState(cmd.data.engineState);
+				const targetSpeed = this.getTargetSpeed(cmd.data.engineState);
 				let d, speed;
 				if (targetSpeed > sub.speed) {
 					d = roundDecimal(targetSpeed - sub.speed - delta, 6);
@@ -175,12 +194,13 @@ export class Maneuvering implements Station {
 				cmd.lastTickTime = Date.now();
 				if (sub.speed === targetSpeed) {
 					this.activeCommands.splice(i, 1);
+					const targetSpeedSpeech = toNatoPhoneticDigits(targetSpeed.toString());
 					this.onAddReportAction(
 						new Report(
 							this.type,
 							ReportType.REPORT_SPEED,
-							`Conn Maneuvering, current speed ${targetSpeed} knots`,
-							`${targetSpeed} knots, aye`,
+							`Conn Maneuvering, current speed ${targetSpeedSpeech} knots`,
+							`${targetSpeedSpeech} knots, aye`,
 						),
 					);
 				} else {

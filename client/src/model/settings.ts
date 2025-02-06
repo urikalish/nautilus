@@ -3,17 +3,17 @@ export const settings = {
 	appName: 'Kalish Nautilus',
 	submarineClass: 'Virginia',
 	speed: {
-		oneThird: 10, //knots
+		third: 10, //knots
 		twoThirds: 20, //knots
 		standard: 25, //knots
 		full: 30, //knots
 		flank: 40, //knots
-		changePerSec: 1, //knots
+		changePerSec: 3, //knots
 	},
 	depth: {
 		test: 800, //feet
 		max: 1600, //feet
-		feetPerSec: 3,
+		feetPerSec: 6,
 	},
 	steer: {
 		degPerSec: 3,
