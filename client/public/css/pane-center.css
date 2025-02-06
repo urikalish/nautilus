@@ -1,7 +1,9 @@
 .pane-center {
 	position: relative;
 	display: grid;
+	grid-template-columns: 1fr auto;
 	place-items: center;
+	gap: 24px;
 }
 
 .board-container {
@@ -80,4 +82,54 @@
 	width: 24px;
 	height: 24px;
 	transform: translate(-12px, 12px) rotate(45deg);
+}
+
+.depth-gauge-pane {
+}
+.depth-gauge {
+	height: 420px;
+	width: 8px;
+	display: flex;
+	flex-direction: column;
+	color: #fff;
+	font-size: 11px;
+}
+.depth-gauge-shallow {
+	position: relative;
+	flex: 400 0 0;
+	background-color: #77f;
+	opacity: 0.9;
+}
+.depth-gauge-shallow::after {
+	content: 'SURF 0 ft';
+	width: 35px;
+	position: absolute;
+	left: 11px;
+	top: -2px;
+}
+.depth-gauge-deep {
+	position: relative;
+	flex: 1200 0 0;
+	background-color: #44c;
+	opacity: 0.9;
+}
+.depth-gauge-deep::after {
+	content: 'DEEP 400 ft';
+	width: 48px;
+	position: absolute;
+	left: 11px;
+	top: -2px;
+}
+.depth-gauge-danger {
+	position: relative;
+	flex: 150 0 0;
+	background-color: #c33;
+	opacity: 0.9;
+}
+.depth-gauge-danger::after {
+	content: 'MAX 1600 ft';
+	width: 51px;
+	position: absolute;
+	left: 11px;
+	top: -2px;
 }
