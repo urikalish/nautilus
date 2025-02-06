@@ -49,7 +49,7 @@
 }
 .depth-gauge-cur-depth {
 	position: absolute;
-	left: 8px;
+	left: 9px;
 	border-top: 7px solid transparent;
 	border-bottom: 7px solid transparent;
 	border-right: 7px solid var(--color--depth-gauge--cur-depth);
