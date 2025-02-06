@@ -122,7 +122,7 @@
 }
 .depth-gauge-danger {
 	position: relative;
-	flex: 150 0 0;
+	flex: 84 0 0;
 	background-color: #c33;
 	opacity: 0.9;
 }
