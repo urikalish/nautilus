@@ -165,7 +165,7 @@
 	left: -7px;
 	border-top: 7px solid transparent;
 	border-bottom: 7px solid transparent;
-	border-left: 7px solid #fff;
+	border-left: 7px solid #0f0;
 	width: 0;
 	height: 0;
 }
@@ -174,4 +174,5 @@
 	position: absolute;
 	right: 9px;
 	top: -6px;
+	color: #0f0;
 }
