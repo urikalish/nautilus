@@ -1,8 +1,16 @@
+@import './command.css';
 @import './speed.css';
 @import './board.css';
 @import './depth.css';
 
 .pane-center {
+	position: relative;
+	display: grid;
+	place-content: space-evenly;
+	justify-items: center;
+}
+
+.center-wrapper {
 	position: relative;
 	display: grid;
 	grid-template-columns: auto 1fr auto;

@@ -33,10 +33,6 @@
 		<div id="wrapper" class="wrapper grid display--none">
 			<div id="main" class="main grid">
 				<div id="pane-left" class="pane-left">
-					<div id="command-pane" class="command-pane grid visibility--hidden">
-						<input id="inp-command" class="inp-command empty" />
-						<label for="inp-command" class="lbl-command">Command</label>
-					</div>
 					<div id="waterfall-pane" class="waterfall-pane">
 						<canvas id="cnv-waterfall" class="cnv-waterfall"></canvas>
 					</div>
@@ -44,86 +40,92 @@
 				</div>
 
 				<div id="pane-center" class="pane-center">
-					<div id="speed-gauge-pane" class="speed-gauge-pane">
-						<div id="speed-gauge" class="speed-gauge">
-							<div class="speed-gauge-35-40" data-speed="40"></div>
-							<div class="speed-gauge-30-35"></div>
-							<div class="speed-gauge-25-30" data-speed="30"></div>
-							<div class="speed-gauge-20-25"></div>
-							<div class="speed-gauge-15-20" data-speed="20"></div>
-							<div class="speed-gauge-10-15"></div>
-							<div class="speed-gauge-5-10" data-speed="10"></div>
-							<div class="speed-gauge-0-5"></div>
-							<div class="speed-gauge-0" data-speed="0"></div>
-							<div id="speed-gauge-cur-speed" class="speed-gauge-cur-speed"></div>
-						</div>
+					<div id="command-pane" class="command-pane grid visibility--hidden">
+						<input id="inp-command" class="inp-command empty" />
+						<label for="inp-command" class="lbl-command">Command</label>
 					</div>
-					<div class="board-container">
-						<div class="board-gutters">
-							<div class="board-gutter">
-								<div class="board-gutter-label">A</div>
-								<div class="board-gutter-label">B</div>
-								<div class="board-gutter-label">C</div>
-								<div class="board-gutter-label">D</div>
-								<div class="board-gutter-label">E</div>
-								<div class="board-gutter-label">F</div>
-								<div class="board-gutter-label">G</div>
-								<div class="board-gutter-label">H</div>
-							</div>
-							<div class="board-gutter">
-								<div class="board-gutter-label">8</div>
-								<div class="board-gutter-label">7</div>
-								<div class="board-gutter-label">6</div>
-								<div class="board-gutter-label">5</div>
-								<div class="board-gutter-label">4</div>
-								<div class="board-gutter-label">3</div>
-								<div class="board-gutter-label">2</div>
-								<div class="board-gutter-label">1</div>
-							</div>
-							<div class="board-gutter">
-								<div class="board-gutter-label">A</div>
-								<div class="board-gutter-label">B</div>
-								<div class="board-gutter-label">C</div>
-								<div class="board-gutter-label">D</div>
-								<div class="board-gutter-label">E</div>
-								<div class="board-gutter-label">F</div>
-								<div class="board-gutter-label">G</div>
-								<div class="board-gutter-label">H</div>
-							</div>
-							<div class="board-gutter">
-								<div class="board-gutter-label">8</div>
-								<div class="board-gutter-label">7</div>
-								<div class="board-gutter-label">6</div>
-								<div class="board-gutter-label">5</div>
-								<div class="board-gutter-label">4</div>
-								<div class="board-gutter-label">3</div>
-								<div class="board-gutter-label">2</div>
-								<div class="board-gutter-label">1</div>
+					<div class="center-wrapper">
+						<div id="speed-gauge-pane" class="speed-gauge-pane">
+							<div id="speed-gauge" class="speed-gauge">
+								<div class="speed-gauge-35-40" data-speed="40"></div>
+								<div class="speed-gauge-30-35"></div>
+								<div class="speed-gauge-25-30" data-speed="30"></div>
+								<div class="speed-gauge-20-25"></div>
+								<div class="speed-gauge-15-20" data-speed="20"></div>
+								<div class="speed-gauge-10-15"></div>
+								<div class="speed-gauge-5-10" data-speed="10"></div>
+								<div class="speed-gauge-0-5"></div>
+								<div class="speed-gauge-0" data-speed="0"></div>
+								<div id="speed-gauge-cur-speed" class="speed-gauge-cur-speed"></div>
 							</div>
 						</div>
-						<div id="board" class="board">
-							<img
-								id="board-marker-my-sub"
-								class="board-marker-my-sub display--none"
-								src="./img/marker/marker-friend.svg"
-								alt="my sub marker"
-							/>
-							<img
-								id="board-marker-enemy-sub"
-								class="board-marker-enemy-sub display--none"
-								src="./img/marker/marker-foe.svg"
-								alt="enemy sub marker"
-							/>
+						<div class="board-container">
+							<div class="board-gutters">
+								<div class="board-gutter">
+									<div class="board-gutter-label">A</div>
+									<div class="board-gutter-label">B</div>
+									<div class="board-gutter-label">C</div>
+									<div class="board-gutter-label">D</div>
+									<div class="board-gutter-label">E</div>
+									<div class="board-gutter-label">F</div>
+									<div class="board-gutter-label">G</div>
+									<div class="board-gutter-label">H</div>
+								</div>
+								<div class="board-gutter">
+									<div class="board-gutter-label">8</div>
+									<div class="board-gutter-label">7</div>
+									<div class="board-gutter-label">6</div>
+									<div class="board-gutter-label">5</div>
+									<div class="board-gutter-label">4</div>
+									<div class="board-gutter-label">3</div>
+									<div class="board-gutter-label">2</div>
+									<div class="board-gutter-label">1</div>
+								</div>
+								<div class="board-gutter">
+									<div class="board-gutter-label">A</div>
+									<div class="board-gutter-label">B</div>
+									<div class="board-gutter-label">C</div>
+									<div class="board-gutter-label">D</div>
+									<div class="board-gutter-label">E</div>
+									<div class="board-gutter-label">F</div>
+									<div class="board-gutter-label">G</div>
+									<div class="board-gutter-label">H</div>
+								</div>
+								<div class="board-gutter">
+									<div class="board-gutter-label">8</div>
+									<div class="board-gutter-label">7</div>
+									<div class="board-gutter-label">6</div>
+									<div class="board-gutter-label">5</div>
+									<div class="board-gutter-label">4</div>
+									<div class="board-gutter-label">3</div>
+									<div class="board-gutter-label">2</div>
+									<div class="board-gutter-label">1</div>
+								</div>
+							</div>
+							<div id="board" class="board">
+								<img
+									id="board-marker-my-sub"
+									class="board-marker-my-sub display--none"
+									src="./img/marker/marker-friend.svg"
+									alt="my sub marker"
+								/>
+								<img
+									id="board-marker-enemy-sub"
+									class="board-marker-enemy-sub display--none"
+									src="./img/marker/marker-foe.svg"
+									alt="enemy sub marker"
+								/>
+							</div>
 						</div>
-					</div>
-					<div id="depth-gauge-pane" class="depth-gauge-pane">
-						<div id="depth-gauge" class="depth-gauge">
-							<div class="depth-gauge-0-400" data-depth="0"></div>
-							<div class="depth-gauge-400-800" data-depth="400"></div>
-							<div class="depth-gauge-800-1200" data-depth="800"></div>
-							<div class="depth-gauge-1200-1600" data-depth="1200"></div>
-							<div class="depth-gauge-1600-1800" data-depth="1800"></div>
-							<div id="depth-gauge-cur-depth" class="depth-gauge-cur-depth"></div>
+						<div id="depth-gauge-pane" class="depth-gauge-pane">
+							<div id="depth-gauge" class="depth-gauge">
+								<div class="depth-gauge-0-400" data-depth="0"></div>
+								<div class="depth-gauge-400-800" data-depth="400"></div>
+								<div class="depth-gauge-800-1200" data-depth="800"></div>
+								<div class="depth-gauge-1200-1600" data-depth="1200"></div>
+								<div class="depth-gauge-1600-1800" data-depth="1800"></div>
+								<div id="depth-gauge-cur-depth" class="depth-gauge-cur-depth"></div>
+							</div>
 						</div>
 					</div>
 				</div>

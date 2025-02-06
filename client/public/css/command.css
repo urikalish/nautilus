@@ -1,5 +1,5 @@
 .command-pane {
-	width: 362px;
+	width: 420px;
 	border: 1px solid #666;
 	background-color: #0004;
 	padding: 16px;
@@ -7,7 +7,7 @@
 }
 
 .inp-command {
-	width: 300px;
+	width: 380px;
 	outline: none;
 	border: none;
 	border-bottom: 1px solid var(--color--gray--light);
