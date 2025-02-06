@@ -18,7 +18,7 @@
 .depth-gauge-400-800,
 .depth-gauge-800-1200,
 .depth-gauge-1200-1600,
-.depth-gauge-1600-1700 {
+.depth-gauge-1600-1800 {
 	position: relative;
 	flex: 400 0 0;
 }
@@ -26,7 +26,7 @@
 .depth-gauge-400-800::after,
 .depth-gauge-800-1200::after,
 .depth-gauge-1200-1600::after,
-.depth-gauge-1600-1700::after {
+.depth-gauge-1600-1800::after {
 	content: attr(data-depth);
 	position: absolute;
 	right: 10px;
@@ -43,8 +43,8 @@
 .depth-gauge-1200-1600 {
 	background-color: var(--color--depth-gauge--deep);
 }
-.depth-gauge-1600-1700 {
-	flex: 100 0 0;
+.depth-gauge-1600-1800 {
+	flex: 200 0 0;
 	background-color: var(--color--depth-gauge--danger);
 }
 .depth-gauge-cur-depth {

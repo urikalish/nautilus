@@ -162,7 +162,7 @@ export class UiHelper {
 		const mySub = this.game.getMySub();
 		this.speedGaugeCurSpeed!.style.bottom = `${(mySub.speed * 420) / 40 - 7}px`;
 		this.speedGaugeCurSpeed!.dataset.speed = Math.round(mySub.speed).toString();
-		this.depthGaugeCurDepth!.style.top = `${(mySub.depth * 420) / 1700 - 7}px`;
+		this.depthGaugeCurDepth!.style.top = `${(mySub.depth * 420) / 1800 - 7}px`;
 		this.depthGaugeCurDepth!.dataset.depth = Math.round(mySub.depth).toString();
 	}
 
