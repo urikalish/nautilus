@@ -22,8 +22,8 @@ export class Initializer {
 		} while (d < 7);
 
 		const subs = [
-			new Sub(0, new Position(startTime, p[0], p[1]), Math.trunc(Math.random() * 360), EngineState.TWO_THIRDS, settings.speed.twoThirds, 900),
-			new Sub(1, new Position(startTime, p[2], p[3]), Math.trunc(Math.random() * 360), EngineState.TWO_THIRDS, settings.speed.twoThirds, 900),
+			new Sub(0, new Position(startTime, p[0], p[1]), Math.trunc(Math.random() * 360), EngineState.THIRD, settings.speed.third, 600),
+			new Sub(1, new Position(startTime, p[2], p[3]), Math.trunc(Math.random() * 360), EngineState.THIRD, settings.speed.third, 600),
 		];
 		const ind = 0;
 		const game = new Game(getRandomNumber(3), startDate, ind, players, subs);
