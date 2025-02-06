@@ -15,6 +15,7 @@
 	grid-template-columns: repeat(8, 1fr);
 	border-bottom: 1px dashed var(--color--board);
 	border-right: 1px dashed var(--color--board);
+	user-select: none;
 }
 .board-gutters {
 	position: absolute;
